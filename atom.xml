@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2021-08-01T01:47:29.184Z</updated>
+  <updated>2021-08-06T07:25:59.031Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>学习记录1</title>
+    <link href="http://example.com/2021/08/06/opengl-xue-xi-ji-lu-1/"/>
+    <id>http://example.com/2021/08/06/opengl-xue-xi-ji-lu-1/</id>
+    <published>2021-08-06T05:33:22.000Z</published>
+    <updated>2021-08-06T07:25:59.031Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="part1-OpenGL学习记录"><a href="#part1-OpenGL学习记录" class="headerlink" title="part1 OpenGL学习记录"></a>part1 OpenGL学习记录</h1><hr><h2 id="lesson-01"><a href="#lesson-01" class="headerlink" title="lesson 01"></a>lesson 01</h2><ul><li>在第一课配置环境这一部分我其实就遇到了困难 开始用VS2019配置 后来发现代码不一样没办法用教程的代码继续往下  于是转战VC6.0 比用VS2019简易多了</li></ul><div style="width:50%;margin:auto"><img src="/2021/08/06/opengl-xue-xi-ji-lu-1/1.png" class title="这是我的第一个OpenGL窗口"></div><hr><h2 id="lesson-02"><a href="#lesson-02" class="headerlink" title="lesson 02"></a>lesson 02</h2><ul><li>这节课我创建了第一个（其实是两个）多边形 惭愧的是函数代码我至今还没有记住（so sad)</li></ul><div style="width:50%;margin:auto"><img src="/2021/08/06/opengl-xue-xi-ji-lu-1/2.png" class title="这是我的第一个多边形"><div>           <hr><p>第三</p><hr><p>第四</p></div></div>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;part1-OpenGL学习记录&quot;&gt;&lt;a href=&quot;#part1-OpenGL学习记录&quot; class=&quot;headerlink&quot; title=&quot;part1 OpenGL学习记录&quot;&gt;&lt;/a&gt;part1 OpenGL学习记录&lt;/h1&gt;&lt;hr&gt;
+&lt;h2 id=&quot;less</summary>
+      
+    
+    
+    
+    
+    <category term="学习" scheme="http://example.com/tags/%E5%AD%A6%E4%B9%A0/"/>
+    
+  </entry>
   
   <entry>
     <title>关于我</title>
