@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2021-10-26T11:38:48.696Z</updated>
+  <updated>2022-03-06T10:32:29.297Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,26 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>浏览器显示未连接互联网的解决方法</title>
+    <link href="http://example.com/2022/03/06/liu-lan-qi-xian-shi-wei-lian-jie-hu-lian-wang-de-jie-jue-fang-fa/"/>
+    <id>http://example.com/2022/03/06/liu-lan-qi-xian-shi-wei-lian-jie-hu-lian-wang-de-jie-jue-fang-fa/</id>
+    <published>2022-03-06T09:44:29.000Z</published>
+    <updated>2022-03-06T10:32:29.297Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>前两天我一个舍友的浏览器总是显示未连接互联网，试了很多方法都没有解决，于是找到了我这个虽然学计算机但实际上啥也不会的舍友，在度娘的帮助下最后成功解决了。为了下一次遇到同样的问题我可以不再需要询问度娘，我在这里简单记录一下解决方案，同时也算是一个自我提升的过程吧。</p><h2 id="第一步"><a href="#第一步" class="headerlink" title="第一步"></a>第一步</h2><hr><p>请先检查是否真的是网络的问题，比如你的WiFi是否真的连接成功了、你的WiFi是否为可用网络。如果确定不是网络的问题，就可以进入第二步了。</p><hr><h2 id="第二步"><a href="#第二步" class="headerlink" title="第二步"></a>第二步</h2><hr><p>如果确保网络没有问题，接下来请检查是否是浏览器的问题，可以尝试更换浏览器，建议选用Chrome、火狐等浏览器。如果也不是浏览器的问题，就可以进入第三步了。</p><h2 id="第三步"><a href="#第三步" class="headerlink" title="第三步"></a>第三步</h2><hr><h3 id="step-1"><a href="#step-1" class="headerlink" title="step 1"></a>step 1</h3><p>打开电脑的控制面板</p><div style="width:50%;margin:auto"><img src="/2022/03/06/liu-lan-qi-xian-shi-wei-lian-jie-hu-lian-wang-de-jie-jue-fang-fa/1.jpg" class title="控制面板"></div><hr><h3 id="step-2"><a href="#step-2" class="headerlink" title="step 2"></a>step 2</h3><ul><li>单击[<strong>网络和Internet</strong>]选项</li></ul><div style="width:50%;margin:auto"><img src="/2022/03/06/liu-lan-qi-xian-shi-wei-lian-jie-hu-lian-wang-de-jie-jue-fang-fa/7.png" class title="单击[网络和Internet]"></div><hr><h3 id="step-3"><a href="#step-3" class="headerlink" title="step 3"></a>step 3</h3><ul><li>单击[<strong>网络和共享中心</strong>]选项</li></ul><div style="width:50%;margin:auto"><img src="/2022/03/06/liu-lan-qi-xian-shi-wei-lian-jie-hu-lian-wang-de-jie-jue-fang-fa/2.jpg" class title="单击[网络和共享中心]"></div><hr><h3 id="step-4"><a href="#step-4" class="headerlink" title="step 4"></a>step 4</h3><ul><li>单击左下角[<strong>Internet选项</strong>]</li></ul><div style="width:50%;margin:auto"><img src="/2022/03/06/liu-lan-qi-xian-shi-wei-lian-jie-hu-lian-wang-de-jie-jue-fang-fa/3.png" class title="单击[Internet选项]"></div><hr><h3 id="step-5"><a href="#step-5" class="headerlink" title="step 5"></a>step 5</h3><ul><li>选择上方的[<strong>连接</strong>]选项</li></ul><div style="width:50%;margin:auto"><img src="/2022/03/06/liu-lan-qi-xian-shi-wei-lian-jie-hu-lian-wang-de-jie-jue-fang-fa/4.png" class title="选择[连接]"></div><hr><h3 id="step-6"><a href="#step-6" class="headerlink" title="step 6"></a>step 6</h3><ul><li>单击[<strong>局域网设置</strong>]选项</li></ul><div style="width:50%;margin:auto"><img src="/2022/03/06/liu-lan-qi-xian-shi-wei-lian-jie-hu-lian-wang-de-jie-jue-fang-fa/5.png" class title="单击[局域网设置]"></div><hr><h3 id="step-7"><a href="#step-7" class="headerlink" title="step 7"></a>step 7</h3><ul><li>将[<strong>为LAN使用代理服务器</strong>]前的勾选取消</li></ul><div style="width:50%;margin:auto"><img src="/2022/03/06/liu-lan-qi-xian-shi-wei-lian-jie-hu-lian-wang-de-jie-jue-fang-fa/6.jpg" class title="取消勾选"></div><hr><h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><hr><p>如果通过上述步骤还是没有解决，可以自行寻求其他解决方案。由于我的技术水平十分有限，可能无法给出更多的解决方法，非常抱歉！</p><hr><p>距离我上一次更新已经过去了四个多月，主要原因还是我太懒了（惭愧），希望之后我能够督促我自己多多记录吧。</p><p>春天来啦，希望大家都能好好生活！</p><p>我们下一篇见！</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;p&gt;前两天我一个舍友的浏览器总是显示未连接互联网，试了很多方法都没有解决，于是找到了我这个虽然学计算机但实际上啥也不会的舍友，在度娘的帮助下最后</summary>
+      
+    
+    
+    
+    
+  </entry>
   
   <entry>
     <title>杂记（一）</title>
