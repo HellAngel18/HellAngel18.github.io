@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://example.com/2022/03/19/linux-xi-tong-yu-huan-jing-de-an-zhuang-yu-da-jian/</loc>
+    
+    <lastmod>2022-03-19</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://example.com/2022/03/06/liu-lan-qi-xian-shi-wei-lian-jie-hu-lian-wang-de-jie-jue-fang-fa/</loc>
     
     <lastmod>2022-03-06</lastmod>
@@ -60,7 +67,7 @@
 
   <url>
     <loc>http://example.com/</loc>
-    <lastmod>2022-03-06</lastmod>
+    <lastmod>2022-03-19</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -68,7 +75,7 @@
   
   <url>
     <loc>http://example.com/tags/%E5%AD%A6%E4%B9%A0/</loc>
-    <lastmod>2022-03-06</lastmod>
+    <lastmod>2022-03-19</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
