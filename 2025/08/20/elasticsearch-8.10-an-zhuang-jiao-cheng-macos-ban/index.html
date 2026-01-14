@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="关于我, 地狱天使&#39;s Blog">
+    <meta name="keywords" content="Elasticsearch 8.10安装教程（macOS版）, 地狱天使&#39;s Blog">
     <meta name="description" content="欢迎来到我的世界">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>关于我 | 地狱天使&#39;s Blog</title>
+    <title>Elasticsearch 8.10安装教程（macOS版） | 地狱天使&#39;s Blog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -311,12 +311,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/6.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/2.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">关于我</h1>
+                    <h1 class="description center-align post-title">Elasticsearch 8.10安装教程（macOS版）</h1>
                 </div>
             </div>
         </div>
@@ -430,9 +430,13 @@
             <div class="row tag-cate">
                 <div class="col s7">
                     
-                          <div class="article-tag">
-                            <span class="chip bg-color">No tag</span>
-                          </div>
+                    <div class="article-tag">
+                        
+                            <a href="/tags/agent/">
+                                <span class="chip bg-color">agent</span>
+                            </a>
+                        
+                    </div>
                     
                 </div>
                 <div class="col s5 right-align">
@@ -444,7 +448,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>Publish Date:&nbsp;&nbsp;
-                    2021-07-31
+                    2025-08-20
                 </div>
                 
 
@@ -465,46 +469,53 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a><strong>前言</strong></h2><p>欢迎来到我的世界</p>
-<hr>
-<h2 id="关于我"><a href="#关于我" class="headerlink" title="关于我"></a><strong>关于我</strong></h2><ul>
-<li><p>随时随地在coding的女孩</p>
-</li>
-<li><p>学历：</p>
-<ul>
-<li>本科：南京师范大学 计算机科学与技术专业</li>
-<li>硕士：华东师范大学 计算机科学与技术专业（推免）    </li>
+                <blockquote>
+<p>从Elasticsearch 8.x开始，官方不再通过Homebrew提供安装包。</p>
+</blockquote>
+<h2 id="1-安装ES"><a href="#1-安装ES" class="headerlink" title="1. 安装ES"></a>1. 安装ES</h2><h3 id="1-1-下载Elasticsearch"><a href="#1-1-下载Elasticsearch" class="headerlink" title="1.1 下载Elasticsearch"></a>1.1 下载Elasticsearch</h3><ul>
+<li>访问<a target="_blank" rel="noopener" href="https://www.elastic.co/cn/downloads/elasticsearch">Elasticsearch官方下载页面</a>，选择 8.10.0 版本并下载。<h3 id="1-2-解压文件"><a href="#1-2-解压文件" class="headerlink" title="1.2 解压文件"></a>1.2 解压文件</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tar -xzf elasticsearch-8.10.0-darwin-x86_64.tar.gz </span><br><span class="line"><span class="built_in">cd</span> elasticsearch-8.10.0</span><br></pre></td></tr></table></figure>
+<h3 id="1-3-启动es"><a href="#1-3-启动es" class="headerlink" title="1.3 启动es"></a>1.3 启动es</h3></li>
+<li>可以直接进入到 bin 目录，然后执行 <code>./elasticsearch</code> 启动 ES。</li>
+<li>默认情况下，ES 默认是自动配置堆大小的，也就是没有设置固定的内存限制，所以 ES 会根据系统可用内存自动分配，有的时候内存会飙升，可以通过下面的命令运行：<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">ES_JAVA_OPTS</span>=<span class="string">&quot;-Xms5g -Xmx5g&quot;</span> ./bin/elasticsearch</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>ES 8.10.0 需要 JDK17 版本</p>
+</blockquote>
+<h2 id="2-ES安全功能解除方法"><a href="#2-ES安全功能解除方法" class="headerlink" title="2. ES安全功能解除方法"></a>2. ES安全功能解除方法</h2></li>
+<li>es的安全功能包括：<ul>
+<li>HTTPS：所有通信默认使用HTTPS。</li>
+<li>身份验证：需要用户名和密码才能访问es。</li>
+<li>证书生成：安装时会自动生成 TLS/SSL 证书。<h3 id="2-1-方法一：使用HTTPS访问-ES"><a href="#2-1-方法一：使用HTTPS访问-ES" class="headerlink" title="2.1 方法一：使用HTTPS访问 ES"></a>2.1 方法一：使用HTTPS访问 ES</h3><h4 id="2-1-1-找到生成的证书"><a href="#2-1-1-找到生成的证书" class="headerlink" title="2.1.1 找到生成的证书"></a>2.1.1 找到生成的证书</h4></li>
 </ul>
 </li>
-<li><p>能好好活着是我最大的愿望</p>
+<li>CA证书路径：通常位于<code>elasticsearch-8.10.0/config/certs/http_ca.crt</code></li>
+<li>用户名和密码：默认用户是elastic，密码会在启动时生成。<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">✅ Elasticsearch security features have been automatically configured!</span><br><span class="line">✅ Authentication is enabled and cluster connections are encrypted.</span><br><span class="line"></span><br><span class="line">ℹ️  Password for the **elastic** user (reset with `bin/elasticsearch-reset-password -u elastic`):</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>如果忘记了密码，可以通过以下命令重置：<br><code>./bin/elasticsearch-reset-password -u elastic</code></p>
+</blockquote>
+<h4 id="2-1-2-使用HTTPS访问"><a href="#2-1-2-使用HTTPS访问" class="headerlink" title="2.1.2 使用HTTPS访问"></a>2.1.2 使用HTTPS访问</h4></li>
+<li>回到解压目录（不是bin目录），运行以下命令，指定CA证书并使用HTTPS协议：<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl --cacert config/certs/http_ca.crt -X GET <span class="string">&quot;https://localhost:9201&quot;</span> -u elastic</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>这里我的9200端口一直显示被占用，所以我换了9201端口。</p>
+</blockquote>
 </li>
+<li>系统会提示输入密码，输入elastic用户的密码后即可访问。<h3 id="2-2-访问二：禁用HTTPS和安全功能"><a href="#2-2-访问二：禁用HTTPS和安全功能" class="headerlink" title="2.2 访问二：禁用HTTPS和安全功能"></a>2.2 访问二：禁用HTTPS和安全功能</h3><h4 id="2-2-1-修改配置文件"><a href="#2-2-1-修改配置文件" class="headerlink" title="2.2.1 修改配置文件"></a>2.2.1 修改配置文件</h4></li>
+<li>编辑 config/elasticsearch.yml 文件，把这两个配置项修改为 false。<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">xpack.security.enabled:</span> <span class="literal">false</span> </span><br><span class="line"><span class="attr">xpack.security.http.ssl.enabled:</span> <span class="literal">false</span></span><br></pre></td></tr></table></figure>
+<h4 id="2-2-2-重启es"><a href="#2-2-2-重启es" class="headerlink" title="2.2.2 重启es"></a>2.2.2 重启es</h4></li>
+<li>重启es：<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./bin/elasticsearch</span><br></pre></td></tr></table></figure>
+<h4 id="2-2-3-使用HTTP访问"><a href="#2-2-3-使用HTTP访问" class="headerlink" title="2.2.3 使用HTTP访问"></a>2.2.3 使用HTTP访问</h4></li>
+<li>现在可以通过HTTP协议访问es：<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl <span class="operator">-</span>X <span class="keyword">GET</span> &quot;http://localhost:9201&quot; <span class="operator">-</span>u 用户名:你的密码</span><br></pre></td></tr></table></figure>
+<img src="http%E8%AE%BF%E9%97%AEes.png" alt="http访问es"><blockquote>
+<p>禁用安全功能仅适用于开发环境，生产环境中不建议这样做。<br>如果你在Docker中运行es，请确保将 xpack.security.enabled 设置为 false。</p>
+</blockquote>
+<h2 id="3-ES安装IK分词器插件"><a href="#3-ES安装IK分词器插件" class="headerlink" title="3. ES安装IK分词器插件"></a>3. ES安装IK分词器插件</h2></li>
+<li>IK 分词器是阿里开源的一个中文分词工具，主要用于全文检索和文本分析：<a target="_blank" rel="noopener" href="https://github.com/infinilabs/analysis-ik">IK分词器</a></li>
+<li>可以通过命令行直接安装：<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./bin/elasticsearch-plugin install https://get.infini.cloud/elasticsearch/analysis-ik/8.10.0.zip</span><br></pre></td></tr></table></figure></li>
+<li>如果失败的话，使用这个链接下载：<a target="_blank" rel="noopener" href="https://release.infinilabs.com/analysis-ik/stable/">IK分词器下载</a><blockquote>
+<p>下载版本必须和es版本相同</p>
+</blockquote>
+</li>
+<li>下载后使用以下命令安装本地插件：<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./bin/elasticsearch-plugin install file:YOUR_PATH/elasticsearch-analysis-ik-8.10.0.zip</span><br></pre></td></tr></table></figure></li>
 </ul>
-<hr>
-<h2 id="爱好"><a href="#爱好" class="headerlink" title="爱好"></a><strong>爱好</strong></h2><ul>
-<li><p>因为没有什么爱好所以什么都可以是我的爱好</p>
-<ul>
-<li>足球——Hala Madrid！</li>
-<li>追剧——什么都看一点</li>
-<li>coding——努力变得更强中</li>
-</ul>
-</li>
-<li><p>其他的还有待挖掘，欢迎和我交流。</p>
-</li>
-</ul>
-<hr>
-<h2 id="社交"><a href="#社交" class="headerlink" title="社交"></a><strong>社交</strong></h2><ul>
-<li><p><strong>微博/QQ/微信</strong>   重度依赖症患者</p>
-</li>
-<li><p><strong>豆瓣/知乎/CSDN</strong>   偶尔使用</p>
-</li>
-<li><p><strong>Instagram/X/Line</strong>    这些真的挺难用的我觉得 但有时候不得不…（你懂的）<del>坏笑</del></p>
-</li>
-</ul>
-<hr>
-<h2 id="信念"><a href="#信念" class="headerlink" title="信念"></a><strong>信念</strong></h2><p><em>经济独立 精神独立 好好活着</em></p>
-<hr>
-<p>本Blog旨在记录一些我自己学习生活过程中的心得体会 所以文章大概都是随心写哈哈哈</p>
-<p>本网站依旧在开发中 如果有任何建议欢迎给我发邮件：<a href="mailto:&#49;&#x31;&#55;&#x39;&#52;&#50;&#54;&#50;&#x36;&#x38;&#108;&#120;&#114;&#x40;&#x67;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">&#49;&#x31;&#55;&#x39;&#52;&#50;&#54;&#50;&#x36;&#x38;&#108;&#120;&#114;&#x40;&#x67;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;</a><br>很希望能找到志同道合的朋友一起交流 如果有朋友愿意跟我聊聊的 也欢迎给我发邮件<br>我暂时就想到这么多 未完待续…<br>感谢你的阅读 祝你生活愉快！</p>
 
                 
             </div>
@@ -531,7 +542,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://lixrangel.com/2021/07/31/guan-yu-wo/">http://lixrangel.com/2021/07/31/guan-yu-wo/</a>
+                    <a href="http://lixrangel.com/2025/08/20/elasticsearch-8.10-an-zhuang-jiao-cheng-macos-ban/">http://lixrangel.com/2025/08/20/elasticsearch-8.10-an-zhuang-jiao-cheng-macos-ban/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -568,7 +579,11 @@
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
                         <div class="article-tag">
-                            <span class="chip bg-color">No tag</span>
+                            
+                                <a href="/tags/agent/">
+                                    <span class="chip bg-color">agent</span>
+                                </a>
+                            
                         </div>
                     
                 </div>
@@ -742,13 +757,13 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;Previous</div>
             <div class="card">
-                <a href="/2021/08/06/za-ji-yi/">
+                <a href="/2025/10/23/ha-xi/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="杂记（一）">
+                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="哈希">
                         
-                        <span class="card-title">杂记（一）</span>
+                        <span class="card-title">哈希</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -759,7 +774,7 @@
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-08-06
+                            <i class="far fa-clock fa-fw icon-date"></i>2025-10-23
                         </span>
                         <span class="publish-author">
                             
@@ -772,8 +787,12 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E6%9D%82%E8%AE%B0/">
-                        <span class="chip bg-color">杂记</span>
+                    <a href="/tags/%E7%AE%97%E6%B3%95/">
+                        <span class="chip bg-color">算法</span>
+                    </a>
+                    
+                    <a href="/tags/%E5%88%B7%E9%A2%98/">
+                        <span class="chip bg-color">刷题</span>
                     </a>
                     
                 </div>
@@ -784,16 +803,16 @@
         
         <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge right-badge text-color">
-                Current&nbsp;<i class="far fa-dot-circle"></i>
+                Next&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/07/31/guan-yu-wo/">
+                <a href="/2024/09/16/fu-wu-qi-lian-jie-hugging-face-shi-bai/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="关于我">
+                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="服务器连接hugging face失败">
                         
-                        <span class="card-title">关于我</span>
+                        <span class="card-title">服务器连接hugging face失败</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -804,7 +823,7 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-07-31
+                                <i class="far fa-clock fa-fw icon-date"></i>2024-09-16
                             </span>
                         <span class="publish-author">
                             
@@ -814,7 +833,14 @@
                         </span>
                     </div>
                 </div>
-
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/">
+                        <span class="chip bg-color">服务器</span>
+                    </a>
+                    
+                </div>
                 
             </div>
         </div>
