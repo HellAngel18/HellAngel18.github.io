@@ -489,9 +489,11 @@
 <li>es的安全功能包括：<ul>
 <li>HTTPS：所有通信默认使用HTTPS。</li>
 <li>身份验证：需要用户名和密码才能访问es。</li>
-<li>证书生成：安装时会自动生成 TLS/SSL 证书。<h3 id="2-1-方法一：使用HTTPS访问-ES"><a href="#2-1-方法一：使用HTTPS访问-ES" class="headerlink" title="2.1 方法一：使用HTTPS访问 ES"></a>2.1 方法一：使用HTTPS访问 ES</h3><h4 id="2-1-1-找到生成的证书"><a href="#2-1-1-找到生成的证书" class="headerlink" title="2.1.1 找到生成的证书"></a>2.1.1 找到生成的证书</h4></li>
+<li>证书生成：安装时会自动生成 TLS/SSL 证书。</li>
 </ul>
 </li>
+</ul>
+<h3 id="2-1-方法一：使用HTTPS访问-ES"><a href="#2-1-方法一：使用HTTPS访问-ES" class="headerlink" title="2.1 方法一：使用HTTPS访问 ES"></a>2.1 方法一：使用HTTPS访问 ES</h3><h4 id="2-1-1-找到生成的证书"><a href="#2-1-1-找到生成的证书" class="headerlink" title="2.1.1 找到生成的证书"></a>2.1.1 找到生成的证书</h4><ul>
 <li>CA证书路径：通常位于<code>elasticsearch-8.10.0/config/certs/http_ca.crt</code></li>
 <li>用户名和密码：默认用户是elastic，密码会在启动时生成。<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">✅ Elasticsearch security features have been automatically configured!</span><br><span class="line">✅ Authentication is enabled and cluster connections are encrypted.</span><br><span class="line"></span><br><span class="line">ℹ️  Password for the **elastic** user (reset with `bin/elasticsearch-reset-password -u elastic`):</span><br></pre></td></tr></table></figure>
 <blockquote>
