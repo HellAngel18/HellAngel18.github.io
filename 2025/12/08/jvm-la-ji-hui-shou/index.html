@@ -580,10 +580,10 @@
 </tbody></table>
 <ul>
 <li><strong>Seria收集器（复制算法）</strong>：新生代单线程回收器，其他线程会阻塞，优点是简单高效；</li>
-<li><strong>Serial Old收集器（标记-整理算法）</strong>：老年代单线程回收器，<font color="#ff0000">Serial回收器老年代版本</font>。<br><img src="Serial&Serial_Old%E5%9B%9E%E6%94%B6%E5%99%A8.png" alt="Serial&amp;Serial_Old回收器"></li>
+<li><strong>Serial Old收集器（标记-整理算法）</strong>：老年代单线程回收器，<font color="#ff0000">Serial回收器老年代版本</font>。<br><img src="Serial&Serial_Old%E5%9B%9E%E6%94%B6%E5%99%A8.png" alt="Serial&amp;Serial Old回收器"></li>
 <li><strong>ParNew回收器（复制算法）</strong>：新生代并行回收器，实际上是<font color="#ff0000">Serial回收器的多线程版本</font>，目标是缩短垃圾收集时的单次停顿时间，在多核cpu环境下有比Serial更好的表现。<br><img src="ParNew%E5%9B%9E%E6%94%B6%E5%99%A8.png" alt="ParNew回收器"></li>
 <li><strong>Parallel Scavenge收集器（复制算法）</strong>：新生代并行回收器，追求高吞吐量，高效利用cpu。适合后台应用对交互响应要求不高的场景。</li>
-<li><strong>Parallel Old收集器（标记-整理算法）</strong>：老年代并行回收器，吞吐量优先，Parallel Scavenge回收器的老年代版本。<br><img src="Parallel_Scavenge&Parallel_Old%E5%9B%9E%E6%94%B6%E5%99%A8.png" alt="Parallel_Scavenge&amp;Parallel_Old回收器"></li>
+<li><strong>Parallel Old收集器（标记-整理算法）</strong>：老年代并行回收器，吞吐量优先，Parallel Scavenge回收器的老年代版本。<br><img src="Parallel_Scavenge&Parallel_Old%E5%9B%9E%E6%94%B6%E5%99%A8.png" alt="Parallel Scavenge&amp;Parallel Old回收器"></li>
 <li><strong>CMS收集器（标记-清除算法）</strong>：老年代并行回收器，以<font color="#ff0000">获取最短回收停顿时间</font>为目标。具有高并发、低停顿的特点，追求最短GC回收停顿时间。<ul>
 <li><font color="#0070c0">初始标记</font>：短暂停顿，标记直接与root相连的对象；</li>
 <li><font color="#0070c0">并发标记</font>：同时开启GC和用户线程，用一个闭包结构去记录可达对象。但在这个阶段结束，这个闭包结构并不能保证包含当前所有的可达对象，因为用户线程可能会不断的更新引用域，所以GC线程无法保证可达性分析的实时性。</li>
