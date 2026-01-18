@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://lixrangel.com/2025/11/25/java-nei-cun-qu-yu-lei-jia-zai/</loc>
+    
+    <lastmod>2026-01-18</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>http://lixrangel.com/2025/11/29/hashmap-concurrenthashmap/</loc>
     
     <lastmod>2026-01-18</lastmod>
@@ -187,14 +196,21 @@
   </url>
   
   <url>
-    <loc>http://lixrangel.com/tags/%E5%85%AB%E8%82%A1%EF%BC%8C%E9%9B%86%E5%90%88/</loc>
+    <loc>http://lixrangel.com/tags/%E5%85%AB%E8%82%A1/</loc>
     <lastmod>2026-01-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>http://lixrangel.com/tags/%E5%85%AB%E8%82%A1/</loc>
+    <loc>http://lixrangel.com/tags/%E9%9B%86%E5%90%88/</loc>
+    <lastmod>2026-01-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://lixrangel.com/tags/%E5%85%AB%E8%82%A1%EF%BC%8CJVM/</loc>
     <lastmod>2026-01-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
