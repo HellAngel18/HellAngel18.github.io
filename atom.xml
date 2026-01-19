@@ -169,8 +169,8 @@
   
   <entry>
     <title>JVM调优</title>
-    <link href="http://lixrangel.com/2025/12/09/jvm-diao-you/"/>
-    <id>http://lixrangel.com/2025/12/09/jvm-diao-you/</id>
+    <link href="http://lixrangel.com/2025/12/09/java-ba-gu/jvm/jvm-diao-you/"/>
+    <id>http://lixrangel.com/2025/12/09/java-ba-gu/jvm/jvm-diao-you/</id>
     <published>2025-12-08T16:00:00.000Z</published>
     <updated>2026-01-18T11:03:00.109Z</updated>
     
@@ -193,8 +193,8 @@
   
   <entry>
     <title>JVM垃圾回收</title>
-    <link href="http://lixrangel.com/2025/12/08/jvm-la-ji-hui-shou/"/>
-    <id>http://lixrangel.com/2025/12/08/jvm-la-ji-hui-shou/</id>
+    <link href="http://lixrangel.com/2025/12/08/java-ba-gu/jvm/jvm-la-ji-hui-shou/"/>
+    <id>http://lixrangel.com/2025/12/08/java-ba-gu/jvm/jvm-la-ji-hui-shou/</id>
     <published>2025-12-07T16:00:00.000Z</published>
     <updated>2026-01-18T11:04:21.472Z</updated>
     
@@ -218,8 +218,8 @@
   
   <entry>
     <title>Java内存区域&amp;类加载</title>
-    <link href="http://lixrangel.com/2025/12/07/java-nei-cun-qu-yu-lei-jia-zai/"/>
-    <id>http://lixrangel.com/2025/12/07/java-nei-cun-qu-yu-lei-jia-zai/</id>
+    <link href="http://lixrangel.com/2025/12/07/java-ba-gu/jvm/java-nei-cun-qu-yu-lei-jia-zai/"/>
+    <id>http://lixrangel.com/2025/12/07/java-ba-gu/jvm/java-nei-cun-qu-yu-lei-jia-zai/</id>
     <published>2025-12-06T16:00:00.000Z</published>
     <updated>2026-01-18T10:56:27.161Z</updated>
     
@@ -242,8 +242,8 @@
   
   <entry>
     <title>ThreadLocal &amp; 线程池</title>
-    <link href="http://lixrangel.com/2025/12/04/threadlocal-xian-cheng-chi/"/>
-    <id>http://lixrangel.com/2025/12/04/threadlocal-xian-cheng-chi/</id>
+    <link href="http://lixrangel.com/2025/12/04/java-ba-gu/duo-xian-cheng-bing-fa/threadlocal-xian-cheng-chi/"/>
+    <id>http://lixrangel.com/2025/12/04/java-ba-gu/duo-xian-cheng-bing-fa/threadlocal-xian-cheng-chi/</id>
     <published>2025-12-03T16:00:00.000Z</published>
     <updated>2026-01-18T10:44:08.894Z</updated>
     
@@ -266,8 +266,8 @@
   
   <entry>
     <title>线程安全</title>
-    <link href="http://lixrangel.com/2025/12/03/xian-cheng-an-quan/"/>
-    <id>http://lixrangel.com/2025/12/03/xian-cheng-an-quan/</id>
+    <link href="http://lixrangel.com/2025/12/03/java-ba-gu/duo-xian-cheng-bing-fa/xian-cheng-an-quan/"/>
+    <id>http://lixrangel.com/2025/12/03/java-ba-gu/duo-xian-cheng-bing-fa/xian-cheng-an-quan/</id>
     <published>2025-12-02T16:00:00.000Z</published>
     <updated>2026-01-18T10:36:32.722Z</updated>
     
@@ -291,8 +291,8 @@
   
   <entry>
     <title>线程基础</title>
-    <link href="http://lixrangel.com/2025/12/02/xian-cheng-ji-chu/"/>
-    <id>http://lixrangel.com/2025/12/02/xian-cheng-ji-chu/</id>
+    <link href="http://lixrangel.com/2025/12/02/java-ba-gu/duo-xian-cheng-bing-fa/xian-cheng-ji-chu/"/>
+    <id>http://lixrangel.com/2025/12/02/java-ba-gu/duo-xian-cheng-bing-fa/xian-cheng-ji-chu/</id>
     <published>2025-12-01T16:00:00.000Z</published>
     <updated>2026-01-18T10:39:52.684Z</updated>
     
@@ -316,8 +316,8 @@
   
   <entry>
     <title>HashMap&amp;ConcurrentHashMap</title>
-    <link href="http://lixrangel.com/2025/11/29/hashmap-concurrenthashmap/"/>
-    <id>http://lixrangel.com/2025/11/29/hashmap-concurrenthashmap/</id>
+    <link href="http://lixrangel.com/2025/11/29/java-ba-gu/ji-he/hashmap-concurrenthashmap/"/>
+    <id>http://lixrangel.com/2025/11/29/java-ba-gu/ji-he/hashmap-concurrenthashmap/</id>
     <published>2025-11-28T16:00:00.000Z</published>
     <updated>2026-01-18T10:52:23.644Z</updated>
     
@@ -340,8 +340,8 @@
   
   <entry>
     <title>滑动窗口</title>
-    <link href="http://lixrangel.com/2025/10/25/hua-dong-chuang-kou/"/>
-    <id>http://lixrangel.com/2025/10/25/hua-dong-chuang-kou/</id>
+    <link href="http://lixrangel.com/2025/10/25/shua-ti/hua-dong-chuang-kou/"/>
+    <id>http://lixrangel.com/2025/10/25/shua-ti/hua-dong-chuang-kou/</id>
     <published>2025-10-24T16:00:00.000Z</published>
     <updated>2026-01-13T12:17:28.188Z</updated>
     
@@ -364,8 +364,8 @@
   
   <entry>
     <title>双指针</title>
-    <link href="http://lixrangel.com/2025/10/24/shuang-zhi-zhen/"/>
-    <id>http://lixrangel.com/2025/10/24/shuang-zhi-zhen/</id>
+    <link href="http://lixrangel.com/2025/10/24/shua-ti/shuang-zhi-zhen/"/>
+    <id>http://lixrangel.com/2025/10/24/shua-ti/shuang-zhi-zhen/</id>
     <published>2025-10-23T16:00:00.000Z</published>
     <updated>2026-01-13T12:11:54.295Z</updated>
     
@@ -388,8 +388,8 @@
   
   <entry>
     <title>哈希</title>
-    <link href="http://lixrangel.com/2025/10/23/ha-xi/"/>
-    <id>http://lixrangel.com/2025/10/23/ha-xi/</id>
+    <link href="http://lixrangel.com/2025/10/23/shua-ti/ha-xi/"/>
+    <id>http://lixrangel.com/2025/10/23/shua-ti/ha-xi/</id>
     <published>2025-10-23T07:27:10.000Z</published>
     <updated>2026-01-13T12:12:07.657Z</updated>
     
@@ -439,8 +439,8 @@
   
   <entry>
     <title>服务器连接hugging face失败</title>
-    <link href="http://lixrangel.com/2024/09/16/fu-wu-qi-lian-jie-hugging-face-shi-bai/"/>
-    <id>http://lixrangel.com/2024/09/16/fu-wu-qi-lian-jie-hugging-face-shi-bai/</id>
+    <link href="http://lixrangel.com/2024/09/16/fu-wu-qi/fu-wu-qi-lian-jie-hugging-face-shi-bai/"/>
+    <id>http://lixrangel.com/2024/09/16/fu-wu-qi/fu-wu-qi-lian-jie-hugging-face-shi-bai/</id>
     <published>2024-09-15T16:00:00.000Z</published>
     <updated>2026-01-13T11:57:42.914Z</updated>
     
@@ -461,12 +461,12 @@
   
   <entry>
     <title>Linux系统与环境的安装与搭建</title>
-    <link href="http://lixrangel.com/2022/03/19/linux-xi-tong-yu-huan-jing-de-an-zhuang-yu-da-jian/"/>
-    <id>http://lixrangel.com/2022/03/19/linux-xi-tong-yu-huan-jing-de-an-zhuang-yu-da-jian/</id>
+    <link href="http://lixrangel.com/2022/03/19/cao-zuo-xi-tong/linux-xi-tong-yu-huan-jing-de-an-zhuang-yu-da-jian/"/>
+    <id>http://lixrangel.com/2022/03/19/cao-zuo-xi-tong/linux-xi-tong-yu-huan-jing-de-an-zhuang-yu-da-jian/</id>
     <published>2022-03-19T07:27:10.000Z</published>
     <updated>2022-03-19T09:40:49.434Z</updated>
     
-    <content type="html"><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>最近计算机系统基础的实验课安装搭建了Linux系统与环境，整个过程我花费了不短的时间，想在这里简单记录一下，也算是以后学习的一个参考吧。</p><h2 id="一、VMware虚拟机的下载"><a href="#一、VMware虚拟机的下载" class="headerlink" title="一、VMware虚拟机的下载"></a>一、VMware虚拟机的下载</h2><hr><h3 id="进入VM官网"><a href="#进入VM官网" class="headerlink" title="进入VM官网"></a>进入VM官网</h3><p>网址：<strong><a href="http://www.vmware.com/">www.vmware.com</a></strong></p><div style="width:50%;margin:auto"><img src="/2022/03/19/linux-xi-tong-yu-huan-jing-de-an-zhuang-yu-da-jian/1.png" class="" title="官网页面"></div><hr><h3 id="下载VMware-WorkStation-Pro"><a href="#下载VMware-WorkStation-Pro" class="headerlink" title="下载VMware WorkStation Pro"></a>下载VMware WorkStation Pro</h3><h4 id="①在工作空间中找到Workstation-Pro"><a href="#①在工作空间中找到Workstation-Pro" class="headerlink" title="①在工作空间中找到Workstation Pro"></a>①在工作空间中找到Workstation Pro</h4><div style="width:50%;margin:auto"><img src="/2022/03/19/linux-xi-tong-yu-huan-jing-de-an-zhuang-yu-da-jian/2.png" class="" title="点击Workstation Pro"></div><h4 id="②选择下载试用版（激活码在后面会给出）"><a href="#②选择下载试用版（激活码在后面会给出）" class="headerlink" title="②选择下载试用版（激活码在后面会给出）"></a>②选择下载试用版（激活码在后面会给出）</h4><div style="width:50%;margin:auto"><img src="/2022/03/19/linux-xi-tong-yu-huan-jing-de-an-zhuang-yu-da-jian/3.png" class="" title="下载试用版"></div><h4 id="③选择for-Windows（这里只以Windows系统为例）"><a href="#③选择for-Windows（这里只以Windows系统为例）" class="headerlink" title="③选择for Windows（这里只以Windows系统为例）"></a>③选择for Windows（这里只以Windows系统为例）</h4><div style="width:50%;margin:auto"><img src="/2022/03/19/linux-xi-tong-yu-huan-jing-de-an-zhuang-yu-da-jian/4.png" class="" title="选择for Windows"></div><hr><h2 id="二、VMware虚拟机的安装"><a href="#二、VMware虚拟机的安装" class="headerlink" title="二、VMware虚拟机的安装"></a>二、VMware虚拟机的安装</h2><hr><p>点击下一步完成安装即可</p><p>安装完毕后输入许可密钥（以下是网上找的几个密钥，选择哪一个都可以）：</p><p><strong>ZF3R0-FHED2-M80TY-8QYGC-NPKYF<br> YF390-0HF8P-M81RQ-2DXQE-M2UT6<br> ZF71R-DMX85-08DQY-8YMNC-PPHV8</strong></p><div style="width:50%;margin:auto"><img src="/2022/03/19/linux-xi-tong-yu-huan-jing-de-an-zhuang-yu-da-jian/5.jpg" class="" title="输入密钥"></div><p>到此，VMware的下载安装已完成，接下来完成对Ubuntu的安装。</p><hr><h2 id="三、Ubuntu的下载"><a href="#三、Ubuntu的下载" class="headerlink" title="三、Ubuntu的下载"></a>三、Ubuntu的下载</h2><hr><h3 id="进入Ubuntu官网"><a href="#进入Ubuntu官网" class="headerlink" title="进入Ubuntu官网"></a>进入Ubuntu官网</h3><p>网址：<strong><a href="http://ubuntu.com/">http://ubuntu.com</a></strong></p><div style="width:50%;margin:auto"><img src="/2022/03/19/linux-xi-tong-yu-huan-jing-de-an-zhuang-yu-da-jian/5.png" class="" title="官网页面"></div><hr><h3 id="下载Ubuntu"><a href="#下载Ubuntu" class="headerlink" title="下载Ubuntu"></a>下载Ubuntu</h3><p>点击【Download】</p><p>点击【20.04LTS】</p><div style="width:50%;margin:auto"><img src="/2022/03/19/linux-xi-tong-yu-huan-jing-de-an-zhuang-yu-da-jian/6.png" class="" title="下载Ubuntu"></div><p><strong>下载位置最好选在一个方便找到的文件夹里，后面会需要该位置</strong></p><hr><h2 id="四、Ubuntu的安装"><a href="#四、Ubuntu的安装" class="headerlink" title="四、Ubuntu的安装"></a>四、Ubuntu的安装</h2><hr><p>打开刚刚安装的VMware，点击【创建新的虚拟机】（Linux将运行在该虚拟机上）</p><div style="width:50%;margin:auto"><img src="/2022/03/19/linux-xi-tong-yu-huan-jing-de-an-zhuang-yu-da-jian/7.png" class="" title="创建新的虚拟机"></div><p>选择下一步</p><div style="width:50%;margin:auto"><img src="/2022/03/19/linux-xi-tong-yu-huan-jing-de-an-zhuang-yu-da-jian/8.png" class="" title="点击下一步"></div><p>选择【稍后安装操作系统】，然后点击下一步</p><div style="width:50%;margin:auto"><img src="/2022/03/19/linux-xi-tong-yu-huan-jing-de-an-zhuang-yu-da-jian/9.png" class="" title="点击下一步"></div><p>选择如下的操作系统和版本</p><div style="width:50%;margin:auto"><img src="/2022/03/19/linux-xi-tong-yu-huan-jing-de-an-zhuang-yu-da-jian/10.png" class="" title="选择操作系统和版本"></div><p>选择虚拟机存储位置（最好不要选在系统盘）</p><div style="width:50%;margin:auto"><img src="/2022/03/19/linux-xi-tong-yu-huan-jing-de-an-zhuang-yu-da-jian/11.png" class="" title="选择虚拟机存储位置"></div><div style="width:50%;margin:auto"><img src="/2022/03/19/linux-xi-tong-yu-huan-jing-de-an-zhuang-yu-da-jian/12.png" class="" title="点击下一步"></div><p>在自定义硬件中选择合适的内存和处理器，内存给2g足够，根据电脑配置给；处理器默认；网络适配器选择NAT；把不用的打印机移除，否则后面可能会出问题。选择刚才Ubuntu文件的位置。</p><div style="width:50%;margin:auto"><img src="/2022/03/19/linux-xi-tong-yu-huan-jing-de-an-zhuang-yu-da-jian/13.png" class="" title="点击自定义硬件"></div><div style="width:50%;margin:auto"><img src="/2022/03/19/linux-xi-tong-yu-huan-jing-de-an-zhuang-yu-da-jian/14.png" class="" title="选择配置"></div><p>设置之后点击【开启虚拟机】</p><div style="width:50%;margin:auto"><img src="/2022/03/19/linux-xi-tong-yu-huan-jing-de-an-zhuang-yu-da-jian/15.png" class="" title="开启虚拟机"></div><p><strong>注意：这里可能会显示”此主机支持AMD-V，但AMD-V处于禁用状态“，解决办法为”重启电脑系统，进入BIOS设置，将AMD由【disabled】改为【enabled】“（我的电脑是联想小新air14，不同的电脑可能会有微小差别）</strong></p><p>等待其自行加载Ubuntu</p><div style="width:50%;margin:auto"><img src="/2022/03/19/linux-xi-tong-yu-huan-jing-de-an-zhuang-yu-da-jian/16.png" class=""></div><p>选择简体中文并安装Ubuntu</p><div style="width:50%;margin:auto"><img src="/2022/03/19/linux-xi-tong-yu-huan-jing-de-an-zhuang-yu-da-jian/17.png" class="" title="安装Ubuntu"></div><p>选择chinese点击继续</p><p>注意：这边可能由于屏幕太小看不到下一步，点不到继续按钮，按住alt+f7，此时鼠标变成小手，可以拖到下面。</p><div style="width:50%;margin:auto"><img src="/2022/03/19/linux-xi-tong-yu-huan-jing-de-an-zhuang-yu-da-jian/18.png" class=""></div><p>选择正常安装之后点击继续（此处最好把网络断开，不要勾选其他选项）</p><div style="width:50%;margin:auto"><img src="/2022/03/19/linux-xi-tong-yu-huan-jing-de-an-zhuang-yu-da-jian/19.png" class=""></div><p>点击安装</p><div style="width:50%;margin:auto"><img src="/2022/03/19/linux-xi-tong-yu-huan-jing-de-an-zhuang-yu-da-jian/20.png" class="" title="点击现在安装"></div><p>点击继续进行下一步</p><div style="width:50%;margin:auto"><img src="/2022/03/19/linux-xi-tong-yu-huan-jing-de-an-zhuang-yu-da-jian/21.png" class="" title="点击继续"></div><p>地点直接点击继续即可，个人信息填写完毕之后继续点击下一步</p><div style="width:50%;margin:auto"><img src="/2022/03/19/linux-xi-tong-yu-huan-jing-de-an-zhuang-yu-da-jian/22.png" class="" title="点击继续"></div><div style="width:50%;margin:auto"><img src="/2022/03/19/linux-xi-tong-yu-huan-jing-de-an-zhuang-yu-da-jian/23.png" class="" title="点击继续"></div><p>等待ubuntu的自行安装即可，安装完成之后重启虚拟机。</p><div style="width:50%;margin:auto"><img src="/2022/03/19/linux-xi-tong-yu-huan-jing-de-an-zhuang-yu-da-jian/24.png" class="" title="重新启动"></div><p>点击账号输入密码登录</p><div style="width:50%;margin:auto"><img src="/2022/03/19/linux-xi-tong-yu-huan-jing-de-an-zhuang-yu-da-jian/25.png" class="" title="登录"></div><p>安装完成之后发现虚拟机未能全屏显示</p><div style="width:50%;margin:auto"><img src="/2022/03/19/linux-xi-tong-yu-huan-jing-de-an-zhuang-yu-da-jian/26.png" class="" title="未全屏显示"></div><p>在左上角的虚拟机一栏中选择安装VMware tools</p><div style="width:50%;margin:auto"><img src="/2022/03/19/linux-xi-tong-yu-huan-jing-de-an-zhuang-yu-da-jian/27.png" class="" title="安装VMware tools"></div><p>右键提取到桌面并且解压，将解压文件中的vmware-tools-distrib复制到桌面</p><div style="width:50%;margin:auto"><img src="/2022/03/19/linux-xi-tong-yu-huan-jing-de-an-zhuang-yu-da-jian/28.png" class="" title="提取解压"></div><p>右键，在终端打开</p><div style="width:50%;margin:auto"><img src="/2022/03/19/linux-xi-tong-yu-huan-jing-de-an-zhuang-yu-da-jian/29.png" class="" title="在终端打开"></div><p>输入以下命令进行安装</p><p><strong>sudo ./vmware-install.pl（注意 . 前面有空格）</strong></p><p>在“Do you still want to proceed with this installation?”后的【no】改为【yes】，即可继续。后面都是直接按确定键即可。</p><p>至此，安装全部完成。</p><div style="width:50%;margin:auto"><img src="/2022/03/19/linux-xi-tong-yu-huan-jing-de-an-zhuang-yu-da-jian/30.png" class="" title="安装完成"></div><hr><p>本篇文章到此就全部结束了</p><p>疫情又严重起来了，大家一定要做好防护啊！</p><p>我们下一篇见！</p>]]></content>
+    <content type="html"><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>最近计算机系统基础的实验课安装搭建了Linux系统与环境，整个过程我花费了不短的时间，想在这里简单记录一下，也算是以后学习的一个参考吧。</p><h2 id="一、VMware虚拟机的下载"><a href="#一、VMware虚拟机的下载" class="headerlink" title="一、VMware虚拟机的下载"></a>一、VMware虚拟机的下载</h2><hr><h3 id="进入VM官网"><a href="#进入VM官网" class="headerlink" title="进入VM官网"></a>进入VM官网</h3><p>网址：<strong><a href="http://www.vmware.com/">www.vmware.com</a></strong></p><div style="width:50%;margin:auto"><img src="/2022/03/19/cao-zuo-xi-tong/linux-xi-tong-yu-huan-jing-de-an-zhuang-yu-da-jian/1.png" class="" title="官网页面"></div><hr><h3 id="下载VMware-WorkStation-Pro"><a href="#下载VMware-WorkStation-Pro" class="headerlink" title="下载VMware WorkStation Pro"></a>下载VMware WorkStation Pro</h3><h4 id="①在工作空间中找到Workstation-Pro"><a href="#①在工作空间中找到Workstation-Pro" class="headerlink" title="①在工作空间中找到Workstation Pro"></a>①在工作空间中找到Workstation Pro</h4><div style="width:50%;margin:auto"><img src="/2022/03/19/cao-zuo-xi-tong/linux-xi-tong-yu-huan-jing-de-an-zhuang-yu-da-jian/2.png" class="" title="点击Workstation Pro"></div><h4 id="②选择下载试用版（激活码在后面会给出）"><a href="#②选择下载试用版（激活码在后面会给出）" class="headerlink" title="②选择下载试用版（激活码在后面会给出）"></a>②选择下载试用版（激活码在后面会给出）</h4><div style="width:50%;margin:auto"><img src="/2022/03/19/cao-zuo-xi-tong/linux-xi-tong-yu-huan-jing-de-an-zhuang-yu-da-jian/3.png" class="" title="下载试用版"></div><h4 id="③选择for-Windows（这里只以Windows系统为例）"><a href="#③选择for-Windows（这里只以Windows系统为例）" class="headerlink" title="③选择for Windows（这里只以Windows系统为例）"></a>③选择for Windows（这里只以Windows系统为例）</h4><div style="width:50%;margin:auto"><img src="/2022/03/19/cao-zuo-xi-tong/linux-xi-tong-yu-huan-jing-de-an-zhuang-yu-da-jian/4.png" class="" title="选择for Windows"></div><hr><h2 id="二、VMware虚拟机的安装"><a href="#二、VMware虚拟机的安装" class="headerlink" title="二、VMware虚拟机的安装"></a>二、VMware虚拟机的安装</h2><hr><p>点击下一步完成安装即可</p><p>安装完毕后输入许可密钥（以下是网上找的几个密钥，选择哪一个都可以）：</p><p><strong>ZF3R0-FHED2-M80TY-8QYGC-NPKYF<br> YF390-0HF8P-M81RQ-2DXQE-M2UT6<br> ZF71R-DMX85-08DQY-8YMNC-PPHV8</strong></p><div style="width:50%;margin:auto"><img src="/2022/03/19/cao-zuo-xi-tong/linux-xi-tong-yu-huan-jing-de-an-zhuang-yu-da-jian/5.jpg" class="" title="输入密钥"></div><p>到此，VMware的下载安装已完成，接下来完成对Ubuntu的安装。</p><hr><h2 id="三、Ubuntu的下载"><a href="#三、Ubuntu的下载" class="headerlink" title="三、Ubuntu的下载"></a>三、Ubuntu的下载</h2><hr><h3 id="进入Ubuntu官网"><a href="#进入Ubuntu官网" class="headerlink" title="进入Ubuntu官网"></a>进入Ubuntu官网</h3><p>网址：<strong><a href="http://ubuntu.com/">http://ubuntu.com</a></strong></p><div style="width:50%;margin:auto"><img src="/2022/03/19/cao-zuo-xi-tong/linux-xi-tong-yu-huan-jing-de-an-zhuang-yu-da-jian/5.png" class="" title="官网页面"></div><hr><h3 id="下载Ubuntu"><a href="#下载Ubuntu" class="headerlink" title="下载Ubuntu"></a>下载Ubuntu</h3><p>点击【Download】</p><p>点击【20.04LTS】</p><div style="width:50%;margin:auto"><img src="/2022/03/19/cao-zuo-xi-tong/linux-xi-tong-yu-huan-jing-de-an-zhuang-yu-da-jian/6.png" class="" title="下载Ubuntu"></div><p><strong>下载位置最好选在一个方便找到的文件夹里，后面会需要该位置</strong></p><hr><h2 id="四、Ubuntu的安装"><a href="#四、Ubuntu的安装" class="headerlink" title="四、Ubuntu的安装"></a>四、Ubuntu的安装</h2><hr><p>打开刚刚安装的VMware，点击【创建新的虚拟机】（Linux将运行在该虚拟机上）</p><div style="width:50%;margin:auto"><img src="/2022/03/19/cao-zuo-xi-tong/linux-xi-tong-yu-huan-jing-de-an-zhuang-yu-da-jian/7.png" class="" title="创建新的虚拟机"></div><p>选择下一步</p><div style="width:50%;margin:auto"><img src="/2022/03/19/cao-zuo-xi-tong/linux-xi-tong-yu-huan-jing-de-an-zhuang-yu-da-jian/8.png" class="" title="点击下一步"></div><p>选择【稍后安装操作系统】，然后点击下一步</p><div style="width:50%;margin:auto"><img src="/2022/03/19/cao-zuo-xi-tong/linux-xi-tong-yu-huan-jing-de-an-zhuang-yu-da-jian/9.png" class="" title="点击下一步"></div><p>选择如下的操作系统和版本</p><div style="width:50%;margin:auto"><img src="/2022/03/19/cao-zuo-xi-tong/linux-xi-tong-yu-huan-jing-de-an-zhuang-yu-da-jian/10.png" class="" title="选择操作系统和版本"></div><p>选择虚拟机存储位置（最好不要选在系统盘）</p><div style="width:50%;margin:auto"><img src="/2022/03/19/cao-zuo-xi-tong/linux-xi-tong-yu-huan-jing-de-an-zhuang-yu-da-jian/11.png" class="" title="选择虚拟机存储位置"></div><div style="width:50%;margin:auto"><img src="/2022/03/19/cao-zuo-xi-tong/linux-xi-tong-yu-huan-jing-de-an-zhuang-yu-da-jian/12.png" class="" title="点击下一步"></div><p>在自定义硬件中选择合适的内存和处理器，内存给2g足够，根据电脑配置给；处理器默认；网络适配器选择NAT；把不用的打印机移除，否则后面可能会出问题。选择刚才Ubuntu文件的位置。</p><div style="width:50%;margin:auto"><img src="/2022/03/19/cao-zuo-xi-tong/linux-xi-tong-yu-huan-jing-de-an-zhuang-yu-da-jian/13.png" class="" title="点击自定义硬件"></div><div style="width:50%;margin:auto"><img src="/2022/03/19/cao-zuo-xi-tong/linux-xi-tong-yu-huan-jing-de-an-zhuang-yu-da-jian/14.png" class="" title="选择配置"></div><p>设置之后点击【开启虚拟机】</p><div style="width:50%;margin:auto"><img src="/2022/03/19/cao-zuo-xi-tong/linux-xi-tong-yu-huan-jing-de-an-zhuang-yu-da-jian/15.png" class="" title="开启虚拟机"></div><p><strong>注意：这里可能会显示”此主机支持AMD-V，但AMD-V处于禁用状态“，解决办法为”重启电脑系统，进入BIOS设置，将AMD由【disabled】改为【enabled】“（我的电脑是联想小新air14，不同的电脑可能会有微小差别）</strong></p><p>等待其自行加载Ubuntu</p><div style="width:50%;margin:auto"><img src="/2022/03/19/cao-zuo-xi-tong/linux-xi-tong-yu-huan-jing-de-an-zhuang-yu-da-jian/16.png" class=""></div><p>选择简体中文并安装Ubuntu</p><div style="width:50%;margin:auto"><img src="/2022/03/19/cao-zuo-xi-tong/linux-xi-tong-yu-huan-jing-de-an-zhuang-yu-da-jian/17.png" class="" title="安装Ubuntu"></div><p>选择chinese点击继续</p><p>注意：这边可能由于屏幕太小看不到下一步，点不到继续按钮，按住alt+f7，此时鼠标变成小手，可以拖到下面。</p><div style="width:50%;margin:auto"><img src="/2022/03/19/cao-zuo-xi-tong/linux-xi-tong-yu-huan-jing-de-an-zhuang-yu-da-jian/18.png" class=""></div><p>选择正常安装之后点击继续（此处最好把网络断开，不要勾选其他选项）</p><div style="width:50%;margin:auto"><img src="/2022/03/19/cao-zuo-xi-tong/linux-xi-tong-yu-huan-jing-de-an-zhuang-yu-da-jian/19.png" class=""></div><p>点击安装</p><div style="width:50%;margin:auto"><img src="/2022/03/19/cao-zuo-xi-tong/linux-xi-tong-yu-huan-jing-de-an-zhuang-yu-da-jian/20.png" class="" title="点击现在安装"></div><p>点击继续进行下一步</p><div style="width:50%;margin:auto"><img src="/2022/03/19/cao-zuo-xi-tong/linux-xi-tong-yu-huan-jing-de-an-zhuang-yu-da-jian/21.png" class="" title="点击继续"></div><p>地点直接点击继续即可，个人信息填写完毕之后继续点击下一步</p><div style="width:50%;margin:auto"><img src="/2022/03/19/cao-zuo-xi-tong/linux-xi-tong-yu-huan-jing-de-an-zhuang-yu-da-jian/22.png" class="" title="点击继续"></div><div style="width:50%;margin:auto"><img src="/2022/03/19/cao-zuo-xi-tong/linux-xi-tong-yu-huan-jing-de-an-zhuang-yu-da-jian/23.png" class="" title="点击继续"></div><p>等待ubuntu的自行安装即可，安装完成之后重启虚拟机。</p><div style="width:50%;margin:auto"><img src="/2022/03/19/cao-zuo-xi-tong/linux-xi-tong-yu-huan-jing-de-an-zhuang-yu-da-jian/24.png" class="" title="重新启动"></div><p>点击账号输入密码登录</p><div style="width:50%;margin:auto"><img src="/2022/03/19/cao-zuo-xi-tong/linux-xi-tong-yu-huan-jing-de-an-zhuang-yu-da-jian/25.png" class="" title="登录"></div><p>安装完成之后发现虚拟机未能全屏显示</p><div style="width:50%;margin:auto"><img src="/2022/03/19/cao-zuo-xi-tong/linux-xi-tong-yu-huan-jing-de-an-zhuang-yu-da-jian/26.png" class="" title="未全屏显示"></div><p>在左上角的虚拟机一栏中选择安装VMware tools</p><div style="width:50%;margin:auto"><img src="/2022/03/19/cao-zuo-xi-tong/linux-xi-tong-yu-huan-jing-de-an-zhuang-yu-da-jian/27.png" class="" title="安装VMware tools"></div><p>右键提取到桌面并且解压，将解压文件中的vmware-tools-distrib复制到桌面</p><div style="width:50%;margin:auto"><img src="/2022/03/19/cao-zuo-xi-tong/linux-xi-tong-yu-huan-jing-de-an-zhuang-yu-da-jian/28.png" class="" title="提取解压"></div><p>右键，在终端打开</p><div style="width:50%;margin:auto"><img src="/2022/03/19/cao-zuo-xi-tong/linux-xi-tong-yu-huan-jing-de-an-zhuang-yu-da-jian/29.png" class="" title="在终端打开"></div><p>输入以下命令进行安装</p><p><strong>sudo ./vmware-install.pl（注意 . 前面有空格）</strong></p><p>在“Do you still want to proceed with this installation?”后的【no】改为【yes】，即可继续。后面都是直接按确定键即可。</p><p>至此，安装全部完成。</p><div style="width:50%;margin:auto"><img src="/2022/03/19/cao-zuo-xi-tong/linux-xi-tong-yu-huan-jing-de-an-zhuang-yu-da-jian/30.png" class="" title="安装完成"></div><hr><p>本篇文章到此就全部结束了</p><p>疫情又严重起来了，大家一定要做好防护啊！</p><p>我们下一篇见！</p>]]></content>
     
     
       
@@ -481,12 +481,12 @@
   
   <entry>
     <title>浏览器显示未连接互联网的解决方法</title>
-    <link href="http://lixrangel.com/2022/03/06/liu-lan-qi-xian-shi-wei-lian-jie-hu-lian-wang-de-jie-jue-fang-fa/"/>
-    <id>http://lixrangel.com/2022/03/06/liu-lan-qi-xian-shi-wei-lian-jie-hu-lian-wang-de-jie-jue-fang-fa/</id>
+    <link href="http://lixrangel.com/2022/03/06/wang-luo/liu-lan-qi-xian-shi-wei-lian-jie-hu-lian-wang-de-jie-jue-fang-fa/"/>
+    <id>http://lixrangel.com/2022/03/06/wang-luo/liu-lan-qi-xian-shi-wei-lian-jie-hu-lian-wang-de-jie-jue-fang-fa/</id>
     <published>2022-03-06T09:44:29.000Z</published>
     <updated>2022-03-06T10:32:29.297Z</updated>
     
-    <content type="html"><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>前两天我一个舍友的浏览器总是显示未连接互联网，试了很多方法都没有解决，于是找到了我这个虽然学计算机但实际上啥也不会的舍友，在度娘的帮助下最后成功解决了。为了下一次遇到同样的问题我可以不再需要询问度娘，我在这里简单记录一下解决方案，同时也算是一个自我提升的过程吧。</p><h2 id="第一步"><a href="#第一步" class="headerlink" title="第一步"></a>第一步</h2><hr><p>请先检查是否真的是网络的问题，比如你的WiFi是否真的连接成功了、你的WiFi是否为可用网络。如果确定不是网络的问题，就可以进入第二步了。</p><hr><h2 id="第二步"><a href="#第二步" class="headerlink" title="第二步"></a>第二步</h2><hr><p>如果确保网络没有问题，接下来请检查是否是浏览器的问题，可以尝试更换浏览器，建议选用Chrome、火狐等浏览器。如果也不是浏览器的问题，就可以进入第三步了。</p><h2 id="第三步"><a href="#第三步" class="headerlink" title="第三步"></a>第三步</h2><hr><h3 id="step-1"><a href="#step-1" class="headerlink" title="step 1"></a>step 1</h3><p>打开电脑的控制面板</p><div style="width:50%;margin:auto"><img src="/2022/03/06/liu-lan-qi-xian-shi-wei-lian-jie-hu-lian-wang-de-jie-jue-fang-fa/1.jpg" class="" title="控制面板"></div><hr><h3 id="step-2"><a href="#step-2" class="headerlink" title="step 2"></a>step 2</h3><ul><li>单击[<strong>网络和Internet</strong>]选项</li></ul><div style="width:50%;margin:auto"><img src="/2022/03/06/liu-lan-qi-xian-shi-wei-lian-jie-hu-lian-wang-de-jie-jue-fang-fa/7.png" class="" title="单击[网络和Internet]"></div><hr><h3 id="step-3"><a href="#step-3" class="headerlink" title="step 3"></a>step 3</h3><ul><li>单击[<strong>网络和共享中心</strong>]选项</li></ul><div style="width:50%;margin:auto"><img src="/2022/03/06/liu-lan-qi-xian-shi-wei-lian-jie-hu-lian-wang-de-jie-jue-fang-fa/2.jpg" class="" title="单击[网络和共享中心]"></div><hr><h3 id="step-4"><a href="#step-4" class="headerlink" title="step 4"></a>step 4</h3><ul><li>单击左下角[<strong>Internet选项</strong>]</li></ul><div style="width:50%;margin:auto"><img src="/2022/03/06/liu-lan-qi-xian-shi-wei-lian-jie-hu-lian-wang-de-jie-jue-fang-fa/3.png" class="" title="单击[Internet选项]"></div><hr><h3 id="step-5"><a href="#step-5" class="headerlink" title="step 5"></a>step 5</h3><ul><li>选择上方的[<strong>连接</strong>]选项</li></ul><div style="width:50%;margin:auto"><img src="/2022/03/06/liu-lan-qi-xian-shi-wei-lian-jie-hu-lian-wang-de-jie-jue-fang-fa/4.png" class="" title="选择[连接]"></div><hr><h3 id="step-6"><a href="#step-6" class="headerlink" title="step 6"></a>step 6</h3><ul><li>单击[<strong>局域网设置</strong>]选项</li></ul><div style="width:50%;margin:auto"><img src="/2022/03/06/liu-lan-qi-xian-shi-wei-lian-jie-hu-lian-wang-de-jie-jue-fang-fa/5.png" class="" title="单击[局域网设置]"></div><hr><h3 id="step-7"><a href="#step-7" class="headerlink" title="step 7"></a>step 7</h3><ul><li>将[<strong>为LAN使用代理服务器</strong>]前的勾选取消</li></ul><div style="width:50%;margin:auto"><img src="/2022/03/06/liu-lan-qi-xian-shi-wei-lian-jie-hu-lian-wang-de-jie-jue-fang-fa/6.jpg" class="" title="取消勾选"></div><hr><h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><hr><p>如果通过上述步骤还是没有解决，可以自行寻求其他解决方案。由于我的技术水平十分有限，可能无法给出更多的解决方法，非常抱歉！</p><hr><p>距离我上一次更新已经过去了四个多月，主要原因还是我太懒了（惭愧），希望之后我能够督促我自己多多记录吧。</p><p>春天来啦，希望大家都能好好生活！</p><p>我们下一篇见！</p>]]></content>
+    <content type="html"><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>前两天我一个舍友的浏览器总是显示未连接互联网，试了很多方法都没有解决，于是找到了我这个虽然学计算机但实际上啥也不会的舍友，在度娘的帮助下最后成功解决了。为了下一次遇到同样的问题我可以不再需要询问度娘，我在这里简单记录一下解决方案，同时也算是一个自我提升的过程吧。</p><h2 id="第一步"><a href="#第一步" class="headerlink" title="第一步"></a>第一步</h2><hr><p>请先检查是否真的是网络的问题，比如你的WiFi是否真的连接成功了、你的WiFi是否为可用网络。如果确定不是网络的问题，就可以进入第二步了。</p><hr><h2 id="第二步"><a href="#第二步" class="headerlink" title="第二步"></a>第二步</h2><hr><p>如果确保网络没有问题，接下来请检查是否是浏览器的问题，可以尝试更换浏览器，建议选用Chrome、火狐等浏览器。如果也不是浏览器的问题，就可以进入第三步了。</p><h2 id="第三步"><a href="#第三步" class="headerlink" title="第三步"></a>第三步</h2><hr><h3 id="step-1"><a href="#step-1" class="headerlink" title="step 1"></a>step 1</h3><p>打开电脑的控制面板</p><div style="width:50%;margin:auto"><img src="/2022/03/06/wang-luo/liu-lan-qi-xian-shi-wei-lian-jie-hu-lian-wang-de-jie-jue-fang-fa/1.jpg" class="" title="控制面板"></div><hr><h3 id="step-2"><a href="#step-2" class="headerlink" title="step 2"></a>step 2</h3><ul><li>单击[<strong>网络和Internet</strong>]选项</li></ul><div style="width:50%;margin:auto"><img src="/2022/03/06/wang-luo/liu-lan-qi-xian-shi-wei-lian-jie-hu-lian-wang-de-jie-jue-fang-fa/7.png" class="" title="单击[网络和Internet]"></div><hr><h3 id="step-3"><a href="#step-3" class="headerlink" title="step 3"></a>step 3</h3><ul><li>单击[<strong>网络和共享中心</strong>]选项</li></ul><div style="width:50%;margin:auto"><img src="/2022/03/06/wang-luo/liu-lan-qi-xian-shi-wei-lian-jie-hu-lian-wang-de-jie-jue-fang-fa/2.jpg" class="" title="单击[网络和共享中心]"></div><hr><h3 id="step-4"><a href="#step-4" class="headerlink" title="step 4"></a>step 4</h3><ul><li>单击左下角[<strong>Internet选项</strong>]</li></ul><div style="width:50%;margin:auto"><img src="/2022/03/06/wang-luo/liu-lan-qi-xian-shi-wei-lian-jie-hu-lian-wang-de-jie-jue-fang-fa/3.png" class="" title="单击[Internet选项]"></div><hr><h3 id="step-5"><a href="#step-5" class="headerlink" title="step 5"></a>step 5</h3><ul><li>选择上方的[<strong>连接</strong>]选项</li></ul><div style="width:50%;margin:auto"><img src="/2022/03/06/wang-luo/liu-lan-qi-xian-shi-wei-lian-jie-hu-lian-wang-de-jie-jue-fang-fa/4.png" class="" title="选择[连接]"></div><hr><h3 id="step-6"><a href="#step-6" class="headerlink" title="step 6"></a>step 6</h3><ul><li>单击[<strong>局域网设置</strong>]选项</li></ul><div style="width:50%;margin:auto"><img src="/2022/03/06/wang-luo/liu-lan-qi-xian-shi-wei-lian-jie-hu-lian-wang-de-jie-jue-fang-fa/5.png" class="" title="单击[局域网设置]"></div><hr><h3 id="step-7"><a href="#step-7" class="headerlink" title="step 7"></a>step 7</h3><ul><li>将[<strong>为LAN使用代理服务器</strong>]前的勾选取消</li></ul><div style="width:50%;margin:auto"><img src="/2022/03/06/wang-luo/liu-lan-qi-xian-shi-wei-lian-jie-hu-lian-wang-de-jie-jue-fang-fa/6.jpg" class="" title="取消勾选"></div><hr><h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><hr><p>如果通过上述步骤还是没有解决，可以自行寻求其他解决方案。由于我的技术水平十分有限，可能无法给出更多的解决方法，非常抱歉！</p><hr><p>距离我上一次更新已经过去了四个多月，主要原因还是我太懒了（惭愧），希望之后我能够督促我自己多多记录吧。</p><p>春天来啦，希望大家都能好好生活！</p><p>我们下一篇见！</p>]]></content>
     
     
       
