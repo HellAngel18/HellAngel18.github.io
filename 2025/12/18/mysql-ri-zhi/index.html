@@ -567,13 +567,8 @@
 <td>提交事务，补齐commit状态</td>
 <td>保证bin log存在，主从一致</td>
 </tr>
-<tr>
-<td>redo log处于prepare状态时，InnoDB会去检查是否存在相应的bin log记录。如果bin log存在，说明MySQL Server认为该提交已经发生，InnoDB必须执行提交操作；如果bin log不存在，则执行回滚。</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
 </tbody></table>
+<p>redo log处于prepare状态时，InnoDB会去检查是否存在相应的bin log记录。如果bin log存在，说明MySQL Server认为该提交已经发生，InnoDB必须执行提交操作；如果bin log不存在，则执行回滚。</p>
 
                 
             </div>
