@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="关于我, 地狱天使&#39;s Blog">
+    <meta name="keywords" content="MySQL存储引擎, 地狱天使&#39;s Blog">
     <meta name="description" content="欢迎来到我的世界">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>关于我 | 地狱天使&#39;s Blog</title>
+    <title>MySQL存储引擎 | 地狱天使&#39;s Blog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -311,12 +311,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/6.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/13.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">关于我</h1>
+                    <h1 class="description center-align post-title">MySQL存储引擎</h1>
                 </div>
             </div>
         </div>
@@ -430,9 +430,17 @@
             <div class="row tag-cate">
                 <div class="col s7">
                     
-                          <div class="article-tag">
-                            <span class="chip bg-color">No tag</span>
-                          </div>
+                    <div class="article-tag">
+                        
+                            <a href="/tags/%E5%85%AB%E8%82%A1/">
+                                <span class="chip bg-color">八股</span>
+                            </a>
+                        
+                            <a href="/tags/MySQL/">
+                                <span class="chip bg-color">MySQL</span>
+                            </a>
+                        
+                    </div>
                     
                 </div>
                 <div class="col s5 right-align">
@@ -444,7 +452,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>Publish Date:&nbsp;&nbsp;
-                    2021-07-31
+                    2025-12-16
                 </div>
                 
 
@@ -465,46 +473,25 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a><strong>前言</strong></h2><p>欢迎来到我的世界</p>
-<hr>
-<h2 id="关于我"><a href="#关于我" class="headerlink" title="关于我"></a><strong>关于我</strong></h2><ul>
-<li><p>随时随地在coding的女孩</p>
-</li>
-<li><p>学历：</p>
+                <h2 id="MySQL的存储引擎"><a href="#MySQL的存储引擎" class="headerlink" title="MySQL的存储引擎"></a>MySQL的存储引擎</h2><ul>
+<li><strong>InnoDB</strong>：InnoDB是MySQL的默认存储引擎，具有<font color="#ff0000">ACID事务支持</font>、<font color="#ff0000">行级锁</font>、<font color="#ff0000">外键约束</font>等特性。</li>
+<li><strong>MyISAM</strong>：MyISAM是MySQL的另一种常见的存储引擎，具有<font color="#ff0000">较低的存储空间</font>和<font color="#ff0000">内存消耗</font>，适用于<font color="#ff0000">大量读操作</font>的场景。然而，MyISAM不支持事务、行级锁和外键约束，因此在并发写入和数据完整性方面有一定的限制。</li>
+<li><strong>Memory</strong>：Memory引擎将数据<font color="#ff0000">存储在内存中</font>，适用于对性能要求较高的读操作，但是在服务器重启或崩溃时数据会丢失。不支持事务、行级锁和外键约束。</li>
+</ul>
+<h2 id="MySQL为什么InnoDB是默认引擎（InnoDB的优势）？"><a href="#MySQL为什么InnoDB是默认引擎（InnoDB的优势）？" class="headerlink" title="MySQL为什么InnoDB是默认引擎（InnoDB的优势）？"></a>MySQL为什么InnoDB是默认引擎（InnoDB的优势）？</h2><p>InnoDB引擎在事务支持、并发性能、崩溃恢复等方面具有优势，因此被MySQL选择为默认的存储引擎。</p>
 <ul>
-<li>本科：南京师范大学 计算机科学与技术专业</li>
-<li>硕士：华东师范大学 计算机科学与技术专业（推免）    </li>
+<li><strong>事务支持</strong>：InnoDB引擎提供了对事务的支持，可以进行ACID（原子性、一致性、隔离性、持久性）属性的操作。</li>
+<li><strong>并发性能</strong>：InnoDB引擎采用了<font color="#ff0000">行级锁定</font>的机制，可以提供更好的并发性能。</li>
+<li><strong>崩溃恢复</strong>：InnoDB引擎<font color="#ff0000">通过redolog日志</font>实现了崩溃恢复，可以在数据库发生异常情况（如断电）时，通过日志文件进行恢复，保证数据的持久性和一致性。</li>
 </ul>
-</li>
-<li><p>能好好活着是我最大的愿望</p>
-</li>
+<h2 id="InnoDB和MyISAM的区别"><a href="#InnoDB和MyISAM的区别" class="headerlink" title="InnoDB和MyISAM的区别"></a>InnoDB和MyISAM的区别</h2><ul>
+<li><strong>锁粒度</strong>：InnoDB支持行级别的锁粒度，MyISAM不支持，只支持表级别的锁粒度。</li>
+<li><strong>事务支持</strong>：MyISAM不提供事务支持。InnoDB提供事务支持，实现了SQL标准定义的四个隔离级别。</li>
+<li><strong>外键</strong>：MyISAM不支持外键，而InnoDB支持。</li>
+<li><strong>崩溃恢复</strong>：MyISAM不支持数据库异常崩溃后的安全恢复，而InnoDB支持，依赖于redo log。</li>
+<li><strong>MVCC</strong>：MyISAM不支持MVCC，而InnoDB支持。</li>
+<li><strong>索引</strong>：虽然MyISAM和InnoDB都是使用B+树作为索引结构，但是两者的实现方式不太一样。<font color="#ff0000">InnoDB是聚簇索引</font>，MyISAM是非聚簇索引。聚簇索引的文件存放在主键索引的叶子节点上，因此InnoDB必须要有主键，通过主键索引效率很高。MyISAM是非聚簇索引，数据文件是分离的，索引保存的是数据文件的指针。</li>
 </ul>
-<hr>
-<h2 id="爱好"><a href="#爱好" class="headerlink" title="爱好"></a><strong>爱好</strong></h2><ul>
-<li><p>因为没有什么爱好所以什么都可以是我的爱好</p>
-<ul>
-<li>足球——Hala Madrid！</li>
-<li>追剧——什么都看一点</li>
-<li>coding——努力变得更强中</li>
-</ul>
-</li>
-<li><p>其他的还有待挖掘，欢迎和我交流。</p>
-</li>
-</ul>
-<hr>
-<h2 id="社交"><a href="#社交" class="headerlink" title="社交"></a><strong>社交</strong></h2><ul>
-<li><p><strong>微博/QQ/微信</strong>   重度依赖症患者</p>
-</li>
-<li><p><strong>豆瓣/知乎/CSDN</strong>   偶尔使用</p>
-</li>
-<li><p><strong>Instagram/X/Line</strong>    这些真的挺难用的我觉得 但有时候不得不…（你懂的）<del>坏笑</del></p>
-</li>
-</ul>
-<hr>
-<h2 id="信念"><a href="#信念" class="headerlink" title="信念"></a><strong>信念</strong></h2><p><em>经济独立 精神独立 好好活着</em></p>
-<hr>
-<p>本Blog旨在记录一些我自己学习生活过程中的心得体会 所以文章大概都是随心写哈哈哈</p>
-<p>本网站依旧在开发中 如果有任何建议欢迎给我发邮件：<a href="mailto:&#49;&#x31;&#55;&#57;&#52;&#x32;&#54;&#50;&#54;&#56;&#108;&#120;&#x72;&#64;&#x67;&#x6d;&#97;&#x69;&#108;&#46;&#x63;&#111;&#109;">&#49;&#x31;&#55;&#57;&#52;&#x32;&#54;&#50;&#54;&#56;&#108;&#120;&#x72;&#64;&#x67;&#x6d;&#97;&#x69;&#108;&#46;&#x63;&#111;&#109;</a><br>很希望能找到志同道合的朋友一起交流 如果有朋友愿意跟我聊聊的 也欢迎给我发邮件<br>我暂时就想到这么多 未完待续…<br>感谢你的阅读 祝你生活愉快！</p>
 
                 
             </div>
@@ -531,7 +518,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://lixrangel.com/2021/07/31/guan-yu-wo/">http://lixrangel.com/2021/07/31/guan-yu-wo/</a>
+                    <a href="http://lixrangel.com/2025/12/16/mysql-cun-chu-yin-qing/">http://lixrangel.com/2025/12/16/mysql-cun-chu-yin-qing/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -568,7 +555,15 @@
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
                         <div class="article-tag">
-                            <span class="chip bg-color">No tag</span>
+                            
+                                <a href="/tags/%E5%85%AB%E8%82%A1/">
+                                    <span class="chip bg-color">八股</span>
+                                </a>
+                            
+                                <a href="/tags/MySQL/">
+                                    <span class="chip bg-color">MySQL</span>
+                                </a>
+                            
                         </div>
                     
                 </div>
@@ -738,17 +733,18 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;Previous</div>
+                <i class="far fa-dot-circle"></i>&nbsp;Current
+            </div>
             <div class="card">
-                <a href="/2021/08/06/za-ji-yi/">
+                <a href="/2025/12/16/mysql-cun-chu-yin-qing/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="杂记（一）">
+                        <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="MySQL存储引擎">
                         
-                        <span class="card-title">杂记（一）</span>
+                        <span class="card-title">MySQL存储引擎</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -758,9 +754,59 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-08-06
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2025-12-16
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-user fa-fw"></i>
+                            地狱天使
+                            
                         </span>
+                    </div>
+                </div>
+
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E5%85%AB%E8%82%A1/">
+                        <span class="chip bg-color">八股</span>
+                    </a>
+                    
+                    <a href="/tags/MySQL/">
+                        <span class="chip bg-color">MySQL</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                Next&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2025/12/15/mysql-suo-yin/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="MySQL索引">
+                        
+                        <span class="card-title">MySQL索引</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2025-12-15
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
@@ -772,49 +818,15 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E6%9D%82%E8%AE%B0/">
-                        <span class="chip bg-color">杂记</span>
+                    <a href="/tags/%E5%85%AB%E8%82%A1/">
+                        <span class="chip bg-color">八股</span>
+                    </a>
+                    
+                    <a href="/tags/MySQL/">
+                        <span class="chip bg-color">MySQL</span>
                     </a>
                     
                 </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                Current&nbsp;<i class="far fa-dot-circle"></i>
-            </div>
-            <div class="card">
-                <a href="/2021/07/31/guan-yu-wo/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="关于我">
-                        
-                        <span class="card-title">关于我</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            
-                        
-                    </div>
-                    <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-07-31
-                            </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-user fa-fw"></i>
-                            地狱天使
-                            
-                        </span>
-                    </div>
-                </div>
-
                 
             </div>
         </div>

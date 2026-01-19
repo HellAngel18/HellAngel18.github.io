@@ -6,7 +6,7 @@
   <link href="http://lixrangel.com/atom.xml" rel="self"/>
   
   <link href="http://lixrangel.com/"/>
-  <updated>2026-01-18T11:03:00.109Z</updated>
+  <updated>2026-01-19T11:48:26.405Z</updated>
   <id>http://lixrangel.com/</id>
   
   <author>
@@ -15,6 +15,58 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>MySQL存储引擎</title>
+    <link href="http://lixrangel.com/2025/12/16/mysql-cun-chu-yin-qing/"/>
+    <id>http://lixrangel.com/2025/12/16/mysql-cun-chu-yin-qing/</id>
+    <published>2025-12-15T16:00:00.000Z</published>
+    <updated>2026-01-19T11:48:26.405Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="MySQL的存储引擎"><a href="#MySQL的存储引擎" class="headerlink" title="MySQL的存储引擎"></a>MySQL的存储引擎</h2><ul><li><strong>InnoDB</strong>：InnoDB是MySQL的默认存储引擎，具有<font color="#ff0000">ACID事务支持</font>、<font color="#ff0000">行级锁</font>、<font color="#ff0000">外键约束</font>等特性。</li><li><strong>MyISAM</strong>：MyISAM是MySQL的另一种常见的存储引擎，具有<font color="#ff0000">较低的存储空间</font>和<font color="#ff0000">内存消耗</font>，适用于<font color="#ff0000">大量读操作</font>的场景。然而，MyISAM不支持事务、行级锁和外键约束，因此在并发写入和数据完整性方面有一定的限制。</li><li><strong>Memory</strong>：Memory引擎将数据<font color="#ff0000">存储在内存中</font>，适用于对性能要求较高的读操作，但是在服务器重启或崩溃时数据会丢失。不支持事务、行级锁和外键约束。</li></ul><h2 id="MySQL为什么InnoDB是默认引擎（InnoDB的优势）？"><a href="#MySQL为什么InnoDB是默认引擎（InnoDB的优势）？" class="headerlink" title="MySQL为什么InnoDB是默认引擎（InnoDB的优势）？"></a>MySQL为什么InnoDB是默认引擎（InnoDB的优势）？</h2><p>InnoDB引擎在事务支持、并发性能、崩溃恢复等方面具有优势，因此被MySQL选择为默认的存储引擎。</p><ul><li><strong>事务支持</strong>：InnoDB引擎提供了对事务的支持，可以进行ACID（原子性、一致性、隔离性、持久性）属性的操作。</li><li><strong>并发性能</strong>：InnoDB引擎采用了<font color="#ff0000">行级锁定</font>的机制，可以提供更好的并发性能。</li><li><strong>崩溃恢复</strong>：InnoDB引擎<font color="#ff0000">通过redolog日志</font>实现了崩溃恢复，可以在数据库发生异常情况（如断电）时，通过日志文件进行恢复，保证数据的持久性和一致性。</li></ul><h2 id="InnoDB和MyISAM的区别"><a href="#InnoDB和MyISAM的区别" class="headerlink" title="InnoDB和MyISAM的区别"></a>InnoDB和MyISAM的区别</h2><ul><li><strong>锁粒度</strong>：InnoDB支持行级别的锁粒度，MyISAM不支持，只支持表级别的锁粒度。</li><li><strong>事务支持</strong>：MyISAM不提供事务支持。InnoDB提供事务支持，实现了SQL标准定义的四个隔离级别。</li><li><strong>外键</strong>：MyISAM不支持外键，而InnoDB支持。</li><li><strong>崩溃恢复</strong>：MyISAM不支持数据库异常崩溃后的安全恢复，而InnoDB支持，依赖于redo log。</li><li><strong>MVCC</strong>：MyISAM不支持MVCC，而InnoDB支持。</li><li><strong>索引</strong>：虽然MyISAM和InnoDB都是使用B+树作为索引结构，但是两者的实现方式不太一样。<font color="#ff0000">InnoDB是聚簇索引</font>，MyISAM是非聚簇索引。聚簇索引的文件存放在主键索引的叶子节点上，因此InnoDB必须要有主键，通过主键索引效率很高。MyISAM是非聚簇索引，数据文件是分离的，索引保存的是数据文件的指针。</li></ul>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;MySQL的存储引擎&quot;&gt;&lt;a href=&quot;#MySQL的存储引擎&quot; class=&quot;headerlink&quot; title=&quot;MySQL的存储引擎&quot;&gt;&lt;/a&gt;MySQL的存储引擎&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;InnoDB&lt;/strong&gt;：InnoDB是M</summary>
+      
+    
+    
+    
+    
+    <category term="八股" scheme="http://lixrangel.com/tags/%E5%85%AB%E8%82%A1/"/>
+    
+    <category term="MySQL" scheme="http://lixrangel.com/tags/MySQL/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>MySQL索引</title>
+    <link href="http://lixrangel.com/2025/12/15/mysql-suo-yin/"/>
+    <id>http://lixrangel.com/2025/12/15/mysql-suo-yin/</id>
+    <published>2025-12-14T16:00:00.000Z</published>
+    <updated>2026-01-19T11:46:41.203Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="索引为什么快？"><a href="#索引为什么快？" class="headerlink" title="索引为什么快？"></a>索引为什么快？</h2><ul><li>大大减少了磁盘I/O的次数。</li></ul><h2 id="为什么InnoDB没有使用哈希作为索引？"><a href="#为什么InnoDB没有使用哈希作为索引？" class="headerlink" title="为什么InnoDB没有使用哈希作为索引？"></a>为什么InnoDB没有使用哈希作为索引？</h2><ul><li>优点：等值查询时理论上时间复杂度是O(1)。</li><li>缺点：<ul><li><strong>不支持范围查询</strong>，会将范围内的值映射到哈希表完全不相邻的地方。</li><li><strong>不支持排序</strong>，因为哈希值是无序的，所以无法利用哈希索引来优化order by子句。</li><li><strong>不支持部分索引键查询</strong>，对于联合索引，比如(col1, col2)，哈希索引必须使用所有索引列进行查询，它无法单独利用col1来加速查询。</li><li><strong>哈希冲突问题</strong>，当不同的键产生相同的哈希值时，需要额外的链表或开放寻址来解决，这会降低性能。</li></ul></li></ul><h2 id="B树和B-树的区别"><a href="#B树和B-树的区别" class="headerlink" title="B树和B+树的区别"></a>B树和B+树的区别</h2><ul><li>在B+树中，<strong>数据都存储在叶子节点上</strong>，而<strong>非叶子节点只存储索引信息</strong>；而B树的非叶子节点既存储索引信息也存储部分数据。<ul><li>好处：B+树的非叶子节点不存放实际的记录数据，仅存放索引，因此数据量相同的情况下，相比既存储索引又存储记录的B树，<strong>B+树的非叶子节点可以存放更多的索引</strong>，因此B+树可以比B树更“矮胖”，查询底层节点的<strong>磁盘I/O次数会更少</strong>。</li></ul></li><li>B+树的叶子节点使用链表相连，便于<strong>范围查询和顺序访问</strong>；B树的叶子节点没有链表连接。<ul><li>好处：B+树叶子节点之间用链表连接了起来，有利于范围查询，而B树要实现范围查询，因此只能通过树的遍历来完成范围查询，这会设计多个节点的磁盘I/O操作，范围查询效率不如B+树。</li></ul></li><li>B+树每次查找都需要查找到叶子节点，<strong>查询性能更稳定</strong>；而B树的查找可能会在非叶子节点找到数据，性能相对不稳定。</li></ul><h2 id="B-树作为索引数据结构的优势？"><a href="#B-树作为索引数据结构的优势？" class="headerlink" title="B+树作为索引数据结构的优势？"></a>B+树作为索引数据结构的优势？</h2><ul><li>B+树的非叶子节点不存放实际的数据，仅存放索引，因此数据量相同的情况下，B+树的非叶子节点可以存放更多的索引，因此更“矮胖”，查询底层节点的<strong>磁盘I/O次数会更少</strong>。</li><li>B+树有大量的冗余节点（所有非叶子节点都是冗余索引），这些冗余索引让B+树<strong>在插入、删除的效率都更高</strong>，比如删除根节点的时候，只会删除叶子节点，不会像B树那样发生复杂的树的变化。</li><li>B+树的叶子节点是一个双向链表，<strong>有利于范围查询</strong>。</li></ul><h2 id="聚簇索引和非聚簇索引"><a href="#聚簇索引和非聚簇索引" class="headerlink" title="聚簇索引和非聚簇索引"></a>聚簇索引和非聚簇索引</h2><ul><li><strong>聚簇索引</strong>：聚簇索引是<font color="#ff0000">索引结构和数据一起存放</font>的索引，数据行按照索引键值的顺序存储。一个表只能有一个聚簇索引，因为数据只能有一种物理排序方式。<ul><li>优点：<ul><li>查询速度非常快，相比于非聚簇索引，少了一次读取数据的IO操作。</li><li>对排序查找和范围查找优化：聚簇索引对于主键的排序查找和范围查找速度非常快。</li></ul></li><li>缺点：<ul><li>依赖于有序的数据。</li><li>更新代价大。</li></ul></li></ul></li><li><strong>非聚簇索引</strong>：<font color="#ff0000">索引结构和数据分开存放的索引</font>。非聚簇索引的叶子节点存放的可能是<font color="#ff0000">数据行的指针</font>，也可能是<font color="#ff0000">主键值</font>。数据行本身存储在聚簇索引。<ul><li>优点：更新代价比聚簇索引要小，因为叶子节点不存放数据。</li><li>缺点：<ul><li>依赖于有序的数据。</li><li>可能会二次查询（回表）。</li></ul></li></ul></li></ul><h2 id="覆盖索引和联合索引"><a href="#覆盖索引和联合索引" class="headerlink" title="覆盖索引和联合索引"></a>覆盖索引和联合索引</h2><ul><li><strong>覆盖索引</strong>：如果<font color="#ff0000">一个索引包含所有需要查询的字段的值</font>，就称为覆盖索引。覆盖索引即需要查询的字段正好是索引的字段，那么直接根据该索引就可以查到数据了，无需回表查询。</li><li><strong>联合索引</strong>：使用表中的多个字段创建索引，就是联合索引。<ul><li><code>ALTER TABLE cus_order ADD INDEX id_score_name(score, name);</code>这里的联合索引是先按照score排序，在score相同的情况下再按照name排序；</li><li><font color="#ff0000">最左匹配原则</font>：在使用联合索引时，会按照最左优先的方式进行索引匹配。也就是说先匹配score，如果score相同，再匹配name。</li><li>比如，如果创建了一个(a, b, c)的联合索引，如果查询条件是以下几种，就可以匹配上联合索引：<ul><li><code>where a = 1;</code></li><li><code>where a = 1 and b = 2 and c = 3;</code></li><li><code>where a = 1 and b = 2;</code></li></ul></li><li>注：因为有查询优化器，所以<font color="#ff0000">a字段在where子句的顺序并不重要</font>。但是如果是以下几种，不符合最左匹配原则，所以无法匹配上联合索引，联合索引就会失效：<ul><li><code>where b = 2;</code></li><li><code>where c = 3;</code></li><li><code>where b = 2 and c = 3;</code></li></ul></li></ul></li></ul><h2 id="什么是索引下推？"><a href="#什么是索引下推？" class="headerlink" title="什么是索引下推？"></a>什么是索引下推？</h2><ul><li>索引下推（Index Condition Pushdown，简称ICP）是MySQL 5.6版本引入的一项优化技术。</li><li>场景设定：<ul><li>假设有一张员工表user，有一个联合索引 idx_name_age(name, age)。我们执行下面这条SQL：<code>SELECT * FROM user WHERE name LIKE &#39;张%&#39; AND age = 10;</code>。<ul><li>没有索引下推时：根据最左匹配原则，<code>name LIKE &#39;张%&#39;</code> 可以用到索引，但后面的<code>age = 10</code>无法用到索引查找（因为name是范围查询，导致后面的列无序的）。执行流程是这样的：<ul><li><strong>存储引擎层</strong>：在索引树上找到所有name以“张”开头的记录（假设有100条）。因为它是负责“找数据”的，它不管age是多少（虽然索引里明明有age），它会把这100条记录的主键ID拿出来，<font color="#ff0000">进行100次回表查询</font>，把完整的行数据取出来。</li><li><strong>Server层</strong>：拿到这100条完整数据后，再判断WHERE age = 10。</li><li>结果：假设只有1个人是10岁，那么那99次回表都是浪费的IO。</li></ul></li><li>有了索引下推后：<ul><li><strong>存储引擎层</strong>：在索引树上找到name以“张”开头的记录。在读取索引记录时，直接判断索引里的age是否等于10。如果不等于10，直接跳过（根本不去回表）。如果等于10，才去回表。</li><li>结果：假设100只有1个人是10岁，那么<font color="#ff0000">只需要1次回表</font>。</li></ul></li></ul></li></ul></li><li>下推的意思就是：<font color="#ff0000">把原本只能在Server层进行的过滤操作（检查age），下推到了存储引擎层进行</font>。</li><li>核心优势：<ul><li><strong>减少回表次数</strong>：这是核心目的。回表涉及随机IO，成本很高。</li><li><strong>减少IO操作</strong>：减少了<font color="#ff0000">Server层和存储引擎层之间的数据交互量</font>。</li></ul></li></ul><h2 id="索引失效有哪些情况？"><a href="#索引失效有哪些情况？" class="headerlink" title="索引失效有哪些情况？"></a>索引失效有哪些情况？</h2><ul><li>当使用<strong>左或者左右模糊匹配</strong>的时候，也就是<code>like%xx</code>或者<code>like%xx%</code></li><li>当在查询条件中<strong>对索引列使用函数</strong>；</li><li>当在查询条件中<strong>对索引列进行表达式计算</strong>；</li><li>MySQL在遇到字符串和数字比较时，会自动把字符串转为数字，然后再进行比较。如果字符串是索引列，而条件语句中的输入参数是数字的话，那么索引列会发生<strong>隐式类型转换</strong>，由于隐式类型转换是通过CAST函数实现的，就等同于对索引使用了函数；</li><li>联合索引需要<strong>遵循最左匹配原则</strong>，也就是按照最左优先的方式进行索引匹配；</li><li>在WHERE子句中，如果<strong>在OR前的条件列是索引列</strong>，而<strong>在OR条件后的列不是索引列</strong>，那么索引会失效。因为OR条件后的列不是索引列，而结果必须返回满足这个条件的数据，必须需要全表扫描，那自然就是两个条件都进行一边全表扫描就好。</li></ul><h2 id="索引优化"><a href="#索引优化" class="headerlink" title="索引优化"></a>索引优化</h2><ul><li><strong>前缀索引优化</strong>：使用前缀索引是为了减少索引字段的大小，可以增加一个索引页中存储的索引值，有效提高索引的查询速度。在一些大字符串的字段作为索引时，使用前缀索引可以帮助我们减少索引项的大小。</li><li><strong>覆盖索引优化</strong>：尽量使用覆盖索引。</li><li><strong>主键索引最好是自增的</strong>。</li><li><strong>防止索引失效</strong>。</li></ul>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;索引为什么快？&quot;&gt;&lt;a href=&quot;#索引为什么快？&quot; class=&quot;headerlink&quot; title=&quot;索引为什么快？&quot;&gt;&lt;/a&gt;索引为什么快？&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;大大减少了磁盘I/O的次数。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;为什么InnoDB没</summary>
+      
+    
+    
+    
+    
+    <category term="八股" scheme="http://lixrangel.com/tags/%E5%85%AB%E8%82%A1/"/>
+    
+    <category term="MySQL" scheme="http://lixrangel.com/tags/MySQL/"/>
+    
+  </entry>
   
   <entry>
     <title>JVM调优</title>
@@ -62,33 +114,6 @@
     <category term="八股" scheme="http://lixrangel.com/tags/%E5%85%AB%E8%82%A1/"/>
     
     <category term="JVM" scheme="http://lixrangel.com/tags/JVM/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>MySQL索引</title>
-    <link href="http://lixrangel.com/2025/12/08/mysql-suo-yin/"/>
-    <id>http://lixrangel.com/2025/12/08/mysql-suo-yin/</id>
-    <published>2025-12-07T16:00:00.000Z</published>
-    <updated>2026-01-19T11:45:26.762Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="索引为什么快？"><a href="#索引为什么快？" class="headerlink" title="索引为什么快？"></a>索引为什么快？</h2><ul><li>大大减少了磁盘I/O的次数。</li></ul><h2 id="为什么InnoDB没有使用哈希作为索引？"><a href="#为什么InnoDB没有使用哈希作为索引？" class="headerlink" title="为什么InnoDB没有使用哈希作为索引？"></a>为什么InnoDB没有使用哈希作为索引？</h2><ul><li>优点：等值查询时理论上时间复杂度是O(1)。</li><li>缺点：<ul><li><strong>不支持范围查询</strong>，会将范围内的值映射到哈希表完全不相邻的地方。</li><li><strong>不支持排序</strong>，因为哈希值是无序的，所以无法利用哈希索引来优化order by子句。</li><li><strong>不支持部分索引键查询</strong>，对于联合索引，比如(col1, col2)，哈希索引必须使用所有索引列进行查询，它无法单独利用col1来加速查询。</li><li><strong>哈希冲突问题</strong>，当不同的键产生相同的哈希值时，需要额外的链表或开放寻址来解决，这会降低性能。</li></ul></li></ul><h2 id="B树和B-树的区别"><a href="#B树和B-树的区别" class="headerlink" title="B树和B+树的区别"></a>B树和B+树的区别</h2><ul><li>在B+树中，<strong>数据都存储在叶子节点上</strong>，而<strong>非叶子节点只存储索引信息</strong>；而B树的非叶子节点既存储索引信息也存储部分数据。<ul><li>好处：B+树的非叶子节点不存放实际的记录数据，仅存放索引，因此数据量相同的情况下，相比既存储索引又存储记录的B树，<strong>B+树的非叶子节点可以存放更多的索引</strong>，因此B+树可以比B树更“矮胖”，查询底层节点的<strong>磁盘I/O次数会更少</strong>。</li></ul></li><li>B+树的叶子节点使用链表相连，便于<strong>范围查询和顺序访问</strong>；B树的叶子节点没有链表连接。<ul><li>好处：B+树叶子节点之间用链表连接了起来，有利于范围查询，而B树要实现范围查询，因此只能通过树的遍历来完成范围查询，这会设计多个节点的磁盘I/O操作，范围查询效率不如B+树。</li></ul></li><li>B+树每次查找都需要查找到叶子节点，<strong>查询性能更稳定</strong>；而B树的查找可能会在非叶子节点找到数据，性能相对不稳定。</li></ul><h2 id="B-树作为索引数据结构的优势？"><a href="#B-树作为索引数据结构的优势？" class="headerlink" title="B+树作为索引数据结构的优势？"></a>B+树作为索引数据结构的优势？</h2><ul><li>B+树的非叶子节点不存放实际的数据，仅存放索引，因此数据量相同的情况下，B+树的非叶子节点可以存放更多的索引，因此更“矮胖”，查询底层节点的<strong>磁盘I/O次数会更少</strong>。</li><li>B+树有大量的冗余节点（所有非叶子节点都是冗余索引），这些冗余索引让B+树<strong>在插入、删除的效率都更高</strong>，比如删除根节点的时候，只会删除叶子节点，不会像B树那样发生复杂的树的变化。</li><li>B+树的叶子节点是一个双向链表，<strong>有利于范围查询</strong>。</li></ul><h2 id="聚簇索引和非聚簇索引"><a href="#聚簇索引和非聚簇索引" class="headerlink" title="聚簇索引和非聚簇索引"></a>聚簇索引和非聚簇索引</h2><ul><li><strong>聚簇索引</strong>：聚簇索引是<font color="#ff0000">索引结构和数据一起存放</font>的索引，数据行按照索引键值的顺序存储。一个表只能有一个聚簇索引，因为数据只能有一种物理排序方式。<ul><li>优点：<ul><li>查询速度非常快，相比于非聚簇索引，少了一次读取数据的IO操作。</li><li>对排序查找和范围查找优化：聚簇索引对于主键的排序查找和范围查找速度非常快。</li></ul></li><li>缺点：<ul><li>依赖于有序的数据。</li><li>更新代价大。</li></ul></li></ul></li><li><strong>非聚簇索引</strong>：<font color="#ff0000">索引结构和数据分开存放的索引</font>。非聚簇索引的叶子节点存放的可能是<font color="#ff0000">数据行的指针</font>，也可能是<font color="#ff0000">主键值</font>。数据行本身存储在聚簇索引。<ul><li>优点：更新代价比聚簇索引要小，因为叶子节点不存放数据。</li><li>缺点：<ul><li>依赖于有序的数据。</li><li>可能会二次查询（回表）。</li></ul></li></ul></li></ul><h2 id="覆盖索引和联合索引"><a href="#覆盖索引和联合索引" class="headerlink" title="覆盖索引和联合索引"></a>覆盖索引和联合索引</h2><ul><li><strong>覆盖索引</strong>：如果<font color="#ff0000">一个索引包含所有需要查询的字段的值</font>，就称为覆盖索引。覆盖索引即需要查询的字段正好是索引的字段，那么直接根据该索引就可以查到数据了，无需回表查询。</li><li><strong>联合索引</strong>：使用表中的多个字段创建索引，就是联合索引。<ul><li><code>ALTER TABLE cus_order ADD INDEX id_score_name(score, name);</code>这里的联合索引是先按照score排序，在score相同的情况下再按照name排序；</li><li><font color="#ff0000">最左匹配原则</font>：在使用联合索引时，会按照最左优先的方式进行索引匹配。也就是说先匹配score，如果score相同，再匹配name。</li><li>比如，如果创建了一个(a, b, c)的联合索引，如果查询条件是以下几种，就可以匹配上联合索引：<ul><li><code>where a = 1;</code></li><li><code>where a = 1 and b = 2 and c = 3;</code></li><li><code>where a = 1 and b = 2;</code></li></ul></li><li>注：因为有查询优化器，所以<font color="#ff0000">a字段在where子句的顺序并不重要</font>。但是如果是以下几种，不符合最左匹配原则，所以无法匹配上联合索引，联合索引就会失效：<ul><li><code>where b = 2;</code></li><li><code>where c = 3;</code></li><li><code>where b = 2 and c = 3;</code></li></ul></li></ul></li></ul><h2 id="什么是索引下推？"><a href="#什么是索引下推？" class="headerlink" title="什么是索引下推？"></a>什么是索引下推？</h2><ul><li>索引下推（Index Condition Pushdown，简称ICP）是MySQL 5.6版本引入的一项优化技术。</li><li>场景设定：<ul><li>假设有一张员工表user，有一个联合索引 idx_name_age(name, age)。我们执行下面这条SQL：<code>SELECT * FROM user WHERE name LIKE &#39;张%&#39; AND age = 10;</code>。<ul><li>没有索引下推时：根据最左匹配原则，<code>name LIKE &#39;张%&#39;</code> 可以用到索引，但后面的<code>age = 10</code>无法用到索引查找（因为name是范围查询，导致后面的列无序的）。执行流程是这样的：<ul><li><strong>存储引擎层</strong>：在索引树上找到所有name以“张”开头的记录（假设有100条）。因为它是负责“找数据”的，它不管age是多少（虽然索引里明明有age），它会把这100条记录的主键ID拿出来，<font color="#ff0000">进行100次回表查询</font>，把完整的行数据取出来。</li><li><strong>Server层</strong>：拿到这100条完整数据后，再判断WHERE age = 10。</li><li>结果：假设只有1个人是10岁，那么那99次回表都是浪费的IO。</li></ul></li><li>有了索引下推后：<ul><li><strong>存储引擎层</strong>：在索引树上找到name以“张”开头的记录。在读取索引记录时，直接判断索引里的age是否等于10。如果不等于10，直接跳过（根本不去回表）。如果等于10，才去回表。</li><li>结果：假设100只有1个人是10岁，那么<font color="#ff0000">只需要1次回表</font>。</li></ul></li></ul></li></ul></li><li>下推的意思就是：<font color="#ff0000">把原本只能在Server层进行的过滤操作（检查age），下推到了存储引擎层进行</font>。</li><li>核心优势：<ul><li><strong>减少回表次数</strong>：这是核心目的。回表涉及随机IO，成本很高。</li><li><strong>减少IO操作</strong>：减少了<font color="#ff0000">Server层和存储引擎层之间的数据交互量</font>。</li></ul></li></ul><h2 id="索引失效有哪些情况？"><a href="#索引失效有哪些情况？" class="headerlink" title="索引失效有哪些情况？"></a>索引失效有哪些情况？</h2><ul><li>当使用<strong>左或者左右模糊匹配</strong>的时候，也就是<code>like%xx</code>或者<code>like%xx%</code></li><li>当在查询条件中<strong>对索引列使用函数</strong>；</li><li>当在查询条件中<strong>对索引列进行表达式计算</strong>；</li><li>MySQL在遇到字符串和数字比较时，会自动把字符串转为数字，然后再进行比较。如果字符串是索引列，而条件语句中的输入参数是数字的话，那么索引列会发生<strong>隐式类型转换</strong>，由于隐式类型转换是通过CAST函数实现的，就等同于对索引使用了函数；</li><li>联合索引需要<strong>遵循最左匹配原则</strong>，也就是按照最左优先的方式进行索引匹配；</li><li>在WHERE子句中，如果<strong>在OR前的条件列是索引列</strong>，而<strong>在OR条件后的列不是索引列</strong>，那么索引会失效。因为OR条件后的列不是索引列，而结果必须返回满足这个条件的数据，必须需要全表扫描，那自然就是两个条件都进行一边全表扫描就好。</li></ul><h2 id="索引优化"><a href="#索引优化" class="headerlink" title="索引优化"></a>索引优化</h2><ul><li><strong>前缀索引优化</strong>：使用前缀索引是为了减少索引字段的大小，可以增加一个索引页中存储的索引值，有效提高索引的查询速度。在一些大字符串的字段作为索引时，使用前缀索引可以帮助我们减少索引项的大小。</li><li><strong>覆盖索引优化</strong>：尽量使用覆盖索引。</li><li><strong>主键索引最好是自增的</strong>。</li><li><strong>防止索引失效</strong>。</li></ul>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h2 id=&quot;索引为什么快？&quot;&gt;&lt;a href=&quot;#索引为什么快？&quot; class=&quot;headerlink&quot; title=&quot;索引为什么快？&quot;&gt;&lt;/a&gt;索引为什么快？&lt;/h2&gt;&lt;ul&gt;
-&lt;li&gt;大大减少了磁盘I/O的次数。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&quot;为什么InnoDB没</summary>
-      
-    
-    
-    
-    
-    <category term="八股" scheme="http://lixrangel.com/tags/%E5%85%AB%E8%82%A1/"/>
-    
-    <category term="MySQL" scheme="http://lixrangel.com/tags/MySQL/"/>
     
   </entry>
   
@@ -428,7 +453,7 @@
     <published>2021-07-30T16:00:00.000Z</published>
     <updated>2026-01-13T08:59:15.473Z</updated>
     
-    <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a><strong>前言</strong></h2><p>欢迎来到我的世界</p><hr><h2 id="关于我"><a href="#关于我" class="headerlink" title="关于我"></a><strong>关于我</strong></h2><ul><li><p>随时随地在coding的女孩</p></li><li><p>学历：</p><ul><li>本科：南京师范大学 计算机科学与技术专业</li><li>硕士：华东师范大学 计算机科学与技术专业（推免）    </li></ul></li><li><p>能好好活着是我最大的愿望</p></li></ul><hr><h2 id="爱好"><a href="#爱好" class="headerlink" title="爱好"></a><strong>爱好</strong></h2><ul><li><p>因为没有什么爱好所以什么都可以是我的爱好</p><ul><li>足球——Hala Madrid！</li><li>追剧——什么都看一点</li><li>coding——努力变得更强中</li></ul></li><li><p>其他的还有待挖掘，欢迎和我交流。</p></li></ul><hr><h2 id="社交"><a href="#社交" class="headerlink" title="社交"></a><strong>社交</strong></h2><ul><li><p><strong>微博/QQ/微信</strong>   重度依赖症患者</p></li><li><p><strong>豆瓣/知乎/CSDN</strong>   偶尔使用</p></li><li><p><strong>Instagram/X/Line</strong>    这些真的挺难用的我觉得 但有时候不得不…（你懂的）<del>坏笑</del></p></li></ul><hr><h2 id="信念"><a href="#信念" class="headerlink" title="信念"></a><strong>信念</strong></h2><p><em>经济独立 精神独立 好好活着</em></p><hr><p>本Blog旨在记录一些我自己学习生活过程中的心得体会 所以文章大概都是随心写哈哈哈</p><p>本网站依旧在开发中 如果有任何建议欢迎给我发邮件：<a href="mailto:&#x31;&#49;&#x37;&#x39;&#52;&#50;&#54;&#50;&#54;&#56;&#x6c;&#120;&#114;&#64;&#x67;&#x6d;&#97;&#105;&#x6c;&#46;&#x63;&#111;&#109;">&#x31;&#49;&#x37;&#x39;&#52;&#50;&#54;&#50;&#54;&#56;&#x6c;&#120;&#114;&#64;&#x67;&#x6d;&#97;&#105;&#x6c;&#46;&#x63;&#111;&#109;</a><br>很希望能找到志同道合的朋友一起交流 如果有朋友愿意跟我聊聊的 也欢迎给我发邮件<br>我暂时就想到这么多 未完待续…<br>感谢你的阅读 祝你生活愉快！</p>]]></content>
+    <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a><strong>前言</strong></h2><p>欢迎来到我的世界</p><hr><h2 id="关于我"><a href="#关于我" class="headerlink" title="关于我"></a><strong>关于我</strong></h2><ul><li><p>随时随地在coding的女孩</p></li><li><p>学历：</p><ul><li>本科：南京师范大学 计算机科学与技术专业</li><li>硕士：华东师范大学 计算机科学与技术专业（推免）    </li></ul></li><li><p>能好好活着是我最大的愿望</p></li></ul><hr><h2 id="爱好"><a href="#爱好" class="headerlink" title="爱好"></a><strong>爱好</strong></h2><ul><li><p>因为没有什么爱好所以什么都可以是我的爱好</p><ul><li>足球——Hala Madrid！</li><li>追剧——什么都看一点</li><li>coding——努力变得更强中</li></ul></li><li><p>其他的还有待挖掘，欢迎和我交流。</p></li></ul><hr><h2 id="社交"><a href="#社交" class="headerlink" title="社交"></a><strong>社交</strong></h2><ul><li><p><strong>微博/QQ/微信</strong>   重度依赖症患者</p></li><li><p><strong>豆瓣/知乎/CSDN</strong>   偶尔使用</p></li><li><p><strong>Instagram/X/Line</strong>    这些真的挺难用的我觉得 但有时候不得不…（你懂的）<del>坏笑</del></p></li></ul><hr><h2 id="信念"><a href="#信念" class="headerlink" title="信念"></a><strong>信念</strong></h2><p><em>经济独立 精神独立 好好活着</em></p><hr><p>本Blog旨在记录一些我自己学习生活过程中的心得体会 所以文章大概都是随心写哈哈哈</p><p>本网站依旧在开发中 如果有任何建议欢迎给我发邮件：<a href="mailto:&#49;&#x31;&#55;&#57;&#52;&#x32;&#54;&#50;&#54;&#56;&#108;&#120;&#x72;&#64;&#x67;&#x6d;&#97;&#x69;&#108;&#46;&#x63;&#111;&#109;">&#49;&#x31;&#55;&#57;&#52;&#x32;&#54;&#50;&#54;&#56;&#108;&#120;&#x72;&#64;&#x67;&#x6d;&#97;&#x69;&#108;&#46;&#x63;&#111;&#109;</a><br>很希望能找到志同道合的朋友一起交流 如果有朋友愿意跟我聊聊的 也欢迎给我发邮件<br>我暂时就想到这么多 未完待续…<br>感谢你的阅读 祝你生活愉快！</p>]]></content>
     
     
       
