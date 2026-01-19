@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://lixrangel.com/2025/12/18/mysql-ri-zhi/</loc>
+    <loc>http://lixrangel.com/2025/12/18/java-ba-gu/mysql/mysql-ri-zhi/</loc>
     
     <lastmod>2026-01-19</lastmod>
     
@@ -11,7 +11,7 @@
   </url>
   
   <url>
-    <loc>http://lixrangel.com/2025/12/20/mysql-jia-gou/</loc>
+    <loc>http://lixrangel.com/2025/12/20/java-ba-gu/mysql/mysql-jia-gou/</loc>
     
     <lastmod>2026-01-19</lastmod>
     
@@ -20,7 +20,7 @@
   </url>
   
   <url>
-    <loc>http://lixrangel.com/2025/12/19/mysql-xing-neng-diao-you/</loc>
+    <loc>http://lixrangel.com/2025/12/19/java-ba-gu/mysql/mysql-xing-neng-diao-you/</loc>
     
     <lastmod>2026-01-19</lastmod>
     
@@ -29,7 +29,7 @@
   </url>
   
   <url>
-    <loc>http://lixrangel.com/2025/12/17/mysql-shi-wu/</loc>
+    <loc>http://lixrangel.com/2025/12/17/java-ba-gu/mysql/mysql-shi-wu/</loc>
     
     <lastmod>2026-01-19</lastmod>
     
@@ -38,7 +38,7 @@
   </url>
   
   <url>
-    <loc>http://lixrangel.com/2025/12/16/mysql-cun-chu-yin-qing/</loc>
+    <loc>http://lixrangel.com/2025/12/16/java-ba-gu/mysql/mysql-cun-chu-yin-qing/</loc>
     
     <lastmod>2026-01-19</lastmod>
     
@@ -47,7 +47,7 @@
   </url>
   
   <url>
-    <loc>http://lixrangel.com/2025/12/15/mysql-suo-yin/</loc>
+    <loc>http://lixrangel.com/2025/12/15/java-ba-gu/mysql/mysql-suo-yin/</loc>
     
     <lastmod>2026-01-19</lastmod>
     
@@ -289,13 +289,6 @@
   </url>
   
   <url>
-    <loc>http://lixrangel.com/tags/MySQL/</loc>
-    <lastmod>2026-01-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>http://lixrangel.com/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/</loc>
     <lastmod>2026-01-19</lastmod>
     <changefreq>weekly</changefreq>
@@ -325,6 +318,13 @@
   
   <url>
     <loc>http://lixrangel.com/tags/%E6%9D%82%E8%AE%B0/</loc>
+    <lastmod>2026-01-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://lixrangel.com/tags/MySQL/</loc>
     <lastmod>2026-01-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>

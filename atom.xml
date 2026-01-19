@@ -18,8 +18,8 @@
   
   <entry>
     <title>MySQL架构</title>
-    <link href="http://lixrangel.com/2025/12/20/mysql-jia-gou/"/>
-    <id>http://lixrangel.com/2025/12/20/mysql-jia-gou/</id>
+    <link href="http://lixrangel.com/2025/12/20/java-ba-gu/mysql/mysql-jia-gou/"/>
+    <id>http://lixrangel.com/2025/12/20/java-ba-gu/mysql/mysql-jia-gou/</id>
     <published>2025-12-19T16:00:00.000Z</published>
     <updated>2026-01-19T11:56:22.685Z</updated>
     
@@ -43,8 +43,8 @@
   
   <entry>
     <title>MySQL性能调优</title>
-    <link href="http://lixrangel.com/2025/12/19/mysql-xing-neng-diao-you/"/>
-    <id>http://lixrangel.com/2025/12/19/mysql-xing-neng-diao-you/</id>
+    <link href="http://lixrangel.com/2025/12/19/java-ba-gu/mysql/mysql-xing-neng-diao-you/"/>
+    <id>http://lixrangel.com/2025/12/19/java-ba-gu/mysql/mysql-xing-neng-diao-you/</id>
     <published>2025-12-18T16:00:00.000Z</published>
     <updated>2026-01-19T11:55:36.083Z</updated>
     
@@ -67,8 +67,8 @@
   
   <entry>
     <title>MySQL日志</title>
-    <link href="http://lixrangel.com/2025/12/18/mysql-ri-zhi/"/>
-    <id>http://lixrangel.com/2025/12/18/mysql-ri-zhi/</id>
+    <link href="http://lixrangel.com/2025/12/18/java-ba-gu/mysql/mysql-ri-zhi/"/>
+    <id>http://lixrangel.com/2025/12/18/java-ba-gu/mysql/mysql-ri-zhi/</id>
     <published>2025-12-17T16:00:00.000Z</published>
     <updated>2026-01-19T11:57:33.742Z</updated>
     
@@ -92,8 +92,8 @@
   
   <entry>
     <title>MySQL事务</title>
-    <link href="http://lixrangel.com/2025/12/17/mysql-shi-wu/"/>
-    <id>http://lixrangel.com/2025/12/17/mysql-shi-wu/</id>
+    <link href="http://lixrangel.com/2025/12/17/java-ba-gu/mysql/mysql-shi-wu/"/>
+    <id>http://lixrangel.com/2025/12/17/java-ba-gu/mysql/mysql-shi-wu/</id>
     <published>2025-12-16T16:00:00.000Z</published>
     <updated>2026-01-19T11:53:21.296Z</updated>
     
@@ -117,8 +117,8 @@
   
   <entry>
     <title>MySQL存储引擎</title>
-    <link href="http://lixrangel.com/2025/12/16/mysql-cun-chu-yin-qing/"/>
-    <id>http://lixrangel.com/2025/12/16/mysql-cun-chu-yin-qing/</id>
+    <link href="http://lixrangel.com/2025/12/16/java-ba-gu/mysql/mysql-cun-chu-yin-qing/"/>
+    <id>http://lixrangel.com/2025/12/16/java-ba-gu/mysql/mysql-cun-chu-yin-qing/</id>
     <published>2025-12-15T16:00:00.000Z</published>
     <updated>2026-01-19T11:48:26.405Z</updated>
     
@@ -142,8 +142,8 @@
   
   <entry>
     <title>MySQL索引</title>
-    <link href="http://lixrangel.com/2025/12/15/mysql-suo-yin/"/>
-    <id>http://lixrangel.com/2025/12/15/mysql-suo-yin/</id>
+    <link href="http://lixrangel.com/2025/12/15/java-ba-gu/mysql/mysql-suo-yin/"/>
+    <id>http://lixrangel.com/2025/12/15/java-ba-gu/mysql/mysql-suo-yin/</id>
     <published>2025-12-14T16:00:00.000Z</published>
     <updated>2026-01-19T11:46:41.203Z</updated>
     
