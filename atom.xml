@@ -6,7 +6,7 @@
   <link href="http://lixrangel.com/atom.xml" rel="self"/>
   
   <link href="http://lixrangel.com/"/>
-  <updated>2026-01-19T11:56:22.685Z</updated>
+  <updated>2026-01-21T12:28:05.978Z</updated>
   <id>http://lixrangel.com/</id>
   
   <author>
@@ -15,6 +15,34 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Redis数据结构</title>
+    <link href="http://lixrangel.com/2025/12/20/java-ba-gu/redis/redis-shu-ju-jie-gou/"/>
+    <id>http://lixrangel.com/2025/12/20/java-ba-gu/redis/redis-shu-ju-jie-gou/</id>
+    <published>2025-12-19T16:00:00.000Z</published>
+    <updated>2026-01-21T12:28:05.978Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="Redis底层数据结构"><a href="#Redis底层数据结构" class="headerlink" title="Redis底层数据结构"></a>Redis底层数据结构</h2><table><thead><tr><th>结构类型</th><th>底层数据结构</th><th>结构存储的值</th><th>结构的读写能力</th></tr></thead><tbody><tr><td><strong>String字符串</strong></td><td>简单动态字符串（SDS）</td><td>可以是字符串、整型或浮点数</td><td>对整个字符串或字符串的一部份进行操作；对整数或浮点数进行自增或自减操作；</td></tr><tr><td><strong>List列表</strong></td><td>LinkedList、ZipList、QuickList</td><td>一个链表，链表上的每个节点都包含一个字符串</td><td>对链表的两端进行push和pop操作，读取单个或多个元素；根据值查找或删除元素；</td></tr><tr><td><strong>Set集合</strong></td><td>Dict、ZipList</td><td>包含字符串的无序集合</td><td>字符串的集合，包含基础的方法：是否存在、添加、获取、删除；还包含计算交集、并集、差集等；</td></tr><tr><td><strong>Hash散列</strong></td><td>Dict、ZipList</td><td>包含键值对的无序散列表</td><td>包含方法有添加、获取、删除单个元素</td></tr><tr><td><strong>Zset有序集合</strong></td><td>ZipList、SkipList</td><td>和散列一样，用于存储键值对</td><td>字符串成员与浮点数分数之间的有序映射；元素的排列顺序由分数的大小决定；包含方法有添加、获取、删除单个元素以及根据分值范围或成员来获取元素。</td></tr></tbody></table><ul><li>五种数据类型的应用场景：<ul><li><strong>String类型</strong>：缓存对象、常规计数、分布式锁、共享session信息等；</li><li><strong>List类型</strong>：消息队列（问题：1. 生产者需要自行实现全局唯一ID；2. 不能以消费组形式消费数据）等。</li><li><strong>Hash类型</strong>：缓存对象、购物车等；</li><li><strong>Set类型</strong>：聚合计算（并集、交集、差集）场景，比如点赞、共同关注、抽奖活动等。</li><li><strong>Zset类型</strong>：排序场景，比如排行榜、电话和姓名排序等。</li></ul></li><li>后续版本支持的四种数据类型，它们的应用场景：<ul><li><strong>BitMap（2.2版新增）</strong>：二值状态统计的场景，比如签到、判断用户登录状态、连续签到用户总数等；</li><li><strong>HyperLogLog（2.8版新增）</strong>：海量数据基数统计的场景，比如百万级网页UV计数等；</li><li><strong>GEO（3.2版新增）</strong>：存储地理位置信息的场景，比如滴滴叫车；</li><li><strong>Stream（5.0版新增）</strong>：消息队列，相比于基于List类型实现的消息队列，有这两个特有的特性：自动生成全局唯一消息ID，支持以消费组的形式消费数据。<br><img src="redis%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84.png" alt="redis数据结构"></li></ul></li></ul><h2 id="Zset底层是怎么实现的？"><a href="#Zset底层是怎么实现的？" class="headerlink" title="Zset底层是怎么实现的？"></a>Zset底层是怎么实现的？</h2><p>Zset类型的底层数据结构是由压缩列表或跳表实现的：</p><ul><li>如果有序集合的元素个数小于128个，并且每个元素的值小于64字节时，Redis会使用压缩列表作为Zset类型的底层数据结构；</li><li>如果有序集合的元素不满足上面的条件，Redis会使用跳表作为Zset类型的底层数据结构；<br>在Redis 7.0中，压缩列表数据结构已经废弃了，交由listpack数据结构来实现了。</li></ul><h2 id="跳表是怎么实现的？"><a href="#跳表是怎么实现的？" class="headerlink" title="跳表是怎么实现的？"></a>跳表是怎么实现的？</h2><ul><li>链表在查找元素的时候，因为需要逐一查找，所以查询效率非常低，时间复杂度是$O(N)$，于是就出现了跳表。跳表是在链表基础上改进过来的，实现了一种【多层】的有序链表，这样的好处是能<strong>快速定位数据</strong>。<br><img src="%E8%B7%B3%E8%A1%A8%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84.png" alt="跳表数据结构"></li></ul><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> <span class="title class_">zskiplistNode</span> &#123;</span><br><span class="line">    <span class="comment">//Zset 对象的元素值</span></span><br><span class="line">    sds ele;</span><br><span class="line">    <span class="comment">//元素权重值</span></span><br><span class="line">    <span class="type">double</span> score;</span><br><span class="line">    <span class="comment">//后向指针</span></span><br><span class="line">    <span class="keyword">struct</span> <span class="title class_">zskiplistNode</span> *backward;</span><br><span class="line">  </span><br><span class="line">    <span class="comment">//节点的level数组，保存每层上的前向指针和跨度</span></span><br><span class="line">    <span class="keyword">struct</span> <span class="title class_">zskiplistLevel</span> &#123;</span><br><span class="line">        <span class="keyword">struct</span> <span class="title class_">zskiplistNode</span> *forward;</span><br><span class="line">        <span class="type">unsigned</span> <span class="type">long</span> span;</span><br><span class="line">    &#125; level[];</span><br><span class="line">&#125; zskiplistNode;</span><br></pre></td></tr></table></figure><ul><li>Zset 对象要同时保存【<strong>元素</strong>】和【<strong>元素的权重</strong>】，对应到跳表节点结构里就是SDS类型的ele变量和double类型的score变量。每个跳表节点都有一个后向指针（<code>struct zskiplistNode *backward</code>），指向前一个节点，目的是为了<font color="#ff0000">方便从跳表的尾节点开始访问节点</font>，这样倒序查找时很方便。</li><li>跳表是一个带有层级关系的链表，而且每一层级可以包含多个节点，每一个节点通过指针连接起来，实现这一特性就是靠跳表节点结构体中的<code>zskiplistLevel</code>结构体类型的level数组。</li><li>level数组中的每一个元素代表跳表的一层，也就是由zskiplistLevel结构体表示，比如<code>level[0]</code>就表示第一层，<code>level[1]</code>就表示第二层。zskiplistLevel结构体里定义了【<strong>指向下一跳表节点的指针</strong>】和【<strong>跨度</strong>】，跨度是用来记录两个节点之间的距离。<br><img src="%E8%B7%B3%E8%A1%A8%E8%B7%A8%E5%BA%A6.png" alt="跳表跨度"></li><li>Redis跳表在创建节点的时候，随机生成每个节点的层数，并没有严格维持相邻两层的节点数量比例为2:1的情况。</li><li>具体的做法是，跳表在创建节点的时候，会生成范围为$[0-1]$的一个随机数，如果这个随机数小于0.25（相当于概率25%），那么层数就增加1层，然后继续生成下一个随机数，直到随机数的结果大于0.25结束，最终确定该节点的层数。（【跳表是怎么设置层高的？】的答案）。</li><li>这样的做法相当于**每增加一层的概率不超过25%**，层数越高，概率越多，层高最大限制是64。在创建跳表头节点时，会直接创建64层高的头节点。</li></ul><h2 id="面试——跳表"><a href="#面试——跳表" class="headerlink" title="面试——跳表"></a>面试——跳表</h2><ul><li>跳表（SkipList）本质上是一种可以通过“<strong>多级索引</strong>”进行快速查找的有序链表。它利用空间换时间的思想，把普通链表的查找复杂度从$O(N)$降到了$O(\log N)$，性能可以媲美红黑树，但实现更简单。</li><li>它的结构可以分为两部分：<ul><li><strong>最底层（L0）</strong>：是一个包含所有数据的<font color="#ff0000">有序双向链表</font>。</li><li><strong>上层索引（L1, L2,…）</strong>：是在底层链表的基础上，<font color="#ff0000">每隔一段距离提取一个节点作为索引</font>。层级越高，节点越稀疏。</li></ul></li><li>查找时，从最高层索引开始，像“坐电梯”一样，发现目标太大就往右跳，发现目标太小就往下一层沉，直到找到数据。</li><li>每个节点的层高是由$[0-1]$的随机数决定的，如果小于0.25，就增加一层；如果大于0.25，就停止。</li></ul><h2 id="Redis为什么使用跳表而不是B-树？"><a href="#Redis为什么使用跳表而不是B-树？" class="headerlink" title="Redis为什么使用跳表而不是B+树？"></a>Redis为什么使用跳表而不是B+树？</h2><ol><li>内存 vs. 磁盘的设计初衷：<ol><li><strong>B+数是为磁盘I/O优化的</strong>：B+树的设计核心是降低树的的高度，从而减少磁盘I/O次数。</li><li><strong>Redis是纯内存操作</strong>：在内存中，没有磁盘I/O的瓶颈。内存中指针跳转的速度非常快。跳表虽然比B+树高（层数多），但在内存中多几次指针跳转的开销非常小。</li></ol></li><li>实现复杂度与代码维护：<ol><li>跳表（Skip List）：本质上是“<strong>多层链表</strong>”，其插入、删除逻辑主要是修改指针，代码实现非常简洁。</li><li>B+树：插入和删除可能引发节点的分裂和合并，甚至需要<strong>对整棵树进行重平衡</strong>。实现一个健壮、高效的B+树非常复杂，代码量大且难以调试。</li></ol></li><li>写入性能与重平衡代价：<ol><li>B+树的写入抖动：当插入数据导致页分裂时，可能需要移动大量数据或改变树结构，这会产生性能抖动。</li><li>跳表的局限性：跳表的插入和删除操作是局部的。插入一个节点只需要修改前后节点的指针，并根据概率随机生成层高。它不需要像红黑树或B+树那样进行全局的旋转或复杂的结构调整。</li></ol></li></ol><h2 id="String是用什么存储的？为什么不用C语言中的字符串？"><a href="#String是用什么存储的？为什么不用C语言中的字符串？" class="headerlink" title="String是用什么存储的？为什么不用C语言中的字符串？"></a>String是用什么存储的？为什么不用C语言中的字符串？</h2><p>Redis的String字符串是用SDS数据结构存储的。<br><img src="SDS%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84.png" alt="SDS数据结构"></p><ul><li><code>len</code>，记录了字符串长度。这样获取字符串长度的时候，只需要返回这个成员变量值就行，时间复杂度只需要$O(1)$。</li><li><code>alloc</code>，分配给字符数组的空间长度。这样在修改字符串的时候，可以通过<code>alloc - len</code> 计算出剩余的空间大小，可以用来判断空间是否满足修改需求，如果不满足的话，就会自动将SDS的空间扩展至执行修改所需的大小，然后才执行实际的修改操作，所以使用SDS既不需要手动修改SDS的空间大小，也不会出现前面所说的缓冲区溢出的问题。</li><li><code>flags</code>，用来表示不同类型的SDS。一共设计了5种类型，分别是<code>sdshdr5</code>、<code>sdshdr8</code>、<code>sdshdr16</code>、<code>sdshdr32</code>、<code>sdshdr64</code>。</li><li><code>buf[]</code>，字符数组，用来保存实际数据。不仅可以保存字符串，也可以保存二进制数据。</li></ul><h3 id="相比于C语言的优势："><a href="#相比于C语言的优势：" class="headerlink" title="相比于C语言的优势："></a>相比于C语言的优势：</h3><ul><li><strong>$O(1)$复杂度获取字符串的长度</strong>。C语言需要遍历，时间复杂度是$O(N)$。</li><li><strong>二进制安全</strong>。因为SDS不需要用”\0”字符来标识字符串结尾了，而是有个专门的len成员变量来记录长度，所以可以存储包含”\0”的数据。但是SDS为了兼容部分C语言标准库的函数，SDS字符串结尾还是会加上”\0”字符。而C语言会通过”\0”来判断字符串的结束，所以不能存储任何带有”\0”的字符串。</li><li><strong>不会发生缓冲区溢出</strong>。Redis的SDS结构里引入了<code>alloc</code>和<code>len</code>成员变量，这样SDS API通过<code>alloc - len</code>计算，可以算出剩余可用的空间大小，这样在对字符串做修改的时候，就可以由程序内部判断缓冲区大小是否足够用。当判断出缓冲区大小不够用时，Redis会自动将扩大SDS的空间大小，以满足修改所需的大小。而C语言需要开发者来保证缓冲区大小。</li></ul>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;Redis底层数据结构&quot;&gt;&lt;a href=&quot;#Redis底层数据结构&quot; class=&quot;headerlink&quot; title=&quot;Redis底层数据结构&quot;&gt;&lt;/a&gt;Redis底层数据结构&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;结构类型&lt;/th&gt;
+&lt;t</summary>
+      
+    
+    
+    
+    
+    <category term="八股" scheme="http://lixrangel.com/tags/%E5%85%AB%E8%82%A1/"/>
+    
+    <category term="Redis" scheme="http://lixrangel.com/tags/Redis/"/>
+    
+  </entry>
   
   <entry>
     <title>MySQL架构</title>
@@ -412,8 +440,8 @@
   
   <entry>
     <title>Elasticsearch 8.10安装教程（macOS版）</title>
-    <link href="http://lixrangel.com/2025/08/20/elasticsearch-8.10-an-zhuang-jiao-cheng-macos-ban/"/>
-    <id>http://lixrangel.com/2025/08/20/elasticsearch-8.10-an-zhuang-jiao-cheng-macos-ban/</id>
+    <link href="http://lixrangel.com/2025/08/20/elasticsearch/elasticsearch-8.10-an-zhuang-jiao-cheng-macos-ban/"/>
+    <id>http://lixrangel.com/2025/08/20/elasticsearch/elasticsearch-8.10-an-zhuang-jiao-cheng-macos-ban/</id>
     <published>2025-08-19T16:00:00.000Z</published>
     <updated>2026-01-14T09:03:03.432Z</updated>
     
@@ -472,26 +500,6 @@
       
       
     <summary type="html">&lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;p&gt;最近计算机系统基础的实验课安装搭建了Linux系统与环境，整个过程我花费了不短的时间，想在这里简单记录一下，也算是以后学习的一个参考吧。&lt;/</summary>
-      
-    
-    
-    
-    
-  </entry>
-  
-  <entry>
-    <title>浏览器显示未连接互联网的解决方法</title>
-    <link href="http://lixrangel.com/2022/03/06/wang-luo/liu-lan-qi-xian-shi-wei-lian-jie-hu-lian-wang-de-jie-jue-fang-fa/"/>
-    <id>http://lixrangel.com/2022/03/06/wang-luo/liu-lan-qi-xian-shi-wei-lian-jie-hu-lian-wang-de-jie-jue-fang-fa/</id>
-    <published>2022-03-06T09:44:29.000Z</published>
-    <updated>2022-03-06T10:32:29.297Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>前两天我一个舍友的浏览器总是显示未连接互联网，试了很多方法都没有解决，于是找到了我这个虽然学计算机但实际上啥也不会的舍友，在度娘的帮助下最后成功解决了。为了下一次遇到同样的问题我可以不再需要询问度娘，我在这里简单记录一下解决方案，同时也算是一个自我提升的过程吧。</p><h2 id="第一步"><a href="#第一步" class="headerlink" title="第一步"></a>第一步</h2><hr><p>请先检查是否真的是网络的问题，比如你的WiFi是否真的连接成功了、你的WiFi是否为可用网络。如果确定不是网络的问题，就可以进入第二步了。</p><hr><h2 id="第二步"><a href="#第二步" class="headerlink" title="第二步"></a>第二步</h2><hr><p>如果确保网络没有问题，接下来请检查是否是浏览器的问题，可以尝试更换浏览器，建议选用Chrome、火狐等浏览器。如果也不是浏览器的问题，就可以进入第三步了。</p><h2 id="第三步"><a href="#第三步" class="headerlink" title="第三步"></a>第三步</h2><hr><h3 id="step-1"><a href="#step-1" class="headerlink" title="step 1"></a>step 1</h3><p>打开电脑的控制面板</p><div style="width:50%;margin:auto"><img src="/2022/03/06/wang-luo/liu-lan-qi-xian-shi-wei-lian-jie-hu-lian-wang-de-jie-jue-fang-fa/1.jpg" class="" title="控制面板"></div><hr><h3 id="step-2"><a href="#step-2" class="headerlink" title="step 2"></a>step 2</h3><ul><li>单击[<strong>网络和Internet</strong>]选项</li></ul><div style="width:50%;margin:auto"><img src="/2022/03/06/wang-luo/liu-lan-qi-xian-shi-wei-lian-jie-hu-lian-wang-de-jie-jue-fang-fa/7.png" class="" title="单击[网络和Internet]"></div><hr><h3 id="step-3"><a href="#step-3" class="headerlink" title="step 3"></a>step 3</h3><ul><li>单击[<strong>网络和共享中心</strong>]选项</li></ul><div style="width:50%;margin:auto"><img src="/2022/03/06/wang-luo/liu-lan-qi-xian-shi-wei-lian-jie-hu-lian-wang-de-jie-jue-fang-fa/2.jpg" class="" title="单击[网络和共享中心]"></div><hr><h3 id="step-4"><a href="#step-4" class="headerlink" title="step 4"></a>step 4</h3><ul><li>单击左下角[<strong>Internet选项</strong>]</li></ul><div style="width:50%;margin:auto"><img src="/2022/03/06/wang-luo/liu-lan-qi-xian-shi-wei-lian-jie-hu-lian-wang-de-jie-jue-fang-fa/3.png" class="" title="单击[Internet选项]"></div><hr><h3 id="step-5"><a href="#step-5" class="headerlink" title="step 5"></a>step 5</h3><ul><li>选择上方的[<strong>连接</strong>]选项</li></ul><div style="width:50%;margin:auto"><img src="/2022/03/06/wang-luo/liu-lan-qi-xian-shi-wei-lian-jie-hu-lian-wang-de-jie-jue-fang-fa/4.png" class="" title="选择[连接]"></div><hr><h3 id="step-6"><a href="#step-6" class="headerlink" title="step 6"></a>step 6</h3><ul><li>单击[<strong>局域网设置</strong>]选项</li></ul><div style="width:50%;margin:auto"><img src="/2022/03/06/wang-luo/liu-lan-qi-xian-shi-wei-lian-jie-hu-lian-wang-de-jie-jue-fang-fa/5.png" class="" title="单击[局域网设置]"></div><hr><h3 id="step-7"><a href="#step-7" class="headerlink" title="step 7"></a>step 7</h3><ul><li>将[<strong>为LAN使用代理服务器</strong>]前的勾选取消</li></ul><div style="width:50%;margin:auto"><img src="/2022/03/06/wang-luo/liu-lan-qi-xian-shi-wei-lian-jie-hu-lian-wang-de-jie-jue-fang-fa/6.jpg" class="" title="取消勾选"></div><hr><h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><hr><p>如果通过上述步骤还是没有解决，可以自行寻求其他解决方案。由于我的技术水平十分有限，可能无法给出更多的解决方法，非常抱歉！</p><hr><p>距离我上一次更新已经过去了四个多月，主要原因还是我太懒了（惭愧），希望之后我能够督促我自己多多记录吧。</p><p>春天来啦，希望大家都能好好生活！</p><p>我们下一篇见！</p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;p&gt;前两天我一个舍友的浏览器总是显示未连接互联网，试了很多方法都没有解决，于是找到了我这个虽然学计算机但实际上啥也不会的舍友，在度娘的帮助下最后</summary>
       
     
     
