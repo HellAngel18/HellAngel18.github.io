@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Redis数据结构, 地狱天使&#39;s Blog">
+    <meta name="keywords" content="Redis线程模型, 地狱天使&#39;s Blog">
     <meta name="description" content="欢迎来到我的世界">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>Redis数据结构 | 地狱天使&#39;s Blog</title>
+    <title>Redis线程模型 | 地狱天使&#39;s Blog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -311,12 +311,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/10.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/17.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Redis数据结构</h1>
+                    <h1 class="description center-align post-title">Redis线程模型</h1>
                 </div>
             </div>
         </div>
@@ -452,7 +452,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>Publish Date:&nbsp;&nbsp;
-                    2025-12-23
+                    2025-12-24
                 </div>
                 
 
@@ -473,119 +473,69 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="Redis底层数据结构"><a href="#Redis底层数据结构" class="headerlink" title="Redis底层数据结构"></a>Redis底层数据结构</h2><table>
+                <h2 id="Redis为什么快？"><a href="#Redis为什么快？" class="headerlink" title="Redis为什么快？"></a>Redis为什么快？</h2><ul>
+<li><strong>纯内存操作</strong>：Redis的大部分操作都<font color="#ff0000">在内存中完成</font>，并且采用了高效的数据结构，访问速度是纳秒级别，而传统的数据库频繁读写磁盘的速度是毫秒级别，两者相差数个数量级。</li>
+<li><strong>高效的I/O模型</strong>：Redis使用单线程时间循环配合I/O多路复用技术，让<font color="#ff0000">单个线程可以同时处理多个网络连接上的I/O事件</font>（如读写），避免了多线程模型中的上下文切换和锁竞争问题。</li>
+<li><strong>优化的内部数据结构</strong>：Redis提供多种数据类型，其内部实现<font color="#ff0000">采用高度优化的编码方式</font>，Redis会根据数据大小和类型动态选择最合适的内部编码，以在性能和空间效率之间取得最佳平衡。</li>
+<li><strong>简洁高效的通信协议</strong>：Redis使用的是自己设计的RESP协议。该协议<font color="#ff0000">实现简单</font>、<font color="#ff0000">解析性能好</font>，并且是<font color="#ff0000">二进制安全</font>的。客户端和服务端之间通信的序列化/反序列化开销很小，有助于提升整体的交互速度。</li>
+</ul>
+<h2 id="Redis哪些地方使用了多线程？"><a href="#Redis哪些地方使用了多线程？" class="headerlink" title="Redis哪些地方使用了多线程？"></a>Redis哪些地方使用了多线程？</h2><ul>
+<li>Redis单线程指的是「<strong>接收客户端请求 -&gt; 解析请求 -&gt; 进行数据读写等操作 -&gt; 发送数据给客户端</strong>」这个过程是由一个线程（主线程）来完成的。也就是Redis的主要工作（<strong>网络I/O和执行命令</strong>）是单线程来处理的。</li>
+<li>Redis程序并不是单线程的，Redis在启动的时候，是会<strong>启动后台线程</strong>（BIO）的。Redis为「<strong>关闭文件、AOF刷盘、释放内存</strong>」这些任务创建单独的线程来处理，因为这些任务耗时，所以创建其他线程来异步处理这些任务。</li>
+<li>为了提高网络I/O的并行度，Redis6.0对于网络I/O采用多线程来处理。但是对于命令的执行，Redis仍然使用单线程来处理。</li>
+<li>Redis6.0版本之后，Redis在启动的时候，默认情况下会额外创建6个线程（这里的线程不包括主线程）：<ul>
+<li><code>Redis-server</code>：Redis的主线程，主要负责执行命令；</li>
+<li><code>bio_close_file</code>、<code>bio_aof_fsync</code>、<code>bio_lazy_free</code>：三个后台线程，分别异步处理「关闭文件任务」、「AOF刷盘任务」、「释放内存任务」；</li>
+<li><code>io_thd_1</code>、<code>io_thd_2</code>、<code>io_thd_3</code>：三个I/O线程，io_threads默认是4，所以会启动3（4 - 1）个I/O多线程，用来分担Redis网络I/O的压力。</li>
+</ul>
+</li>
+</ul>
+<h2 id="Redis单线程模型？"><a href="#Redis单线程模型？" class="headerlink" title="Redis单线程模型？"></a>Redis单线程模型？</h2><ul>
+<li>Redis基于 Reactor 模式设计开发了一套高效的事件处理模型，这套事件处理模型对应的是Redis中的<strong>文件事件处理器</strong>（file event handler）。由于文件事件处理器（file event handler）是单线程方式运行的，所以我们一般都说Redis是单线程模型。</li>
+<li>文件事件处理器（file event handler）主要是包含4个部分：<ul>
+<li>多个socket（客户端连接）；</li>
+<li>IO多路复用程序（支持多个客户端连接的关键）；</li>
+<li>文件事件分派器（将socket关联到相应的事件处理器）；</li>
+<li>事件处理器（连接应答处理器、命令请求处理器、命令回复处理器）。<br><img src="%E6%96%87%E4%BB%B6%E4%BA%8B%E4%BB%B6%E5%A4%84%E7%90%86%E5%99%A8.png" alt="文件事件处理器"></li>
+</ul>
+</li>
+</ul>
+<h2 id="Redis怎么实现的IO多路复用？"><a href="#Redis怎么实现的IO多路复用？" class="headerlink" title="Redis怎么实现的IO多路复用？"></a>Redis怎么实现的IO多路复用？</h2><ul>
+<li>Redis是跑在「单线程」中的，所有的操作都是按照顺序线性执行的，但是由于读写操作等待用户输入或输出都是阻塞的，所以I/O操作在一般情况下往往不能直接返回，这会导致某一文件的I/O阻塞掉，致整个进程无法对其他客户提供服务。而I/O多路复用就是为了解决这个问题而出现的。为了<strong>让单线程（进程）的服务端应用同时处理多个客户端的事件</strong>，Redis采用了IO多路复用机制。</li>
+<li>这里“多路”指的是<strong>多个网络连接客户端</strong>，“复用”指的是<strong>复用同一个线程</strong>（单进程）。I/O多路复用其实是使用一个线程来检查多个socket的就绪状态，在单个线程中通过记录跟踪每一个socket（I/O流）的状态来管理处理多个I/O流。如下图是Redis的I/O多路复用模型：<br><img src="Redis%E7%9A%84IO%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8%E6%A8%A1%E5%9E%8B.png" alt="Redis的IO多路复用模型"></li>
+<li>一个socket客户端与服务端连接时，会生成对应的一个<strong>套接字描述符</strong>（其实就是一个整数，是这个连接在操作系统中的一个索引），每一个socket网络连接其实都对应一个文件描述符。</li>
+<li>多个客户端与服务端连接时，Redis使用I/O多路复用程序<strong>将客户端socket对应的FD注册到监听列表</strong>中。当客户端执行read、write等操作命令时，数据到达内核缓冲区，epoll检测到该FD状态变为“可读”，便会生成一个事件通知Redis。Redis拿到时间后，调用对应的处理函数读取并解析命令。<blockquote>
+<p>IO多路复用程序是一个封装层，封装了操作系统底层的多路复用函数（如Linux的epoll、macOS的kqueue或旧的select。</p>
+</blockquote>
+</li>
+<li>文件事件处理器使用I/O多路复用模块同时监控多个文件描述符（FD）的读写情况，当accept、read、write和close文件事件产生时，文件事件处理器就会回调FD绑定的事件处理器进行处理相关命令操作。</li>
+<li>例如：以Redis的IO多路复用程序epoll函数为例。多个客户端连接服务端时，Redis会将客户端socket对应的FD（文件描述符）注册进epoll，然后epoll同时监听多个文件描述符（FD）是否有数据到来，如果有数据来了就通知事件处理器赶紧处理，这样就不会存在服务端一直等待某个客户端给数据的情形。</li>
+<li>整个<strong>文件事件处理器是在单线程上运行的</strong>，但是通过I/O多路复用模块的引入，实现了同时对多个FD读写的监控，当其中一个client端达到写或读的状态，文件事件处理器就马上执行，从而就不会出现I/O阻塞的问题，提高了网络通信的性能。</li>
+</ul>
+<table>
 <thead>
 <tr>
-<th>结构类型</th>
-<th>底层数据结构</th>
-<th>结构存储的值</th>
-<th>结构的读写能力</th>
+<th>状态</th>
+<th>过程</th>
+<th>线程状态</th>
 </tr>
 </thead>
 <tbody><tr>
-<td><strong>String字符串</strong></td>
-<td>简单动态字符串（SDS）</td>
-<td>可以是字符串、整型或浮点数</td>
-<td>对整个字符串或字符串的一部份进行操作；对整数或浮点数进行自增或自减操作；</td>
+<td>等待事件</td>
+<td>Redis主线程调用epoll_wait()，将自己挂起。</td>
+<td>阻塞（但同时高效监听所有FD）</td>
 </tr>
 <tr>
-<td><strong>List列表</strong></td>
-<td>LinkedList、ZipList、QuickList</td>
-<td>一个链表，链表上的每个节点都包含一个字符串</td>
-<td>对链表的两端进行push和pop操作，读取单个或多个元素；根据值查找或删除元素；</td>
+<td>事件就绪</td>
+<td>内核通知epoll，有N个FD就绪。epoll将线程唤醒。</td>
+<td>运行</td>
 </tr>
 <tr>
-<td><strong>Set集合</strong></td>
-<td>Dict、ZipList</td>
-<td>包含字符串的无序集合</td>
-<td>字符串的集合，包含基础的方法：是否存在、添加、获取、删除；还包含计算交集、并集、差集等；</td>
-</tr>
-<tr>
-<td><strong>Hash散列</strong></td>
-<td>Dict、ZipList</td>
-<td>包含键值对的无序散列表</td>
-<td>包含方法有添加、获取、删除单个元素</td>
-</tr>
-<tr>
-<td><strong>Zset有序集合</strong></td>
-<td>ZipList、SkipList</td>
-<td>和散列一样，用于存储键值对</td>
-<td>字符串成员与浮点数分数之间的有序映射；元素的排列顺序由分数的大小决定；包含方法有添加、获取、删除单个元素以及根据分值范围或成员来获取元素。</td>
+<td>处理数据</td>
+<td>主线程遍历这N个就绪FD，执行read和命令处理。</td>
+<td>运行</td>
 </tr>
 </tbody></table>
-<ul>
-<li>五种数据类型的应用场景：<ul>
-<li><strong>String类型</strong>：缓存对象、常规计数、分布式锁、共享session信息等；</li>
-<li><strong>List类型</strong>：消息队列（问题：1. 生产者需要自行实现全局唯一ID；2. 不能以消费组形式消费数据）等。</li>
-<li><strong>Hash类型</strong>：缓存对象、购物车等；</li>
-<li><strong>Set类型</strong>：聚合计算（并集、交集、差集）场景，比如点赞、共同关注、抽奖活动等。</li>
-<li><strong>Zset类型</strong>：排序场景，比如排行榜、电话和姓名排序等。</li>
-</ul>
-</li>
-<li>后续版本支持的四种数据类型，它们的应用场景：<ul>
-<li><strong>BitMap（2.2版新增）</strong>：二值状态统计的场景，比如签到、判断用户登录状态、连续签到用户总数等；</li>
-<li><strong>HyperLogLog（2.8版新增）</strong>：海量数据基数统计的场景，比如百万级网页UV计数等；</li>
-<li><strong>GEO（3.2版新增）</strong>：存储地理位置信息的场景，比如滴滴叫车；</li>
-<li><strong>Stream（5.0版新增）</strong>：消息队列，相比于基于List类型实现的消息队列，有这两个特有的特性：自动生成全局唯一消息ID，支持以消费组的形式消费数据。<br><img src="redis%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84.png" alt="redis数据结构"></li>
-</ul>
-</li>
-</ul>
-<h2 id="Zset底层是怎么实现的？"><a href="#Zset底层是怎么实现的？" class="headerlink" title="Zset底层是怎么实现的？"></a>Zset底层是怎么实现的？</h2><p>Zset类型的底层数据结构是由压缩列表或跳表实现的：</p>
-<ul>
-<li>如果有序集合的元素个数小于128个，并且每个元素的值小于64字节时，Redis会使用压缩列表作为Zset类型的底层数据结构；</li>
-<li>如果有序集合的元素不满足上面的条件，Redis会使用跳表作为Zset类型的底层数据结构；<br>在Redis 7.0中，压缩列表数据结构已经废弃了，交由listpack数据结构来实现了。</li>
-</ul>
-<h2 id="跳表是怎么实现的？"><a href="#跳表是怎么实现的？" class="headerlink" title="跳表是怎么实现的？"></a>跳表是怎么实现的？</h2><ul>
-<li>链表在查找元素的时候，因为需要逐一查找，所以查询效率非常低，时间复杂度是$O(N)$，于是就出现了跳表。跳表是在链表基础上改进过来的，实现了一种【多层】的有序链表，这样的好处是能<strong>快速定位数据</strong>。<br><img src="%E8%B7%B3%E8%A1%A8%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84.png" alt="跳表数据结构"></li>
-</ul>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> <span class="title class_">zskiplistNode</span> &#123;</span><br><span class="line">    <span class="comment">//Zset 对象的元素值</span></span><br><span class="line">    sds ele;</span><br><span class="line">    <span class="comment">//元素权重值</span></span><br><span class="line">    <span class="type">double</span> score;</span><br><span class="line">    <span class="comment">//后向指针</span></span><br><span class="line">    <span class="keyword">struct</span> <span class="title class_">zskiplistNode</span> *backward;</span><br><span class="line">  </span><br><span class="line">    <span class="comment">//节点的level数组，保存每层上的前向指针和跨度</span></span><br><span class="line">    <span class="keyword">struct</span> <span class="title class_">zskiplistLevel</span> &#123;</span><br><span class="line">        <span class="keyword">struct</span> <span class="title class_">zskiplistNode</span> *forward;</span><br><span class="line">        <span class="type">unsigned</span> <span class="type">long</span> span;</span><br><span class="line">    &#125; level[];</span><br><span class="line">&#125; zskiplistNode;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>Zset 对象要同时保存【<strong>元素</strong>】和【<strong>元素的权重</strong>】，对应到跳表节点结构里就是SDS类型的ele变量和double类型的score变量。每个跳表节点都有一个后向指针（<code>struct zskiplistNode *backward</code>），指向前一个节点，目的是为了<font color="#ff0000">方便从跳表的尾节点开始访问节点</font>，这样倒序查找时很方便。</li>
-<li>跳表是一个带有层级关系的链表，而且每一层级可以包含多个节点，每一个节点通过指针连接起来，实现这一特性就是靠跳表节点结构体中的<code>zskiplistLevel</code>结构体类型的level数组。</li>
-<li>level数组中的每一个元素代表跳表的一层，也就是由zskiplistLevel结构体表示，比如<code>level[0]</code>就表示第一层，<code>level[1]</code>就表示第二层。zskiplistLevel结构体里定义了【<strong>指向下一跳表节点的指针</strong>】和【<strong>跨度</strong>】，跨度是用来记录两个节点之间的距离。<br><img src="%E8%B7%B3%E8%A1%A8%E8%B7%A8%E5%BA%A6.png" alt="跳表跨度"></li>
-<li>Redis跳表在创建节点的时候，随机生成每个节点的层数，并没有严格维持相邻两层的节点数量比例为2:1的情况。</li>
-<li>具体的做法是，跳表在创建节点的时候，会生成范围为$[0-1]$的一个随机数，如果这个随机数小于0.25（相当于概率25%），那么层数就增加1层，然后继续生成下一个随机数，直到随机数的结果大于0.25结束，最终确定该节点的层数。（【跳表是怎么设置层高的？】的答案）。</li>
-<li>这样的做法相当于**每增加一层的概率不超过25%**，层数越高，概率越多，层高最大限制是64。在创建跳表头节点时，会直接创建64层高的头节点。</li>
-</ul>
-<h2 id="面试——跳表"><a href="#面试——跳表" class="headerlink" title="面试——跳表"></a>面试——跳表</h2><ul>
-<li>跳表（SkipList）本质上是一种可以通过“<strong>多级索引</strong>”进行快速查找的有序链表。它利用空间换时间的思想，把普通链表的查找复杂度从$O(N)$降到了$O(\log N)$，性能可以媲美红黑树，但实现更简单。</li>
-<li>它的结构可以分为两部分：<ul>
-<li><strong>最底层（L0）</strong>：是一个包含所有数据的<font color="#ff0000">有序双向链表</font>。</li>
-<li><strong>上层索引（L1, L2,…）</strong>：是在底层链表的基础上，<font color="#ff0000">每隔一段距离提取一个节点作为索引</font>。层级越高，节点越稀疏。</li>
-</ul>
-</li>
-<li>查找时，从最高层索引开始，像“坐电梯”一样，发现目标太大就往右跳，发现目标太小就往下一层沉，直到找到数据。</li>
-<li>每个节点的层高是由$[0-1]$的随机数决定的，如果小于0.25，就增加一层；如果大于0.25，就停止。</li>
-</ul>
-<h2 id="Redis为什么使用跳表而不是B-树？"><a href="#Redis为什么使用跳表而不是B-树？" class="headerlink" title="Redis为什么使用跳表而不是B+树？"></a>Redis为什么使用跳表而不是B+树？</h2><ol>
-<li>内存 vs. 磁盘的设计初衷：<ol>
-<li><strong>B+数是为磁盘I/O优化的</strong>：B+树的设计核心是降低树的的高度，从而减少磁盘I/O次数。</li>
-<li><strong>Redis是纯内存操作</strong>：在内存中，没有磁盘I/O的瓶颈。内存中指针跳转的速度非常快。跳表虽然比B+树高（层数多），但在内存中多几次指针跳转的开销非常小。</li>
-</ol>
-</li>
-<li>实现复杂度与代码维护：<ol>
-<li>跳表（Skip List）：本质上是“<strong>多层链表</strong>”，其插入、删除逻辑主要是修改指针，代码实现非常简洁。</li>
-<li>B+树：插入和删除可能引发节点的分裂和合并，甚至需要<strong>对整棵树进行重平衡</strong>。实现一个健壮、高效的B+树非常复杂，代码量大且难以调试。</li>
-</ol>
-</li>
-<li>写入性能与重平衡代价：<ol>
-<li>B+树的写入抖动：当插入数据导致页分裂时，可能需要移动大量数据或改变树结构，这会产生性能抖动。</li>
-<li>跳表的局限性：跳表的插入和删除操作是局部的。插入一个节点只需要修改前后节点的指针，并根据概率随机生成层高。它不需要像红黑树或B+树那样进行全局的旋转或复杂的结构调整。</li>
-</ol>
-</li>
-</ol>
-<h2 id="String是用什么存储的？为什么不用C语言中的字符串？"><a href="#String是用什么存储的？为什么不用C语言中的字符串？" class="headerlink" title="String是用什么存储的？为什么不用C语言中的字符串？"></a>String是用什么存储的？为什么不用C语言中的字符串？</h2><p>Redis的String字符串是用SDS数据结构存储的。<br><img src="SDS%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84.png" alt="SDS数据结构"></p>
-<ul>
-<li><code>len</code>，记录了字符串长度。这样获取字符串长度的时候，只需要返回这个成员变量值就行，时间复杂度只需要$O(1)$。</li>
-<li><code>alloc</code>，分配给字符数组的空间长度。这样在修改字符串的时候，可以通过<code>alloc - len</code> 计算出剩余的空间大小，可以用来判断空间是否满足修改需求，如果不满足的话，就会自动将SDS的空间扩展至执行修改所需的大小，然后才执行实际的修改操作，所以使用SDS既不需要手动修改SDS的空间大小，也不会出现前面所说的缓冲区溢出的问题。</li>
-<li><code>flags</code>，用来表示不同类型的SDS。一共设计了5种类型，分别是<code>sdshdr5</code>、<code>sdshdr8</code>、<code>sdshdr16</code>、<code>sdshdr32</code>、<code>sdshdr64</code>。</li>
-<li><code>buf[]</code>，字符数组，用来保存实际数据。不仅可以保存字符串，也可以保存二进制数据。</li>
-</ul>
-<h3 id="相比于C语言的优势："><a href="#相比于C语言的优势：" class="headerlink" title="相比于C语言的优势："></a>相比于C语言的优势：</h3><ul>
-<li><strong>$O(1)$复杂度获取字符串的长度</strong>。C语言需要遍历，时间复杂度是$O(N)$。</li>
-<li><strong>二进制安全</strong>。因为SDS不需要用”\0”字符来标识字符串结尾了，而是有个专门的len成员变量来记录长度，所以可以存储包含”\0”的数据。但是SDS为了兼容部分C语言标准库的函数，SDS字符串结尾还是会加上”\0”字符。而C语言会通过”\0”来判断字符串的结束，所以不能存储任何带有”\0”的字符串。</li>
-<li><strong>不会发生缓冲区溢出</strong>。Redis的SDS结构里引入了<code>alloc</code>和<code>len</code>成员变量，这样SDS API通过<code>alloc - len</code>计算，可以算出剩余可用的空间大小，这样在对字符串做修改的时候，就可以由程序内部判断缓冲区大小是否足够用。当判断出缓冲区大小不够用时，Redis会自动将扩大SDS的空间大小，以满足修改所需的大小。而C语言需要开发者来保证缓冲区大小。</li>
-</ul>
 
                 
             </div>
@@ -612,7 +562,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://lixrangel.com/2025/12/23/java-ba-gu/redis/redis-shu-ju-jie-gou/">http://lixrangel.com/2025/12/23/java-ba-gu/redis/redis-shu-ju-jie-gou/</a>
+                    <a href="http://lixrangel.com/2025/12/24/java-ba-gu/redis/xian-cheng-mo-xing/">http://lixrangel.com/2025/12/24/java-ba-gu/redis/xian-cheng-mo-xing/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -827,9 +777,10 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;Previous</div>
+                <i class="far fa-dot-circle"></i>&nbsp;Current
+            </div>
             <div class="card">
                 <a href="/2025/12/24/java-ba-gu/redis/xian-cheng-mo-xing/">
                     <div class="card-image">
@@ -847,9 +798,9 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2025-12-24
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2025-12-24
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
@@ -858,6 +809,7 @@
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
@@ -880,13 +832,13 @@
                 Next&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2025/12/20/java-ba-gu/mysql/mysql-jia-gou/">
+                <a href="/2025/12/23/java-ba-gu/redis/redis-shu-ju-jie-gou/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/16.jpg" class="responsive-img" alt="MySQL架构">
+                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="Redis数据结构">
                         
-                        <span class="card-title">MySQL架构</span>
+                        <span class="card-title">Redis数据结构</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -897,7 +849,7 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2025-12-20
+                                <i class="far fa-clock fa-fw icon-date"></i>2025-12-23
                             </span>
                         <span class="publish-author">
                             
@@ -914,8 +866,8 @@
                         <span class="chip bg-color">八股</span>
                     </a>
                     
-                    <a href="/tags/MySQL/">
-                        <span class="chip bg-color">MySQL</span>
+                    <a href="/tags/Redis/">
+                        <span class="chip bg-color">Redis</span>
                     </a>
                     
                 </div>
