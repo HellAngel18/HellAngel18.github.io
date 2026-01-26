@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Redis缓存淘汰和过期删除, 地狱天使&#39;s Blog">
+    <meta name="keywords" content="Redis持久化, 地狱天使&#39;s Blog">
     <meta name="description" content="欢迎来到我的世界">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>Redis缓存淘汰和过期删除 | 地狱天使&#39;s Blog</title>
+    <title>Redis持久化 | 地狱天使&#39;s Blog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -311,12 +311,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/0.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/1.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Redis缓存淘汰和过期删除</h1>
+                    <h1 class="description center-align post-title">Redis持久化</h1>
                 </div>
             </div>
         </div>
@@ -452,7 +452,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>Publish Date:&nbsp;&nbsp;
-                    2025-12-26
+                    2025-12-27
                 </div>
                 
 
@@ -473,34 +473,76 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="Redis过期删除策略"><a href="#Redis过期删除策略" class="headerlink" title="Redis过期删除策略"></a>Redis过期删除策略</h2><ol>
-<li><strong>惰性删除</strong>：不主动删除过期键，<font color="#ff0000">只会在取出/查询key的时候才会对数据进行过期检查</font>，如果过期则删除该key。这种方式对CPU最友好，但是可能会造成太多过期key没有被删除。</li>
-<li><strong>定期删除</strong>：<font color="#ff0000">周期性地随机从设置了过期时间的key中抽查一批</font>，然后逐个检查这些key是否过期，过期就删除key。相比于惰性删除，定期删除对内存更友好，对CPU不太友好。</li>
-<li>Redis选择「<strong>惰性删除+定期删除</strong>」这两种策略配合使用，以求在合理使用CPU时间和避免内存浪费之间取得平衡。<br>惰性删除的流程图：<br><img src="%E6%83%B0%E6%80%A7%E5%88%A0%E9%99%A4%E6%B5%81%E7%A8%8B%E5%9B%BE.png#pic_center" alt="惰性删除流程图"><br>定期删除流程图：<br><img src="%E5%AE%9A%E6%9C%9F%E5%88%A0%E9%99%A4%E6%B5%81%E7%A8%8B%E5%9B%BE.png#pic_center" alt="定期删除流程图"><br>定期删除参数：<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> ACTIVE_EXPIRE_CYCLE_FAST_DURATION 1000 <span class="comment">/* Microseconds. */</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> ACTIVE_EXPIRE_CYCLE_SLOW_TIME_PERC 25 <span class="comment">/* Max % of CPU to use. */</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> ACTIVE_EXPIRE_CYCLE_ACCEPTABLE_STALE 10 <span class="comment">/* % of stale keys after which</span></span></span><br><span class="line"><span class="comment"><span class="meta">                                                   we do extra efforts. */</span></span></span><br></pre></td></tr></table></figure></li>
-</ol>
-<h2 id="大量key集中过期怎么办？"><a href="#大量key集中过期怎么办？" class="headerlink" title="大量key集中过期怎么办？"></a>大量key集中过期怎么办？</h2><ol>
-<li><strong>尽量避免key集中过期</strong>：在设置键的过期时间时尽量随机一点。</li>
-<li><strong>开启lazy free机制</strong>：修改<code>redis.conf</code>配置文件，将<code>lazyfree-lazy-expire</code>参数设置为yes，即可开启lazy free机制。开启lazy free机制后，Redis会<font color="#ff0000">在后台异步删除过期的key</font>，不会阻塞主线程的运行，从而降低对Redis性能的影响。</li>
-</ol>
-<h2 id="内存淘汰策略"><a href="#内存淘汰策略" class="headerlink" title="内存淘汰策略"></a>内存淘汰策略</h2><ul>
-<li>Redis的内存淘汰策略<strong>只有在运行内存达到了配置的最大内存阈值时才会触发</strong>，这个阈值是通过<code>redis.conf</code>的<code>maxmemory</code>参数来定义的。64位操作系统下，<code>maxmemory</code>默认为0，表示不限制内存大小。32位操作系统下，默认的最大内存值是3GB。</li>
-<li>redis提供了6种内存淘汰策略：<ul>
-<li><strong>volatile-lru（least recently used）</strong>：从已设置过期时间的数据（<code>server.db[i].expires</code>）中挑选最久未使用的键的数据淘汰。</li>
-<li><strong>volatile-ttl</strong>：从已设置过期时间的数据（<code>server.db[i].expires</code>）中挑选将要过期的数据淘汰。</li>
-<li><strong>volatile- random</strong>：从已设置过期时间的数据（<code>server.db[i].expires</code>）中任意选择数据淘汰。</li>
-<li><strong>allkeys-lru（least recently used）</strong>：从所有数据（<code>server.db[i].dict</code>）中移除最近最少使用的数据淘汰。</li>
-<li><strong>allkeys-random</strong>：从所有数据（<code>server.db[i].dict</code>）中任意选择数据淘汰。</li>
-<li><strong>no-eviction（默认内存淘汰策略）</strong>：禁止驱逐数据（也就是不淘汰），当内存不足以容纳新写入数据时，新写入操作会报错。</li>
+                <h2 id="Redis持久化方式"><a href="#Redis持久化方式" class="headerlink" title="Redis持久化方式"></a>Redis持久化方式</h2><ul>
+<li><strong>快照（snapshotting，RDB）</strong>：将某一时刻的内存数据，以二进制的方式写入磁盘。</li>
+<li><strong>只追加文件（append-only file，AOF）</strong>：每执行一条写操作命令，就把该命令以追加的方式写入到一个文件里。</li>
+<li>ROB和AOF的混合持久化。</li>
+</ul>
+<h2 id="RDB持久化"><a href="#RDB持久化" class="headerlink" title="RDB持久化"></a>RDB持久化</h2><ul>
+<li>Redis可以通过创建快照来获得存储在内存里面的数据<strong>在某个时间点上的副本</strong>。Redis创建快照之后，可以<strong>将快照复制到其他服务器</strong>从而创建具有相同数据的服务器副本（Redis主从结构，主要用来提高Redis性能），还可以将快照留在原地以便重启服务器的时候使用。RDB记录的就是数据，而不是操作。</li>
+<li>Redis提供了两个命令来生成RDB快照文件，区别在于是否在【主线程】里执行：<ul>
+<li><code>save</code>：在主线程生成RDB文件，同步保存操作，会阻塞Redis主线程；</li>
+<li><code>bgsave</code>：fork出一个子进程，子进程执行，不会阻塞Redis主线程，默认选项。</li>
 </ul>
 </li>
-<li>4.0版本后增加以下两种：<ul>
-<li><strong>volatile-lfu（least frequently used）</strong>：从已设置过期时间的数据（<code>server.db[i].expires</code>）中挑选最不经常使用的数据淘汰。</li>
-<li><strong>allkeys-lfu（least frequently used）</strong>：从所有数据（<code>server.db[i].dict</code>）中移除最不经常使用的数据淘汰。<blockquote>
-<p>lru是时间，lfu是频率。</p>
+</ul>
+<h2 id="AOF持久化"><a href="#AOF持久化" class="headerlink" title="AOF持久化"></a>AOF持久化</h2><ul>
+<li>与快照持久化相比，AOF持久化的实时性更好。默认情况下Redis没有开启AOF方式的持久化（Redis6.0之后已经默认是开启了），可以通过<code>appendonly</code>参数开启。</li>
+<li>开启AOF持久化后每执行一条会更改Redis中的数据的命令，Redis就会将该命令写入到<strong>AOF缓冲区</strong><code>server.aof_buf</code>中，然后再写入到AOF文件中（此时还在<strong>系统内核缓冲区</strong>未同步到磁盘），最后再根据<strong>持久化方式</strong>（fsync策略）的配置来决定何时将系统内核缓冲区的数据同步到硬盘中。（只有同步到磁盘中才算持久化保存了，否则依然存在数据丢失的风险，比如说：系统内核缓冲区的数据还未同步，磁盘机器就宕机了，那这部分数据就算丢失了）。</li>
+</ul>
+<h2 id="AOF工作基本流程"><a href="#AOF工作基本流程" class="headerlink" title="AOF工作基本流程"></a>AOF工作基本流程</h2><ol>
+<li><strong>命令追加（append）</strong>：所有的写命令会追加到AOF缓冲区中。</li>
+<li><strong>文件写入（write）</strong>：调用<font color="#ff0000">write函数</font>（系统调用），write将数据写入到了系统内核缓冲区之后直接返回了（延迟写）。<blockquote>
+<p>此时还没有同步到磁盘。</p>
 </blockquote>
 </li>
+<li><strong>文件同步（fsync）</strong>：根据你在<code>redis.conf</code>文件里<code>appendfsync</code>配置的策略，Redis会在不同的时机调用<code>fsync</code>函数（系统调用）。<code>fsync</code>针对单个文件操作，对其进行强制硬盘同步（文件在内核缓冲区里的数据写到硬盘），<code>fsync</code>将阻塞直到写入磁盘完成后返回，保证了数据持久化。</li>
+<li><strong>文件重写（rewrite）</strong>：随着AOF文件越来越大，需要定期对AOF文件进行重写，达到压缩的目的。</li>
+<li><strong>重启加载（load）</strong>：当Redis重启时，可以加载AOF文件进行数据恢复。<br><img src="AOF%E5%B7%A5%E4%BD%9C%E5%9F%BA%E6%9C%AC%E6%B5%81%E7%A8%8B.png" alt="AOF工作基本流程"></li>
+</ol>
+<h2 id="AOF持久化方式有哪些？"><a href="#AOF持久化方式有哪些？" class="headerlink" title="AOF持久化方式有哪些？"></a>AOF持久化方式有哪些？</h2><p>三种<code>fsync</code>策略：</p>
+<ol>
+<li><code>appendfsync always</code>：主线程调用<code>write</code>执行写操作后，会<strong>立刻调用</strong><code>fsync</code>函数同步AOF文件（刷盘）。<strong>主线程会阻塞</strong>，直到<code>fsync</code>将数据完全刷到磁盘后才会返回。这种方式数据最安全，理论上不会有任何数据丢失。但因为每个写操作都会同步阻塞主线程，所以性能极差。</li>
+<li><code>appendfsync everysec</code>：主线程调用<code>write</code>执行写操作后<strong>立即返回</strong>，由<strong>后台线程</strong>（<code>aof_fsync</code>线程）<strong>每秒钟</strong>调用<code>fsync</code>函数（系统调用）同步一次AOF文件。这种方式<strong>主线程的性能基本不受影响</strong>。在性能和数据安全之间做出了绝佳的平衡。不过，在Redis异常宕机时，最多可能丢失最近1秒内的数据。</li>
+<li><code>appendfsync no</code>：主线程调用<code>write</code>执行写操作后立即返回，让<strong>操作系统决定</strong>何时进行同步，Linux下一般为30秒一次（<code>write</code>但不<code>fsync</code>，<code>fsync</code>的时机由操作系统决定）。这种方式性能最好，因为避免了<code>fsync</code>的阻塞。但数据安全性最差，宕机时丢失的数据量不可控，取决于操作系统上一次同步的时间点。</li>
+</ol>
+<h2 id="AOF的重写机制"><a href="#AOF的重写机制" class="headerlink" title="AOF的重写机制"></a>AOF的重写机制</h2><ol>
+<li><strong>Fork子进程</strong>：Redis主进程fork出一个子进程（此时利用操作系统的写时复制Copy-On-Write机制，子进程拥有父进程那一瞬间的内存数据快照）。</li>
+<li><strong>子进程写新的AOF文件</strong>：子进程不关心旧的AOF文件，它直接遍历内存中的数据。如果内存里有<code>key1 = 10000</code>（他可能在旧的AOF文件中是10000条INCR命令），它就在新的临时AOF文件里写一条<code>SET key1 10000</code>；如果内存里有一个list，它就用一条<code>RPUSH</code>命令把里面所有元素记录下来。总结：<font color="#ff0000">用最少的命令，还原当前内存里的数据状态</font>。</li>
+<li><strong>父进程处理新请求（AOF重写缓冲区）</strong>：在子进程重写的过程中，主进程依然在接收客户端的新写入命令。主进程会把这些新命令写入到一个专门的<font color="#ff0000">AOF重写缓冲区</font>中，防止数据丢失。</li>
+<li><strong>合并</strong>：当子进程写完临时文件后，通知主进程。主进程把”AOF重写缓冲区”里积累的<font color="#ff0000">新命令追加到临时文件末尾</font>。</li>
+<li><strong>替换</strong>：用这个新的、体积很小的临时文件，原子地<strong>替换掉旧的AOF文件</strong>。</li>
+</ol>
+<h2 id="AOF和RDB的优缺点"><a href="#AOF和RDB的优缺点" class="headerlink" title="AOF和RDB的优缺点"></a>AOF和RDB的优缺点</h2><h3 id="AOF"><a href="#AOF" class="headerlink" title="AOF"></a>AOF</h3><ul>
+<li>优点：<ul>
+<li>AOF提供了更好的数据安全性，因为它默认每接收到一个写命令就会追加到文件末尾。即使Redis服务器宕机，也只会丢失最后一次写入前的数据。</li>
+<li>AOF支持<strong>多种同步策略</strong>，可以根据需要调整数据安全性和性能之间的平衡。</li>
+<li>AOF文件在redis启动时可以通过<strong>重写机制优化</strong>，减少文件体积，加快恢复速度。</li>
 </ul>
 </li>
+<li>缺点：<ul>
+<li>因为记录了每一个写操作，所以<strong>AOF文件通常比RDB文件更大</strong>，消耗更多的磁盘空间。</li>
+<li>频繁的磁盘IO操作可能会对redis的写入性能造成一定影响。</li>
+</ul>
+</li>
+</ul>
+<h3 id="RDB"><a href="#RDB" class="headerlink" title="RDB"></a>RDB</h3><ul>
+<li>优点：<ul>
+<li>RDB文件存储的内容是<strong>经过压缩的二进制数据</strong>，<strong>文件体积小</strong>，备份和恢复的速度非常快。</li>
+<li>RDB是在主线程之外通过fork子线程来进行的，不会阻塞服务器处理命令请求，对redis服务的性能影响较小。</li>
+<li>使用RDB文件恢复数据，<strong>直接解析还原数据即可</strong>，不需要一条一条地执行命令，速度非常快。</li>
+</ul>
+</li>
+<li>缺点：<ul>
+<li>RDB方式在两次快照之间，如果redis服务器发生故障，这段时间的数据会丢失。</li>
+<li>如果在RDB创建快照到恢复期间有写操作，恢复后的数据可能与故障前的数据不完全一致。</li>
+</ul>
+</li>
+</ul>
+<h2 id="两种持久化方式的使用场景"><a href="#两种持久化方式的使用场景" class="headerlink" title="两种持久化方式的使用场景"></a>两种持久化方式的使用场景</h2><ul>
+<li>Redis保存的数据丢失一些也没什么影响的话，可以选择使用RDB。</li>
+<li>不建议单独使用AOF，因为时不时地创建一个RDB快照可以进行数据库备份、更快的重启以及解决AOF引擎错误。</li>
+<li>如果保存的数据要求安全性比较高的话，建议同时开启RDB和AOF持久化或者开启RDB和AOF混合持久化。</li>
 </ul>
 
                 
@@ -528,7 +570,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://lixrangel.com/2025/12/26/java-ba-gu/redis/redis-huan-cun-tao-tai-he-guo-qi-shan-chu/">http://lixrangel.com/2025/12/26/java-ba-gu/redis/redis-huan-cun-tao-tai-he-guo-qi-shan-chu/</a>
+                    <a href="http://lixrangel.com/2025/12/27/java-ba-gu/redis/redis-chi-jiu-hua/">http://lixrangel.com/2025/12/27/java-ba-gu/redis/redis-chi-jiu-hua/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -743,9 +785,10 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;Previous</div>
+                <i class="far fa-dot-circle"></i>&nbsp;Current
+            </div>
             <div class="card">
                 <a href="/2025/12/27/java-ba-gu/redis/redis-chi-jiu-hua/">
                     <div class="card-image">
@@ -763,9 +806,9 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2025-12-27
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2025-12-27
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
@@ -774,6 +817,7 @@
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
@@ -796,13 +840,13 @@
                 Next&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2025/12/25/java-ba-gu/redis/redis-shi-wu/">
+                <a href="/2025/12/26/java-ba-gu/redis/redis-huan-cun-tao-tai-he-guo-qi-shan-chu/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/15.jpg" class="responsive-img" alt="Redis事务">
+                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="Redis缓存淘汰和过期删除">
                         
-                        <span class="card-title">Redis事务</span>
+                        <span class="card-title">Redis缓存淘汰和过期删除</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -813,7 +857,7 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2025-12-25
+                                <i class="far fa-clock fa-fw icon-date"></i>2025-12-26
                             </span>
                         <span class="publish-author">
                             
