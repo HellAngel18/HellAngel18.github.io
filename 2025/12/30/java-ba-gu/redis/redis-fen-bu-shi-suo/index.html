@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="关于我, 地狱天使&#39;s Blog">
+    <meta name="keywords" content="Redis分布式锁, 地狱天使&#39;s Blog">
     <meta name="description" content="欢迎来到我的世界">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>关于我 | 地狱天使&#39;s Blog</title>
+    <title>Redis分布式锁 | 地狱天使&#39;s Blog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -311,12 +311,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/6.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/10.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">关于我</h1>
+                    <h1 class="description center-align post-title">Redis分布式锁</h1>
                 </div>
             </div>
         </div>
@@ -430,9 +430,17 @@
             <div class="row tag-cate">
                 <div class="col s7">
                     
-                          <div class="article-tag">
-                            <span class="chip bg-color">No tag</span>
-                          </div>
+                    <div class="article-tag">
+                        
+                            <a href="/tags/%E5%85%AB%E8%82%A1/">
+                                <span class="chip bg-color">八股</span>
+                            </a>
+                        
+                            <a href="/tags/Redis/">
+                                <span class="chip bg-color">Redis</span>
+                            </a>
+                        
+                    </div>
                     
                 </div>
                 <div class="col s5 right-align">
@@ -444,7 +452,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>Publish Date:&nbsp;&nbsp;
-                    2021-07-31
+                    2025-12-30
                 </div>
                 
 
@@ -465,46 +473,40 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a><strong>前言</strong></h2><p>欢迎来到我的世界</p>
-<hr>
-<h2 id="关于我"><a href="#关于我" class="headerlink" title="关于我"></a><strong>关于我</strong></h2><ul>
-<li><p>随时随地在coding的女孩</p>
-</li>
-<li><p>学历：</p>
+                <h2 id="Redis分布式锁的实现原理？"><a href="#Redis分布式锁的实现原理？" class="headerlink" title="Redis分布式锁的实现原理？"></a>Redis分布式锁的实现原理？</h2><p><img src="redis%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81.png" alt="redis分布式锁"></p>
 <ul>
-<li>本科：南京师范大学 计算机科学与技术专业</li>
-<li>硕士：华东师范大学 计算机科学与技术专业（推免）    </li>
+<li>Redis本身可以被多个客户端共享访问，正好就是一个共享存储系统，可以用来保存分布式锁，而且redis的读写性能高，可以应对高并发的锁操作场景。Redis的SET命令有个<strong>NX参数可以实现「key不存在才插入」</strong>，所以可以用它来实现分布式锁：<ul>
+<li>如果key不存在，表示加锁成功；</li>
+<li>如果key存在，说明已经有人正在改，表示加锁失败。</li>
 </ul>
 </li>
-<li><p>能好好活着是我最大的愿望</p>
-</li>
-</ul>
-<hr>
-<h2 id="爱好"><a href="#爱好" class="headerlink" title="爱好"></a><strong>爱好</strong></h2><ul>
-<li><p>因为没有什么爱好所以什么都可以是我的爱好</p>
-<ul>
-<li>足球——Hala Madrid！</li>
-<li>追剧——什么都看一点</li>
-<li>coding——努力变得更强中</li>
+<li>基于Redis节点实现分布式锁时，对于加锁操作，我们需要满足三个条件：<ul>
+<li>加锁包括了<strong>读取锁变量</strong>、<strong>检查锁变量</strong>和<strong>设置锁变量值</strong>三个操作，但需要以原子操作的方式完成，所以使用SET命令带上NX选项来实现加锁；</li>
+<li><strong>锁变量需要设置过期时间</strong>，以免客户端拿到锁后发生异常，导致锁一致无法释放，所以在SET命令执行时加上EX/PX选项，设置其过期时间；</li>
+<li>锁变量的值需要能区分来自不同客户端的加锁操作，以免在释放锁时，会释放其他客户端的锁，所以使用SET命令设置锁变量值时，<strong>每个客户端设置的值是一个唯一值</strong>，用于标识客户端；</li>
 </ul>
 </li>
-<li><p>其他的还有待挖掘，欢迎和我交流。</p>
-</li>
+<li>满足这三个条件的分布式命令如下，可以实现原子加锁：<code>SET lock_key unique_value NX PX 10000</code><ul>
+<li><code>lock_key</code>就是key键；</li>
+<li><code>unique_value</code>是客户端生成的唯一的标识，区分来自不同客户端的锁操作；</li>
+<li><code>NX</code>代表只在lock_key不存在时，才对lock_key进行设置操作；</li>
+<li><code>PX 1000</code>表示设置lock_key的过期时间为10s，这是为了避免客户端发生异常而无法释放锁。</li>
 </ul>
-<hr>
-<h2 id="社交"><a href="#社交" class="headerlink" title="社交"></a><strong>社交</strong></h2><ul>
-<li><p><strong>微博/QQ/微信</strong>   重度依赖症患者</p>
 </li>
-<li><p><strong>豆瓣/知乎/CSDN</strong>   偶尔使用</p>
-</li>
-<li><p><strong>Instagram/X/Line</strong>    这些真的挺难用的我觉得 但有时候不得不…（你懂的）<del>坏笑</del></p>
-</li>
+<li>而解锁的过程就是将lock_key键删除（<code>del lock_key</code>），但不能乱删，要保证执行操作的客户端就是加锁的客户端。所以解锁的时候，要先判断锁的<code>unique_value</code>是否为加锁客户端，是的话，才将lock_key键删除。</li>
+<li>可以看到，解锁是有<strong>判断身份+删除两个操作</strong>，这时就需要<strong>lua脚本</strong>来保证解锁的原子性，因为Redis在执行lua脚本时，可以以原子性的方式执行，保证了锁释放操作的原子性。<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">// 释放锁时，先比较 unique_value 是否相等，避免锁的误释放 </span><br><span class="line"><span class="keyword">if</span> redis.call(<span class="string">&quot;get&quot;</span>,KEYS[<span class="number">1</span>]) == ARGV[<span class="number">1</span>] <span class="keyword">then</span> </span><br><span class="line"><span class="keyword">return</span> redis.call(<span class="string">&quot;del&quot;</span>,KEYS[<span class="number">1</span>]) </span><br><span class="line"><span class="keyword">else</span> </span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span> </span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure></li>
 </ul>
-<hr>
-<h2 id="信念"><a href="#信念" class="headerlink" title="信念"></a><strong>信念</strong></h2><p><em>经济独立 精神独立 好好活着</em></p>
-<hr>
-<p>本Blog旨在记录一些我自己学习生活过程中的心得体会 所以文章大概都是随心写哈哈哈</p>
-<p>本网站依旧在开发中 如果有任何建议欢迎给我发邮件：<a href="mailto:&#x31;&#x31;&#x37;&#57;&#52;&#50;&#54;&#50;&#x36;&#x38;&#108;&#120;&#114;&#64;&#x67;&#x6d;&#x61;&#105;&#x6c;&#x2e;&#x63;&#x6f;&#109;">&#x31;&#x31;&#x37;&#57;&#52;&#50;&#54;&#50;&#x36;&#x38;&#108;&#120;&#114;&#64;&#x67;&#x6d;&#x61;&#105;&#x6c;&#x2e;&#x63;&#x6f;&#109;</a><br>很希望能找到志同道合的朋友一起交流 如果有朋友愿意跟我聊聊的 也欢迎给我发邮件<br>我暂时就想到这么多 未完待续…<br>感谢你的阅读 祝你生活愉快！</p>
+<h3 id="如果业务没跑完锁过期了怎么办？"><a href="#如果业务没跑完锁过期了怎么办？" class="headerlink" title="如果业务没跑完锁过期了怎么办？"></a>如果业务没跑完锁过期了怎么办？</h3><ul>
+<li>Redisson的Watch Dog（看门狗）</li>
+<li>自动续期：<ul>
+<li>当你加锁时不设置具体的过期时间，Redisson默认设置30s；</li>
+<li>它会<strong>启动一个后台守护线程（Watch Dog）</strong>；</li>
+<li>每隔10s它会检查一下，该线程是否还持有这把锁；</li>
+<li>如果还在，<strong>就重置过期时间为30s</strong></li>
+</ul>
+</li>
+<li>这就实现了，只要业务在跑，锁就永不过期；业务一停，锁在30s后自动释放。</li>
+</ul>
 
                 
             </div>
@@ -531,7 +533,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://lixrangel.com/2021/07/31/guan-yu-wo/">http://lixrangel.com/2021/07/31/guan-yu-wo/</a>
+                    <a href="http://lixrangel.com/2025/12/30/java-ba-gu/redis/redis-fen-bu-shi-suo/">http://lixrangel.com/2025/12/30/java-ba-gu/redis/redis-fen-bu-shi-suo/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -568,7 +570,15 @@
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
                         <div class="article-tag">
-                            <span class="chip bg-color">No tag</span>
+                            
+                                <a href="/tags/%E5%85%AB%E8%82%A1/">
+                                    <span class="chip bg-color">八股</span>
+                                </a>
+                            
+                                <a href="/tags/Redis/">
+                                    <span class="chip bg-color">Redis</span>
+                                </a>
+                            
                         </div>
                     
                 </div>
@@ -738,17 +748,18 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;Previous</div>
+                <i class="far fa-dot-circle"></i>&nbsp;Current
+            </div>
             <div class="card">
-                <a href="/2021/08/06/za-ji/za-ji-yi/">
+                <a href="/2025/12/30/java-ba-gu/redis/redis-fen-bu-shi-suo/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="杂记（一）">
+                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="Redis分布式锁">
                         
-                        <span class="card-title">杂记（一）</span>
+                        <span class="card-title">Redis分布式锁</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -758,9 +769,59 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-08-06
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2025-12-30
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-user fa-fw"></i>
+                            地狱天使
+                            
                         </span>
+                    </div>
+                </div>
+
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E5%85%AB%E8%82%A1/">
+                        <span class="chip bg-color">八股</span>
+                    </a>
+                    
+                    <a href="/tags/Redis/">
+                        <span class="chip bg-color">Redis</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                Next&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2025/12/29/java-ba-gu/redis/redis-ji-qun/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="Redis集群">
+                        
+                        <span class="card-title">Redis集群</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2025-12-29
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
@@ -772,49 +833,15 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E6%9D%82%E8%AE%B0/">
-                        <span class="chip bg-color">杂记</span>
+                    <a href="/tags/%E5%85%AB%E8%82%A1/">
+                        <span class="chip bg-color">八股</span>
+                    </a>
+                    
+                    <a href="/tags/Redis/">
+                        <span class="chip bg-color">Redis</span>
                     </a>
                     
                 </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                Current&nbsp;<i class="far fa-dot-circle"></i>
-            </div>
-            <div class="card">
-                <a href="/2021/07/31/guan-yu-wo/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="关于我">
-                        
-                        <span class="card-title">关于我</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            
-                        
-                    </div>
-                    <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-07-31
-                            </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-user fa-fw"></i>
-                            地狱天使
-                            
-                        </span>
-                    </div>
-                </div>
-
                 
             </div>
         </div>
