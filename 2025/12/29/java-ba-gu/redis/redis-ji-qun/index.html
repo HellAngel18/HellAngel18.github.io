@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="关于我, 地狱天使&#39;s Blog">
+    <meta name="keywords" content="Redis集群, 地狱天使&#39;s Blog">
     <meta name="description" content="欢迎来到我的世界">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>关于我 | 地狱天使&#39;s Blog</title>
+    <title>Redis集群 | 地狱天使&#39;s Blog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -311,12 +311,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/6.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/7.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">关于我</h1>
+                    <h1 class="description center-align post-title">Redis集群</h1>
                 </div>
             </div>
         </div>
@@ -430,9 +430,17 @@
             <div class="row tag-cate">
                 <div class="col s7">
                     
-                          <div class="article-tag">
-                            <span class="chip bg-color">No tag</span>
-                          </div>
+                    <div class="article-tag">
+                        
+                            <a href="/tags/%E5%85%AB%E8%82%A1/">
+                                <span class="chip bg-color">八股</span>
+                            </a>
+                        
+                            <a href="/tags/Redis/">
+                                <span class="chip bg-color">Redis</span>
+                            </a>
+                        
+                    </div>
                     
                 </div>
                 <div class="col s5 right-align">
@@ -444,7 +452,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>Publish Date:&nbsp;&nbsp;
-                    2021-07-31
+                    2025-12-29
                 </div>
                 
 
@@ -465,46 +473,72 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a><strong>前言</strong></h2><p>欢迎来到我的世界</p>
-<hr>
-<h2 id="关于我"><a href="#关于我" class="headerlink" title="关于我"></a><strong>关于我</strong></h2><ul>
-<li><p>随时随地在coding的女孩</p>
-</li>
-<li><p>学历：</p>
-<ul>
-<li>本科：南京师范大学 计算机科学与技术专业</li>
-<li>硕士：华东师范大学 计算机科学与技术专业（推免）    </li>
+                <h2 id="Redis主从同步"><a href="#Redis主从同步" class="headerlink" title="Redis主从同步"></a>Redis主从同步</h2><p>单节点的redis并发能力是有上限的，要进一步提高redis的并发能力，就需要搭建主从集群，实现读写分离。一般都是一主多从，主节点负责写数据，从节点负责读数据。</p>
+<h3 id="完全同步"><a href="#完全同步" class="headerlink" title="完全同步"></a>完全同步</h3><ul>
+<li>发生情况：<ul>
+<li><strong>初次同步</strong>：当一个从服务器（slave）首次连接到主服务器（master）时，会进行一次完全同步。</li>
+<li><strong>从服务器数据丢失</strong>：如果从服务器数据因为某种原因（如断电）丢失，会请求进行完全同步。</li>
+<li><strong>主服务器数据发生变化</strong>：如果从服务器长时间未与主服务器同步，导致数据差异太大，也可能触发完全同步。</li>
 </ul>
 </li>
-<li><p>能好好活着是我最大的愿望</p>
-</li>
-</ul>
-<hr>
-<h2 id="爱好"><a href="#爱好" class="headerlink" title="爱好"></a><strong>爱好</strong></h2><ul>
-<li><p>因为没有什么爱好所以什么都可以是我的爱好</p>
-<ul>
-<li>足球——Hala Madrid！</li>
-<li>追剧——什么都看一点</li>
-<li>coding——努力变得更强中</li>
+<li>完全同步过程：<ol>
+<li><strong>从节点发送命令</strong>：从节点向主节点发送<code>PSYNC ? -1</code>命令，请求同步数据（-1表示我是新来的，没有之前的同步速度）。</li>
+<li><strong>主节点确认同步</strong>：主节点收到命令后，判断需要进行完全同步，于是返回<code>FULLRESYNC &lt;runid&gt; &lt;offset&gt;</code>。<ul>
+<li><code>runid</code>：主节点的运行id；</li>
+<li><code>offset</code>：当前的复制偏移量。</li>
+<li>从节点保存这些信息。</li>
 </ul>
 </li>
-<li><p>其他的还有待挖掘，欢迎和我交流。</p>
+<li><strong>fork子进程生成RDB</strong>：主节点执行<code>BGSAVE</code>命令，fork出一个子进程，将当前内存中的全量数据生成RDB快照文件。</li>
+<li><strong>主节点发送RDB</strong>：RDB生成完成后，主节点通过网络将该文件发送给从节点。</li>
+<li><strong>从节点加载</strong>：从节点接收完RDB文件后，会先清空自己当前数据库中的所有数据库，将RDB文件写入本地磁盘，然后再从本地磁盘加载到内存。这个过程中<font color="#ff0000">从节点会阻塞</font>。（在清空旧数据之前，从节点依然会基于旧的数据版本对外提供服务）。</li>
+<li><strong>写入缓冲区</strong>：在主节点生成和发送RDB的这段时间里，<font color="#ff0000">主节点并没有阻塞写操作</font>。所有新接收到的写命令，会被写入到专门为该从节点分配的<font color="#ff0000">Replication Buffer（复制缓冲区）</font>中。</li>
+<li><strong>发送缓冲命令</strong>：当从节点RDB加载完成后，通知主节点。主节点将Replication Buffer 中<font color="#ff0000">积压的所有写命令发送给从节点</font>。</li>
+<li><strong>最终一致</strong>：<font color="#ff0000">从节点执行这些写命令</font>，此时主从节点的数据状态达到一致。之后双方进入“命令传播”阶段，进行持续的增量同步。<br><img src="Redis%E5%85%A8%E9%87%8F%E5%A4%8D%E5%88%B6.png" alt="Redis全量复制"></li>
+</ol>
 </li>
 </ul>
-<hr>
-<h2 id="社交"><a href="#社交" class="headerlink" title="社交"></a><strong>社交</strong></h2><ul>
-<li><p><strong>微博/QQ/微信</strong>   重度依赖症患者</p>
+<h3 id="增量同步"><a href="#增量同步" class="headerlink" title="增量同步"></a>增量同步</h3><ul>
+<li>增量同步是“断网重连”后的补救措施。</li>
+<li>增量同步过程：<ol>
+<li>从服务器在恢复网络后，会发送<code>PSYNC</code>命令给主服务器，此时的<code>PSYNC</code>命令里的offset参数不是-1；</li>
+<li>主服务器收到该命令后，然后用<code>CONTINUE</code>响应命令告诉从服务器接下来采用增量复制的方式同步数据；</li>
+<li>然后主服务器将主从服务器断线期间，所执行的写命令发送给从服务器，然后从服务器执行这些命令。</li>
+</ol>
 </li>
-<li><p><strong>豆瓣/知乎/CSDN</strong>   偶尔使用</p>
+<li>但是出现以下两种情况，增量同步会强制转为全量同步：<ul>
+<li><strong>RunID不匹配</strong>：说明master重启过，或者slave连到了一个新的master。</li>
+<li><strong>积压缓冲区溢出</strong>：slave掉线时间太长，导致所需的offset数据在环形缓冲区中已经被新数据覆盖了。此时master找不到就数据，只能发起全量同步。</li>
+</ul>
 </li>
-<li><p><strong>Instagram/X/Line</strong>    这些真的挺难用的我觉得 但有时候不得不…（你懂的）<del>坏笑</del></p>
+<li>主服务器怎么知道要将哪些增量数据发送给从服务器呢？<ul>
+<li><code>repl_backlog_buffer</code>，是一个「环形」缓冲区，用于主从服务器断连后，从中找到差异的数据；</li>
+<li><code>replication offset</code>，标记上面那个缓冲区的同步进度，主从服务器都有各自的偏移量，主服务器使用<code>master_repl_offset</code>来记录自己「写」到的位置，从服务器使用<code>slave_repl_offset</code>来记录自己「读」到的位置。</li>
+<li>如果判断出从服务器要复制的数据还在<code>repl_backlog_buffer</code>中，就执行增量同步；如果要复制的数据已经不在<code>repl_backlog_buffer</code>中，也就是这个期间主服务器更新了太多写命令覆盖掉了，那么就要执行完全同步。</li>
+</ul>
 </li>
 </ul>
-<hr>
-<h2 id="信念"><a href="#信念" class="headerlink" title="信念"></a><strong>信念</strong></h2><p><em>经济独立 精神独立 好好活着</em></p>
-<hr>
-<p>本Blog旨在记录一些我自己学习生活过程中的心得体会 所以文章大概都是随心写哈哈哈</p>
-<p>本网站依旧在开发中 如果有任何建议欢迎给我发邮件：<a href="mailto:&#x31;&#x31;&#x37;&#x39;&#52;&#x32;&#x36;&#50;&#x36;&#x38;&#108;&#x78;&#114;&#x40;&#103;&#x6d;&#x61;&#105;&#108;&#x2e;&#x63;&#x6f;&#x6d;">&#x31;&#x31;&#x37;&#x39;&#52;&#x32;&#x36;&#50;&#x36;&#x38;&#108;&#x78;&#114;&#x40;&#103;&#x6d;&#x61;&#105;&#108;&#x2e;&#x63;&#x6f;&#x6d;</a><br>很希望能找到志同道合的朋友一起交流 如果有朋友愿意跟我聊聊的 也欢迎给我发邮件<br>我暂时就想到这么多 未完待续…<br>感谢你的阅读 祝你生活愉快！</p>
+<h2 id="哨兵机制（Redis-Sentinel）"><a href="#哨兵机制（Redis-Sentinel）" class="headerlink" title="哨兵机制（Redis Sentinel）"></a>哨兵机制（Redis Sentinel）</h2><p>当redis集群的主节点故障时，Sentinel集群将从剩余的从节点中选举一个新的主节点，有以下步骤：</p>
+<ol>
+<li><strong>故障节点主观下线</strong>：Sentinel集群的每一个Sentinel节点会定时对redis集群的所有节点发心跳包检测节点是否正常。如果一个节点在<code>down-after-milliseconds</code>时间内没有回复Sentinel节点的心跳包，则该redis节点被该Sentinel节点主观下线。</li>
+<li><strong>故障节点客观下线</strong>：当节点被一个Sentinel节点记为主观下线时，还需要Sentinel集群的其他Sentinel节点共同判断为主观下线才行。该Sentinel节点会询问其他Sentinel节点，如果Sentinel集群中超过<code>quorum</code>数量的Sentinel节点认为该redis节点主观下线，则该redis节点客观下线。如果客观下线的redis节点是从节点或者是Sentinel节点，则操作到此为止；如果<font color="#ff0000">客观下线的redis节点为主节点，则开始故障转移</font>，从从节点中选举一个节点升级为主节点。</li>
+<li><strong>Sentinel集群选取leader</strong>：如果需要从redis集群选举一个节点为主节点，首先需要<font color="#ff0000">从Sentinel集群中选举一个Sentinel节点作为leader</font>。每一个Sentinel节点都可以成为leader，当一个Sentinel节点确认redis集群的主节点主观下线后，会请求其他Sentinel节点要求将自己选举为leader。被请求的Sentinel节点如果没有同意过其他Sentinel节点的选举请求，则同意该请求（选举票数+1），否则不同意。如果一个Sentinel节点获得的选举票数达到leader最低票数（<code>quorum</code>和Sentinel节点数/2 + 1的最大值），则该Sentinel节点选举为leader，否则重新进行选举。</li>
+<li><strong>Sentinel leader决定新主节点</strong>：当Sentinel集群选举出Sentinel leader后，由Sentinel leader从redis从节点中选择一个redis节点作为主节点：<ul>
+<li>过滤故障（网络状况不好）的节点，就是主节点和从节点断开的时间太大。</li>
+<li>选择优先级<code>slave-priority</code>（可以通过配置文件配置）最大的从节点作为主节点，如果不在则继续。</li>
+<li>如果<code>slave-priority</code>一样，则判断slave节点的offset值，最大优先级越高，也就是复制进度最大的从节点。</li>
+<li>最后是判断slave节点运行id的大小，越小优先级越高。<br><img src="redis%E9%80%89%E4%B8%BE%E6%96%B0%E4%B8%BB%E8%8A%82%E7%82%B9.png" alt="redis选举新主节点"></li>
+</ul>
+</li>
+</ol>
+<h2 id="Redis集群模式（Redis-Cluster）"><a href="#Redis集群模式（Redis-Cluster）" class="headerlink" title="Redis集群模式（Redis Cluster）"></a>Redis集群模式（Redis Cluster）</h2><ul>
+<li>当Redis缓存数据量大到一台服务器无法缓存时，就需要使用Redis切片集群（Redis Cluster）方案，<strong>它将数据分布在不同的服务器上</strong>（多个master，每个master多个slave），以此来降低系统对单主节点的依赖，从而提高Redis服务的读写性能。</li>
+<li>Redis Cluster方案采用哈希槽（Hash Slot），来处理数据和节点之间的映射关系。一个切片集群共有16384个哈希槽，这些哈希槽类似于数据分区，每个键值对都会根据它的key，被映射到一个哈希槽中，具体执行过程分为两大步：<ul>
+<li>根据键值对的key，按照CRC16算法计算一个16bit的值。</li>
+<li>再用16bit值对16384取模，得到0～16383范围内的模数，每个模数代表一个相应编号的哈希槽。</li>
+</ul>
+</li>
+</ul>
 
                 
             </div>
@@ -531,7 +565,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://lixrangel.com/2021/07/31/guan-yu-wo/">http://lixrangel.com/2021/07/31/guan-yu-wo/</a>
+                    <a href="http://lixrangel.com/2025/12/29/java-ba-gu/redis/redis-ji-qun/">http://lixrangel.com/2025/12/29/java-ba-gu/redis/redis-ji-qun/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -568,7 +602,15 @@
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
                         <div class="article-tag">
-                            <span class="chip bg-color">No tag</span>
+                            
+                                <a href="/tags/%E5%85%AB%E8%82%A1/">
+                                    <span class="chip bg-color">八股</span>
+                                </a>
+                            
+                                <a href="/tags/Redis/">
+                                    <span class="chip bg-color">Redis</span>
+                                </a>
+                            
                         </div>
                     
                 </div>
@@ -738,17 +780,18 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;Previous</div>
+                <i class="far fa-dot-circle"></i>&nbsp;Current
+            </div>
             <div class="card">
-                <a href="/2021/08/06/za-ji/za-ji-yi/">
+                <a href="/2025/12/29/java-ba-gu/redis/redis-ji-qun/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="杂记（一）">
+                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="Redis集群">
                         
-                        <span class="card-title">杂记（一）</span>
+                        <span class="card-title">Redis集群</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -758,9 +801,59 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-08-06
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2025-12-29
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-user fa-fw"></i>
+                            地狱天使
+                            
                         </span>
+                    </div>
+                </div>
+
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E5%85%AB%E8%82%A1/">
+                        <span class="chip bg-color">八股</span>
+                    </a>
+                    
+                    <a href="/tags/Redis/">
+                        <span class="chip bg-color">Redis</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                Next&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2025/12/28/java-ba-gu/redis/redis-chang-jing/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="Redis场景">
+                        
+                        <span class="card-title">Redis场景</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2025-12-28
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
@@ -772,49 +865,15 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E6%9D%82%E8%AE%B0/">
-                        <span class="chip bg-color">杂记</span>
+                    <a href="/tags/%E5%85%AB%E8%82%A1/">
+                        <span class="chip bg-color">八股</span>
+                    </a>
+                    
+                    <a href="/tags/Redis/">
+                        <span class="chip bg-color">Redis</span>
                     </a>
                     
                 </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                Current&nbsp;<i class="far fa-dot-circle"></i>
-            </div>
-            <div class="card">
-                <a href="/2021/07/31/guan-yu-wo/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="关于我">
-                        
-                        <span class="card-title">关于我</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            
-                        
-                    </div>
-                    <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-07-31
-                            </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-user fa-fw"></i>
-                            地狱天使
-                            
-                        </span>
-                    </div>
-                </div>
-
                 
             </div>
         </div>

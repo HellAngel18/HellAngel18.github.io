@@ -6,7 +6,7 @@
   <link href="http://lixrangel.com/atom.xml" rel="self"/>
   
   <link href="http://lixrangel.com/"/>
-  <updated>2026-01-26T07:34:19.458Z</updated>
+  <updated>2026-01-26T07:36:02.974Z</updated>
   <id>http://lixrangel.com/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Redis集群</title>
+    <link href="http://lixrangel.com/2025/12/29/java-ba-gu/redis/redis-ji-qun/"/>
+    <id>http://lixrangel.com/2025/12/29/java-ba-gu/redis/redis-ji-qun/</id>
+    <published>2025-12-28T16:00:00.000Z</published>
+    <updated>2026-01-26T07:36:02.974Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="Redis主从同步"><a href="#Redis主从同步" class="headerlink" title="Redis主从同步"></a>Redis主从同步</h2><p>单节点的redis并发能力是有上限的，要进一步提高redis的并发能力，就需要搭建主从集群，实现读写分离。一般都是一主多从，主节点负责写数据，从节点负责读数据。</p><h3 id="完全同步"><a href="#完全同步" class="headerlink" title="完全同步"></a>完全同步</h3><ul><li>发生情况：<ul><li><strong>初次同步</strong>：当一个从服务器（slave）首次连接到主服务器（master）时，会进行一次完全同步。</li><li><strong>从服务器数据丢失</strong>：如果从服务器数据因为某种原因（如断电）丢失，会请求进行完全同步。</li><li><strong>主服务器数据发生变化</strong>：如果从服务器长时间未与主服务器同步，导致数据差异太大，也可能触发完全同步。</li></ul></li><li>完全同步过程：<ol><li><strong>从节点发送命令</strong>：从节点向主节点发送<code>PSYNC ? -1</code>命令，请求同步数据（-1表示我是新来的，没有之前的同步速度）。</li><li><strong>主节点确认同步</strong>：主节点收到命令后，判断需要进行完全同步，于是返回<code>FULLRESYNC &lt;runid&gt; &lt;offset&gt;</code>。<ul><li><code>runid</code>：主节点的运行id；</li><li><code>offset</code>：当前的复制偏移量。</li><li>从节点保存这些信息。</li></ul></li><li><strong>fork子进程生成RDB</strong>：主节点执行<code>BGSAVE</code>命令，fork出一个子进程，将当前内存中的全量数据生成RDB快照文件。</li><li><strong>主节点发送RDB</strong>：RDB生成完成后，主节点通过网络将该文件发送给从节点。</li><li><strong>从节点加载</strong>：从节点接收完RDB文件后，会先清空自己当前数据库中的所有数据库，将RDB文件写入本地磁盘，然后再从本地磁盘加载到内存。这个过程中<font color="#ff0000">从节点会阻塞</font>。（在清空旧数据之前，从节点依然会基于旧的数据版本对外提供服务）。</li><li><strong>写入缓冲区</strong>：在主节点生成和发送RDB的这段时间里，<font color="#ff0000">主节点并没有阻塞写操作</font>。所有新接收到的写命令，会被写入到专门为该从节点分配的<font color="#ff0000">Replication Buffer（复制缓冲区）</font>中。</li><li><strong>发送缓冲命令</strong>：当从节点RDB加载完成后，通知主节点。主节点将Replication Buffer 中<font color="#ff0000">积压的所有写命令发送给从节点</font>。</li><li><strong>最终一致</strong>：<font color="#ff0000">从节点执行这些写命令</font>，此时主从节点的数据状态达到一致。之后双方进入“命令传播”阶段，进行持续的增量同步。<br><img src="Redis%E5%85%A8%E9%87%8F%E5%A4%8D%E5%88%B6.png" alt="Redis全量复制"></li></ol></li></ul><h3 id="增量同步"><a href="#增量同步" class="headerlink" title="增量同步"></a>增量同步</h3><ul><li>增量同步是“断网重连”后的补救措施。</li><li>增量同步过程：<ol><li>从服务器在恢复网络后，会发送<code>PSYNC</code>命令给主服务器，此时的<code>PSYNC</code>命令里的offset参数不是-1；</li><li>主服务器收到该命令后，然后用<code>CONTINUE</code>响应命令告诉从服务器接下来采用增量复制的方式同步数据；</li><li>然后主服务器将主从服务器断线期间，所执行的写命令发送给从服务器，然后从服务器执行这些命令。</li></ol></li><li>但是出现以下两种情况，增量同步会强制转为全量同步：<ul><li><strong>RunID不匹配</strong>：说明master重启过，或者slave连到了一个新的master。</li><li><strong>积压缓冲区溢出</strong>：slave掉线时间太长，导致所需的offset数据在环形缓冲区中已经被新数据覆盖了。此时master找不到就数据，只能发起全量同步。</li></ul></li><li>主服务器怎么知道要将哪些增量数据发送给从服务器呢？<ul><li><code>repl_backlog_buffer</code>，是一个「环形」缓冲区，用于主从服务器断连后，从中找到差异的数据；</li><li><code>replication offset</code>，标记上面那个缓冲区的同步进度，主从服务器都有各自的偏移量，主服务器使用<code>master_repl_offset</code>来记录自己「写」到的位置，从服务器使用<code>slave_repl_offset</code>来记录自己「读」到的位置。</li><li>如果判断出从服务器要复制的数据还在<code>repl_backlog_buffer</code>中，就执行增量同步；如果要复制的数据已经不在<code>repl_backlog_buffer</code>中，也就是这个期间主服务器更新了太多写命令覆盖掉了，那么就要执行完全同步。</li></ul></li></ul><h2 id="哨兵机制（Redis-Sentinel）"><a href="#哨兵机制（Redis-Sentinel）" class="headerlink" title="哨兵机制（Redis Sentinel）"></a>哨兵机制（Redis Sentinel）</h2><p>当redis集群的主节点故障时，Sentinel集群将从剩余的从节点中选举一个新的主节点，有以下步骤：</p><ol><li><strong>故障节点主观下线</strong>：Sentinel集群的每一个Sentinel节点会定时对redis集群的所有节点发心跳包检测节点是否正常。如果一个节点在<code>down-after-milliseconds</code>时间内没有回复Sentinel节点的心跳包，则该redis节点被该Sentinel节点主观下线。</li><li><strong>故障节点客观下线</strong>：当节点被一个Sentinel节点记为主观下线时，还需要Sentinel集群的其他Sentinel节点共同判断为主观下线才行。该Sentinel节点会询问其他Sentinel节点，如果Sentinel集群中超过<code>quorum</code>数量的Sentinel节点认为该redis节点主观下线，则该redis节点客观下线。如果客观下线的redis节点是从节点或者是Sentinel节点，则操作到此为止；如果<font color="#ff0000">客观下线的redis节点为主节点，则开始故障转移</font>，从从节点中选举一个节点升级为主节点。</li><li><strong>Sentinel集群选取leader</strong>：如果需要从redis集群选举一个节点为主节点，首先需要<font color="#ff0000">从Sentinel集群中选举一个Sentinel节点作为leader</font>。每一个Sentinel节点都可以成为leader，当一个Sentinel节点确认redis集群的主节点主观下线后，会请求其他Sentinel节点要求将自己选举为leader。被请求的Sentinel节点如果没有同意过其他Sentinel节点的选举请求，则同意该请求（选举票数+1），否则不同意。如果一个Sentinel节点获得的选举票数达到leader最低票数（<code>quorum</code>和Sentinel节点数/2 + 1的最大值），则该Sentinel节点选举为leader，否则重新进行选举。</li><li><strong>Sentinel leader决定新主节点</strong>：当Sentinel集群选举出Sentinel leader后，由Sentinel leader从redis从节点中选择一个redis节点作为主节点：<ul><li>过滤故障（网络状况不好）的节点，就是主节点和从节点断开的时间太大。</li><li>选择优先级<code>slave-priority</code>（可以通过配置文件配置）最大的从节点作为主节点，如果不在则继续。</li><li>如果<code>slave-priority</code>一样，则判断slave节点的offset值，最大优先级越高，也就是复制进度最大的从节点。</li><li>最后是判断slave节点运行id的大小，越小优先级越高。<br><img src="redis%E9%80%89%E4%B8%BE%E6%96%B0%E4%B8%BB%E8%8A%82%E7%82%B9.png" alt="redis选举新主节点"></li></ul></li></ol><h2 id="Redis集群模式（Redis-Cluster）"><a href="#Redis集群模式（Redis-Cluster）" class="headerlink" title="Redis集群模式（Redis Cluster）"></a>Redis集群模式（Redis Cluster）</h2><ul><li>当Redis缓存数据量大到一台服务器无法缓存时，就需要使用Redis切片集群（Redis Cluster）方案，<strong>它将数据分布在不同的服务器上</strong>（多个master，每个master多个slave），以此来降低系统对单主节点的依赖，从而提高Redis服务的读写性能。</li><li>Redis Cluster方案采用哈希槽（Hash Slot），来处理数据和节点之间的映射关系。一个切片集群共有16384个哈希槽，这些哈希槽类似于数据分区，每个键值对都会根据它的key，被映射到一个哈希槽中，具体执行过程分为两大步：<ul><li>根据键值对的key，按照CRC16算法计算一个16bit的值。</li><li>再用16bit值对16384取模，得到0～16383范围内的模数，每个模数代表一个相应编号的哈希槽。</li></ul></li></ul>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;Redis主从同步&quot;&gt;&lt;a href=&quot;#Redis主从同步&quot; class=&quot;headerlink&quot; title=&quot;Redis主从同步&quot;&gt;&lt;/a&gt;Redis主从同步&lt;/h2&gt;&lt;p&gt;单节点的redis并发能力是有上限的，要进一步提高redis的并发能力，就需要搭建主</summary>
+      
+    
+    
+    
+    
+    <category term="八股" scheme="http://lixrangel.com/tags/%E5%85%AB%E8%82%A1/"/>
+    
+    <category term="Redis" scheme="http://lixrangel.com/tags/Redis/"/>
+    
+  </entry>
   
   <entry>
     <title>Redis场景</title>
@@ -488,30 +512,6 @@
     <category term="八股" scheme="http://lixrangel.com/tags/%E5%85%AB%E8%82%A1/"/>
     
     <category term="集合" scheme="http://lixrangel.com/tags/%E9%9B%86%E5%90%88/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>滑动窗口</title>
-    <link href="http://lixrangel.com/2025/10/25/shua-ti/hua-dong-chuang-kou/"/>
-    <id>http://lixrangel.com/2025/10/25/shua-ti/hua-dong-chuang-kou/</id>
-    <published>2025-10-24T16:00:00.000Z</published>
-    <updated>2026-01-13T12:17:28.188Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="无重复字符的最长子串"><a href="#无重复字符的最长子串" class="headerlink" title="无重复字符的最长子串"></a>无重复字符的最长子串</h2><p><img src="%E6%97%A0%E9%87%8D%E5%A4%8D%E5%AD%97%E7%AC%A6%E7%9A%84%E6%9C%80%E9%95%BF%E5%AD%90%E4%B8%B2.svg" alt="无重复字符的最长子串"></p><ul><li>pre存储上一个无重复子串的第一个位置</li></ul><h2 id="找到字符串中所有字母异位词"><a href="#找到字符串中所有字母异位词" class="headerlink" title="找到字符串中所有字母异位词"></a>找到字符串中所有字母异位词</h2><p><img src="%E6%89%BE%E5%88%B0%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E6%89%80%E6%9C%89%E5%AD%97%E6%AF%8D%E5%BC%82%E4%BD%8D%E8%AF%8D.svg" alt="找到字符串中所有字母异位词"></p><ul><li><code>i</code>作为外循环，<code>j</code>每次通过<code>i - n + 1</code>计算</li><li>每次都先更新charS，如果<code>j &lt; 0</code>，continue</li><li>循环结束移除charS中的<code>j</code></li></ul>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h2 id=&quot;无重复字符的最长子串&quot;&gt;&lt;a href=&quot;#无重复字符的最长子串&quot; class=&quot;headerlink&quot; title=&quot;无重复字符的最长子串&quot;&gt;&lt;/a&gt;无重复字符的最长子串&lt;/h2&gt;&lt;p&gt;&lt;img src=&quot;%E6%97%A0%E9%87%8D%E5%A4%8D%</summary>
-      
-    
-    
-    
-    
-    <category term="算法" scheme="http://lixrangel.com/tags/%E7%AE%97%E6%B3%95/"/>
-    
-    <category term="刷题" scheme="http://lixrangel.com/tags/%E5%88%B7%E9%A2%98/"/>
     
   </entry>
   
