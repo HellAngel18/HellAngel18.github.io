@@ -563,6 +563,108 @@
              <!-- 隐藏某个文章 -->
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
+                    <a href="/2025/12/26/java-ba-gu/redis/redis-huan-cun-tao-tai-he-guo-qi-shan-chu/">
+                        <div class="card-image">
+                            
+                            
+                            <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="Redis缓存淘汰和过期删除">
+                            
+                            <span class="card-title">Redis缓存淘汰和过期删除</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                Redis过期删除策略
+惰性删除：不主动删除过期键，只会在取出/查询key的时候才会对数据进行过期检查，如果过期则删除该key。这种方式对CPU最友好，但是可能会造成太多过期key没有被删除。
+定期删除：周期性地随机从设置了过期时间的key
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2025-12-26
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-user fa-fw"></i>
+                                地狱天使
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="/tags/%E5%85%AB%E8%82%A1/">
+                            <span class="chip bg-color">八股</span>
+                        </a>
+                        
+                        <a href="/tags/Redis/">
+                            <span class="chip bg-color">Redis</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+              <!-- 隐藏某个文章 -->
+            
+             <!-- 隐藏某个文章 -->
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/2025/12/25/java-ba-gu/redis/redis-shi-wu/">
+                        <div class="card-image">
+                            
+                            
+                            <img src="/medias/featureimages/15.jpg" class="responsive-img" alt="Redis事务">
+                            
+                            <span class="card-title">Redis事务</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                如何实现Redis原子性？
+redis执行一条命令的时候是具备原子性的，因为redis执行命令的时候是单线程处理的，不存在多线程安全的问题。
+如果要保证2条命令的原子性的话，可以考虑用lua脚本，将多个操作写到一个lua脚本中，redis会
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2025-12-25
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-user fa-fw"></i>
+                                地狱天使
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="/tags/%E5%85%AB%E8%82%A1/">
+                            <span class="chip bg-color">八股</span>
+                        </a>
+                        
+                        <a href="/tags/Redis/">
+                            <span class="chip bg-color">Redis</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+              <!-- 隐藏某个文章 -->
+            
+             <!-- 隐藏某个文章 -->
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
                     <a href="/2025/12/24/java-ba-gu/redis/redis-xian-cheng-mo-xing/">
                         <div class="card-image">
                             
@@ -979,110 +1081,6 @@ MyISAM：MyISAM是MySQL的另一种常见的存储引擎，具有较低的存储
                         
                         <a href="/tags/MySQL/">
                             <span class="chip bg-color">MySQL</span>
-                        </a>
-                        
-                    </div>
-                    
-                </div>
-            </div>
-              <!-- 隐藏某个文章 -->
-            
-             <!-- 隐藏某个文章 -->
-            <div class="article col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/2025/12/09/java-ba-gu/jvm/jvm-diao-you/">
-                        <div class="card-image">
-                            
-                            
-                            <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="JVM调优">
-                            
-                            <span class="card-title">JVM调优</span>
-                        </div>
-                    </a>
-
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                                JVM参数设置设置堆内存大小（-Xms和-Xmx）
-推荐显式设置这两个参数，并且通常建议将他们设置为相同的值，以避免堆内存的动态调整带来的性能开销。
-
-12-Xms&lt;heap size&gt;[unit] #设置JVM初始堆大小 -X
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2025-12-09
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fas fa-user fa-fw"></i>
-                                地狱天使
-                                
-                            </span>
-                        </div>
-                    </div>
-
-                    
-                    <div class="card-action article-tags">
-                        
-                        <a href="/tags/%E5%85%AB%E8%82%A1/">
-                            <span class="chip bg-color">八股</span>
-                        </a>
-                        
-                        <a href="/tags/JVM/">
-                            <span class="chip bg-color">JVM</span>
-                        </a>
-                        
-                    </div>
-                    
-                </div>
-            </div>
-              <!-- 隐藏某个文章 -->
-            
-             <!-- 隐藏某个文章 -->
-            <div class="article col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/2025/12/08/java-ba-gu/jvm/jvm-la-ji-hui-shou/">
-                        <div class="card-image">
-                            
-                            
-                            <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="JVM垃圾回收">
-                            
-                            <span class="card-title">JVM垃圾回收</span>
-                        </div>
-                    </a>
-
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                                JVM怎么判断对象是否是垃圾对象？
-引用计数法：
-原理：为每个对象分配一个引用计数器，每当有一个地方引用它时，计数器加1；当引用失效时，计数器减1。当计数器为0时，表示对象不再被任何变量引用，可以被回收。
-缺点：不能解决循环引用的问题，即两
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2025-12-08
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fas fa-user fa-fw"></i>
-                                地狱天使
-                                
-                            </span>
-                        </div>
-                    </div>
-
-                    
-                    <div class="card-action article-tags">
-                        
-                        <a href="/tags/%E5%85%AB%E8%82%A1/">
-                            <span class="chip bg-color">八股</span>
-                        </a>
-                        
-                        <a href="/tags/JVM/">
-                            <span class="chip bg-color">JVM</span>
                         </a>
                         
                     </div>
