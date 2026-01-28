@@ -545,7 +545,7 @@
 <li>计算段偏移量和段掩码。这两个参数用于定位key属于哪个<code>segment</code>：<ul>
 <li><code>segmentShift</code>：key 的 hash 值是 32 位的。<code>ConcurrentHashMap</code> 使用 hash 值的<strong>高位</strong>来定位 Segment。这里 <code>32 - sshift</code> 算出的是需要向右移动多少位才能取到高位。</li>
 <li><code>segmentMask</code>：掩码，用于取模运算（位运算 <code>&amp;</code>）。</li>
-<li>定位公式：`(hash &gt;&gt;&gt; segmentShift) &amp; segmentMask</li>
+<li>定位公式：<code>(hash &gt;&gt;&gt; segmentShift) &amp; segmentMask</code></li>
 <li><img src="segmentShift.svg" alt="segmentShift"></li>
 </ul>
 </li>
