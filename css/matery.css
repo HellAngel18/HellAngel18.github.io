@@ -124,7 +124,7 @@ code {
 .code_copy {
     position: absolute;
     top: 0.7rem;
-    right: 15px; /* 调整位置，避免与语言标签重叠 */
+    right: 45px; /* 调整位置，避免与代码折叠键重叠 */
     z-index: 1;
     filter: invert(50%);
     cursor: pointer;
