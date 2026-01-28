@@ -133,7 +133,7 @@ code {
 .code_copy {
     position: absolute;
     top: 0.7rem;
-    right: 25px;
+    right: 15px; /* 调整位置，避免与语言标签重叠 */
     z-index: 1;
     filter: invert(50%);
     cursor: pointer;
@@ -2162,19 +2162,11 @@ pre[class*="language-"] code {
 /* 3. 调整语言名称(右上角)的位置，防止跑偏 */
 .code_lang {
     top: 1.1rem !important; 
-    right: 15px !important;
+    right: 50px !important; /* 调整位置，避免与复制按钮重叠 */
 }
 
 /* 4. 确保红黄绿圆点可见 */
 .code-area::after {
-    top: 15px !important; /* 根据 padding 调整垂直位置 */
-    left: 15px !important;
-    content: " ";
-    position: absolute;
-    border-radius: 50%;
-    background: #ff5f56;
-    width: 12px;
-    height: 12px;
-    box-shadow: 20px 0 #ffbd2e, 40px 0 #27c93f;
-    z-index: 10;
+    content: none !important;
+    display: none !important;
 }
