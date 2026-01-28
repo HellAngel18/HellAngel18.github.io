@@ -473,7 +473,7 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="1-ConcurrentHashMap-1-7"><a href="#1-ConcurrentHashMap-1-7" class="headerlink" title="1. ConcurrentHashMap 1.7"></a>1. ConcurrentHashMap 1.7</h2><h3 id="1-1-存储结构"><a href="#1-1-存储结构" class="headerlink" title="1.1 存储结构"></a>1.1 存储结构</h3><p><img src="ConcorrentHashMap7.svg" alt="ConcorrentHashMap1.7 存储结构"></p>
+                <h2 id="1-ConcurrentHashMap-1-7"><a href="#1-ConcurrentHashMap-1-7" class="headerlink" title="1. ConcurrentHashMap 1.7"></a>1. ConcurrentHashMap 1.7</h2><h3 id="1-1-存储结构"><a href="#1-1-存储结构" class="headerlink" title="1.1 存储结构"></a>1.1 存储结构</h3><p><img src="ConcurrentHashMap7.svg" alt="ConcorrentHashMap1.7 存储结构"></p>
 <ul>
 <li><code>ConcurrentHashMap</code> 由很多个 <code>Segment</code> 组成，每一个 <code>Segment</code> 是一个类似于<code>HashMap</code> 的结构，所以每一个 <code>HashMap</code> 的内部可以进行扩容。但是 <code>Segment</code> 的个数一旦初始化就不能改变，默认 <code>Segment</code> 的个数是16个，也就意味着 <code>ConcurrentHashMap</code> 默认支持最多16个线程并发。</li>
 </ul>
