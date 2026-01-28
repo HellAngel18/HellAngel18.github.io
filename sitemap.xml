@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://lixrangel.com/2025/03/12/java-ba-gu/ji-he/hashmap-yuan-ma-fen-xi/</loc>
+    
+    <lastmod>2026-01-28</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>http://lixrangel.com/2025/03/13/java-ba-gu/ji-he/concurrenthashmap-yuan-ma-fen-xi/</loc>
     
     <lastmod>2026-01-28</lastmod>
@@ -391,14 +400,7 @@
   </url>
   
   <url>
-    <loc>http://lixrangel.com/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/</loc>
-    <lastmod>2026-01-28</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>http://lixrangel.com/tags/JVM/</loc>
+    <loc>http://lixrangel.com/tags/Redis/</loc>
     <lastmod>2026-01-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -419,7 +421,14 @@
   </url>
   
   <url>
-    <loc>http://lixrangel.com/tags/Redis/</loc>
+    <loc>http://lixrangel.com/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://lixrangel.com/tags/JVM/</loc>
     <lastmod>2026-01-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
