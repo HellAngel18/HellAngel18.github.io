@@ -2138,3 +2138,43 @@ footer .copy-right {
     padding: 0;
     margin: 0;
 }
+
+/* --- 修复 Prism 代码块样式冲突 --- */
+
+/* 1. 让 Prism 的 pre 背景透明，避免与 Matery 的背景重叠 */
+pre[class*="language-"] {
+    background-color: #272822 !important; /* 强制使用 Matery 的深色背景 */
+    padding: 2rem 1rem 1rem 1rem !important; /* 保证留出顶部红黄绿点的位置 */
+    border-radius: 0.35rem;
+    margin: 1.5rem 0; /* 上下间距 */
+    text-shadow: none !important; /* 去掉 Prism 可能自带的文字阴影 */
+}
+
+/* 2. 修正 code 标签的样式 */
+pre[class*="language-"] code {
+    color: #f8f8f2 !important; /* 字体颜色 */
+    background: none !important; /* 去掉 code 自身的背景 */
+    text-shadow: none !important;
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace !important;
+    font-size: 0.95rem;
+}
+
+/* 3. 调整语言名称(右上角)的位置，防止跑偏 */
+.code_lang {
+    top: 1.1rem !important; 
+    right: 15px !important;
+}
+
+/* 4. 确保红黄绿圆点可见 */
+.code-area::after {
+    top: 15px !important; /* 根据 padding 调整垂直位置 */
+    left: 15px !important;
+    content: " ";
+    position: absolute;
+    border-radius: 50%;
+    background: #ff5f56;
+    width: 12px;
+    height: 12px;
+    box-shadow: 20px 0 #ffbd2e, 40px 0 #27c93f;
+    z-index: 10;
+}
