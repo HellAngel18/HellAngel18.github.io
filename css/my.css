@@ -1,1 +1,6 @@
 /* Here is your custom css styles. */
+
+/* 隐藏代码块左上角的三个圆点 */
+.code-area::after {
+    display: none !important;
+}
