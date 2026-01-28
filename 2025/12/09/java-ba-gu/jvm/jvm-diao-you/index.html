@@ -468,6 +468,10 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
+        <script src="/libs/prism/prism.js"></script>
+        
 
         
 
@@ -476,9 +480,8 @@
                 <h2 id="JVM参数设置"><a href="#JVM参数设置" class="headerlink" title="JVM参数设置"></a>JVM参数设置</h2><h3 id="设置堆内存大小（-Xms和-Xmx）"><a href="#设置堆内存大小（-Xms和-Xmx）" class="headerlink" title="设置堆内存大小（-Xms和-Xmx）"></a>设置堆内存大小（-Xms和-Xmx）</h3><ul>
 <li>推荐显式设置这两个参数，并且通常建议<strong>将他们设置为相同的值</strong>，以避免堆内存的动态调整带来的性能开销。</li>
 </ul>
-<pre><code class="yaml">-Xms&lt;heap size&gt;[unit] #设置JVM初始堆大小 
--Xmx&lt;heap size&gt;[unit] #设置JVM最大堆大小
-</code></pre>
+<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token punctuation">-</span>Xms&lt;heap size<span class="token punctuation">></span><span class="token punctuation">[</span>unit<span class="token punctuation">]</span> <span class="token comment">#设置JVM初始堆大小 </span>
+<span class="token punctuation">-</span>Xmx&lt;heap size<span class="token punctuation">></span><span class="token punctuation">[</span>unit<span class="token punctuation">]</span> <span class="token comment">#设置JVM最大堆大小</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 <ul>
 <li><code>&lt;heap size&gt;</code>是指定内存的具体数值；</li>
 <li><code>[unit]</code>是指定内存的单位，如G(GB)、M(MB)、K(KB)。</li>
@@ -488,37 +491,24 @@
 <p>尽量让新创建的对象在新生代分配内存并被回收，因为 Minor GC 的成本通常远低于 Full GC。通过分析 GC 日志，判断新生代空间分配是否合理。如果大量新对象过早进入老年代（Promotion），可以适当通过 -Xmn 或 -XX:NewSize/-XX:MaxNewSize 调整新生代大小，目标是最大限度地减少对象直接进入老年代的情况。</p>
 </blockquote>
 <ol>
-<li> 通过<code>-XX:NewSize</code>和<code>-XX:MaxNewSize</code>指定<br>```yaml</li>
+<li> 通过<code>-XX:NewSize</code>和<code>-XX:MaxNewSize</code>指定<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token punctuation">-</span>XX<span class="token punctuation">:</span>NewSize=&lt;young size<span class="token punctuation">></span><span class="token punctuation">[</span>unit<span class="token punctuation">]</span> <span class="token comment">#指定新生代初始大小</span>
+<span class="token punctuation">-</span>XX<span class="token punctuation">:</span>MaxNewSize=&lt;young size<span class="token punctuation">></span><span class="token punctuation">[</span>unit<span class="token punctuation">]</span> <span class="token comment">#设置新生代最大大小</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></li>
+<li>通过<code>-Xmn&lt;young size&gt;[unit]</code>指定<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token punctuation">-</span>Xmn512m<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
+<li>通过<code>-XX:NewRatio=&lt;int&gt;</code>参数来设置老年代与新生代（不含Survivor区）的内存大小比例。<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token punctuation">-</span>XX<span class="token punctuation">:</span>NewRatio=2<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
 </ol>
-<p>-XX:NewSize=<young size>[unit] #指定新生代初始大小<br>-XX:MaxNewSize=<young size>[unit] #设置新生代最大大小</p>
-<pre><code>2. 通过`-Xmn&lt;young size&gt;[unit]`指定
-```yaml
--Xmn512m
-</code></pre>
-<ol start="3">
-<li>通过<code>-XX:NewRatio=&lt;int&gt;</code>参数来设置老年代与新生代（不含Survivor区）的内存大小比例。<br>```yaml</li>
-</ol>
-<p>-XX:NewRatio=2</p>
-<pre><code>
-### 设置永久代/元空间大小（PermGen/Metaspace）
-从Java 8开始，如果我们没有指定Metaspace的大小，随着更多类的创建，虚拟机会耗尽所有可用的系统内存。
-- JDK1.8之前永久代还没被彻底移除的时候通常通过下面这些参数来调节方法区大小。
-```yaml
--XX:PermSize=N #方法区(永久代)初始大小
--XX:MaxPermSize=N #方法区(永久代)最大大小,超过这个值将会抛出 OutOfMemoryError 异常:java.lang.OutOfMemoryError: PermGen
-</code></pre>
+<h3 id="设置永久代-元空间大小（PermGen-Metaspace）"><a href="#设置永久代-元空间大小（PermGen-Metaspace）" class="headerlink" title="设置永久代/元空间大小（PermGen/Metaspace）"></a>设置永久代/元空间大小（PermGen/Metaspace）</h3><p>从Java 8开始，如果我们没有指定Metaspace的大小，随着更多类的创建，虚拟机会耗尽所有可用的系统内存。</p>
 <ul>
-<li>JDK1.8的时候，方法区（HotSpot的永久代）被彻底移除了，取而代之的是元空间，元空间使用的是本地内存。<br>```yaml</li>
-<li>XX:MetaspaceSize=N #首次触发Full GC的阈值</li>
-<li>XX:MaxMetaspaceSize=N #设置Metaspace的最大大小<br>```<br>注意：</li>
+<li>JDK1.8之前永久代还没被彻底移除的时候通常通过下面这些参数来调节方法区大小。<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token punctuation">-</span>XX<span class="token punctuation">:</span>PermSize=N <span class="token comment">#方法区(永久代)初始大小</span>
+<span class="token punctuation">-</span>XX<span class="token punctuation">:</span>MaxPermSize=N <span class="token comment">#方法区(永久代)最大大小,超过这个值将会抛出 OutOfMemoryError 异常:java.lang.OutOfMemoryError: PermGen</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></li>
+<li>JDK1.8的时候，方法区（HotSpot的永久代）被彻底移除了，取而代之的是元空间，元空间使用的是本地内存。<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token punctuation">-</span>XX<span class="token punctuation">:</span>MetaspaceSize=N <span class="token comment">#首次触发Full GC的阈值</span>
+<span class="token punctuation">-</span>XX<span class="token punctuation">:</span>MaxMetaspaceSize=N <span class="token comment">#设置Metaspace的最大大小</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+注意：</li>
 <li><code>XX:MetaspaceSize</code>并非初始容量：Metaspace 的初始容量并不是<code>-XX:MetaspaceSize</code>设置，无论<code>-XX:MetaspaceSize</code>配置什么值，对于 64 位 JVM，元空间的<font color="#ff0000">初始容量通常是一个固定的较小值</font>（Oracle 文档提到约 12MB 到 20MB 之间，实际观察约 20.8MB）。</li>
-<li>扩容与 Full GC：当 Metaspace 的使用量增长并首次达到<code>-XX:MetaspaceSize</code>指定的阈值时，会触发一次 Full GC。在此之后，JVM 会动态调整这个触发 GC 的阈值。如果元空间继续增长，每次达到新的阈值需要扩容时，仍然可能触发 Full GC（具体行为与垃圾收集器和版本有关）。垃圾搜集器内部是根据变量<code>_capacity_until_GC</code>来判断 Metaspace 区域是否达到阈值的，初始化代码如下所示：<pre><code class="java">void MetaspaceGC::initialize() &#123;
-// Set the high-water mark to MaxMetapaceSize during VM initialization since
-// we can&#39;t do a GC during initialization.
-_capacity_until_GC = MaxMetaspaceSize;
-&#125;
-</code></pre>
-</li>
+<li>扩容与 Full GC：当 Metaspace 的使用量增长并首次达到<code>-XX:MetaspaceSize</code>指定的阈值时，会触发一次 Full GC。在此之后，JVM 会动态调整这个触发 GC 的阈值。如果元空间继续增长，每次达到新的阈值需要扩容时，仍然可能触发 Full GC（具体行为与垃圾收集器和版本有关）。垃圾搜集器内部是根据变量<code>_capacity_until_GC</code>来判断 Metaspace 区域是否达到阈值的，初始化代码如下所示：<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">void</span> <span class="token class-name">MetaspaceGC</span><span class="token operator">::</span><span class="token function">initialize</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token comment">// Set the high-water mark to MaxMetapaceSize during VM initialization since</span>
+  <span class="token comment">// we can't do a GC during initialization.</span>
+  _capacity_until_GC <span class="token operator">=</span> <span class="token class-name">MaxMetaspaceSize</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
 <li><strong><code>-XX:MaxMetaspaceSize</code>的重要性</strong>：如果不显式设置<code>-XX:MaxMetaspaceSize</code>，元空间的最大大小理论上受限于可用的本地内存。在极端情况下（如类加载器泄漏导致不断加载类），这确实可能耗尽大量本地内存。因此，强烈建议设置一个合理的<code>-XX:MaxMetaspaceSize</code>上限，以防止对系统造成影响。</li>
 </ul>
 <h3 id="垃圾回收器相关参数"><a href="#垃圾回收器相关参数" class="headerlink" title="垃圾回收器相关参数"></a>垃圾回收器相关参数</h3><ul>
@@ -528,56 +518,56 @@ _capacity_until_GC = MaxMetaspaceSize;
 <li>G1 GC：JDK 9及之后版本的默认GC。将堆划分为多个region，兼顾吞吐量和停顿时间，试图在可预测的停顿时间内完成GC。参数：<code>-XX:+UseG1GC</code>。</li>
 </ul>
 <h3 id="GC日志记录"><a href="#GC日志记录" class="headerlink" title="GC日志记录"></a>GC日志记录</h3><p>在生产环境或进行GC问题排查时，务必开启GC日志记录。以下是一些推荐配置的GC日志参数：</p>
-<pre><code class="yaml"># --- 推荐的基础配置 ---
-# 打印详细 GC 信息
--XX:+PrintGCDetails
-# 打印 GC 发生的时间戳 (相对于 JVM 启动时间)
-# -XX:+PrintGCTimeStamps
-# 打印 GC 发生的日期和时间 (更常用)
--XX:+PrintGCDateStamps
-# 指定 GC 日志文件的输出路径，%t 可以输出日期时间戳
--Xloggc:/path/to/gc-%t.log
+<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token comment"># --- 推荐的基础配置 ---</span>
+<span class="token comment"># 打印详细 GC 信息</span>
+<span class="token punctuation">-</span>XX<span class="token punctuation">:</span>+PrintGCDetails
+<span class="token comment"># 打印 GC 发生的时间戳 (相对于 JVM 启动时间)</span>
+<span class="token comment"># -XX:+PrintGCTimeStamps</span>
+<span class="token comment"># 打印 GC 发生的日期和时间 (更常用)</span>
+<span class="token punctuation">-</span>XX<span class="token punctuation">:</span>+PrintGCDateStamps
+<span class="token comment"># 指定 GC 日志文件的输出路径，%t 可以输出日期时间戳</span>
+<span class="token punctuation">-</span>Xloggc<span class="token punctuation">:</span>/path/to/gc<span class="token punctuation">-</span>%t.log
 
-# --- 推荐的进阶配置 ---
-# 打印对象年龄分布 (有助于判断对象晋升老年代的情况)
--XX:+PrintTenuringDistribution
-# 在 GC 前后打印堆信息
--XX:+PrintHeapAtGC
-# 打印各种类型引用 (强/软/弱/虚) 的处理信息
--XX:+PrintReferenceGC
-# 打印应用暂停时间 (Stop-The-World, STW)
--XX:+PrintGCApplicationStoppedTime
+<span class="token comment"># --- 推荐的进阶配置 ---</span>
+<span class="token comment"># 打印对象年龄分布 (有助于判断对象晋升老年代的情况)</span>
+<span class="token punctuation">-</span>XX<span class="token punctuation">:</span>+PrintTenuringDistribution
+<span class="token comment"># 在 GC 前后打印堆信息</span>
+<span class="token punctuation">-</span>XX<span class="token punctuation">:</span>+PrintHeapAtGC
+<span class="token comment"># 打印各种类型引用 (强/软/弱/虚) 的处理信息</span>
+<span class="token punctuation">-</span>XX<span class="token punctuation">:</span>+PrintReferenceGC
+<span class="token comment"># 打印应用暂停时间 (Stop-The-World, STW)</span>
+<span class="token punctuation">-</span>XX<span class="token punctuation">:</span>+PrintGCApplicationStoppedTime
 
-# --- GC 日志文件滚动配置 ---
-# 启用 GC 日志文件滚动
--XX:+UseGCLogFileRotation
-# 设置滚动日志文件的数量 (例如，保留最近 14 个)
--XX:NumberOfGCLogFiles=14
-# 设置每个日志文件的最大大小 (例如，50MB)
--XX:GCLogFileSize=50M
+<span class="token comment"># --- GC 日志文件滚动配置 ---</span>
+<span class="token comment"># 启用 GC 日志文件滚动</span>
+<span class="token punctuation">-</span>XX<span class="token punctuation">:</span>+UseGCLogFileRotation
+<span class="token comment"># 设置滚动日志文件的数量 (例如，保留最近 14 个)</span>
+<span class="token punctuation">-</span>XX<span class="token punctuation">:</span>NumberOfGCLogFiles=14
+<span class="token comment"># 设置每个日志文件的最大大小 (例如，50MB)</span>
+<span class="token punctuation">-</span>XX<span class="token punctuation">:</span>GCLogFileSize=50M
 
-# --- 可选的辅助诊断配置 ---
-# 打印安全点 (Safepoint) 统计信息 (有助于分析 STW 原因)
-# -XX:+PrintSafepointStatistics
-# -XX:PrintSafepointStatisticsCount=1
-</code></pre>
-<h3 id="处理OOM"><a href="#处理OOM" class="headerlink" title="处理OOM"></a>处理OOM</h3><pre><code class="yaml"># 在发生 OOM 时生成堆转储文件
--XX:+HeapDumpOnOutOfMemoryError
+<span class="token comment"># --- 可选的辅助诊断配置 ---</span>
+<span class="token comment"># 打印安全点 (Safepoint) 统计信息 (有助于分析 STW 原因)</span>
+<span class="token comment"># -XX:+PrintSafepointStatistics</span>
+<span class="token comment"># -XX:PrintSafepointStatisticsCount=1</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-# 指定堆转储文件的输出路径。&lt;pid&gt; 会被替换为进程 ID
--XX:HeapDumpPath=/path/to/heapdump/java_pid&lt;pid&gt;.hprof
-# 示例：-XX:HeapDumpPath=/data/dumps/
+<h3 id="处理OOM"><a href="#处理OOM" class="headerlink" title="处理OOM"></a>处理OOM</h3><pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token comment"># 在发生 OOM 时生成堆转储文件</span>
+<span class="token punctuation">-</span>XX<span class="token punctuation">:</span>+HeapDumpOnOutOfMemoryError
 
-# (可选) 在发生 OOM 时执行指定的命令或脚本
-# 例如，发送告警通知或尝试重启服务（需谨慎使用）
--XX:OnOutOfMemoryError=&quot;&lt;command&gt; &lt;args&gt;&quot;
-# 示例：-XX:OnOutOfMemoryError=&quot;sh /path/to/notify.sh&quot;
+<span class="token comment"># 指定堆转储文件的输出路径。&lt;pid> 会被替换为进程 ID</span>
+<span class="token punctuation">-</span>XX<span class="token punctuation">:</span>HeapDumpPath=/path/to/heapdump/java_pid&lt;pid<span class="token punctuation">></span>.hprof
+<span class="token comment"># 示例：-XX:HeapDumpPath=/data/dumps/</span>
 
-# (可选) 启用 GC 开销限制检查
-# 如果 GC 时间占总时间比例过高（默认 98%）且回收效果甚微（默认小于 2% 堆内存），
-# 会提前抛出 OOM，防止应用长时间卡死在 GC 中。
--XX:+UseGCOverheadLimit
-</code></pre>
+<span class="token comment"># (可选) 在发生 OOM 时执行指定的命令或脚本</span>
+<span class="token comment"># 例如，发送告警通知或尝试重启服务（需谨慎使用）</span>
+<span class="token punctuation">-</span>XX<span class="token punctuation">:</span>OnOutOfMemoryError="&lt;command<span class="token punctuation">></span> &lt;args<span class="token punctuation">></span>"
+<span class="token comment"># 示例：-XX:OnOutOfMemoryError="sh /path/to/notify.sh"</span>
+
+<span class="token comment"># (可选) 启用 GC 开销限制检查</span>
+<span class="token comment"># 如果 GC 时间占总时间比例过高（默认 98%）且回收效果甚微（默认小于 2% 堆内存），</span>
+<span class="token comment"># 会提前抛出 OOM，防止应用长时间卡死在 GC 中。</span>
+<span class="token punctuation">-</span>XX<span class="token punctuation">:</span>+UseGCOverheadLimit<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h3 id="其他常用参数"><a href="#其他常用参数" class="headerlink" title="其他常用参数"></a>其他常用参数</h3><ul>
 <li><code>server</code>: 明确启用 Server 模式的 HotSpot VM。（在 64 位 JVM 上通常是默认值）。</li>
 <li><code>XX:+UseStringDeduplication</code>: (JDK 8u20+) 尝试识别并共享底层 <code>char[]</code> 数组相同的 String 对象，以减少内存占用。适用于存在大量重复字符串的场景。</li>

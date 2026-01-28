@@ -468,6 +468,10 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
+        <script src="/libs/prism/prism.js"></script>
+        
 
         
 
@@ -494,14 +498,12 @@
 </ul>
 </li>
 <li>而解锁的过程就是将lock_key键删除（<code>del lock_key</code>），但不能乱删，要保证执行操作的客户端就是加锁的客户端。所以解锁的时候，要先判断锁的<code>unique_value</code>是否为加锁客户端，是的话，才将lock_key键删除。</li>
-<li>可以看到，解锁是有<strong>判断身份+删除两个操作</strong>，这时就需要<strong>lua脚本</strong>来保证解锁的原子性，因为Redis在执行lua脚本时，可以以原子性的方式执行，保证了锁释放操作的原子性。<pre><code class="lua">// 释放锁时，先比较 unique_value 是否相等，避免锁的误释放 
-if redis.call(&quot;get&quot;,KEYS[1]) == ARGV[1] then 
-return redis.call(&quot;del&quot;,KEYS[1]) 
-else 
-return 0 
-end
-</code></pre>
-</li>
+<li>可以看到，解锁是有<strong>判断身份+删除两个操作</strong>，这时就需要<strong>lua脚本</strong>来保证解锁的原子性，因为Redis在执行lua脚本时，可以以原子性的方式执行，保证了锁释放操作的原子性。<pre class="line-numbers language-lua" data-language="lua"><code class="language-lua"><span class="token operator">//</span> 释放锁时，先比较 unique_value 是否相等，避免锁的误释放 
+<span class="token keyword">if</span> redis<span class="token punctuation">.</span><span class="token function">call</span><span class="token punctuation">(</span><span class="token string">"get"</span><span class="token punctuation">,</span>KEYS<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">==</span> ARGV<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token keyword">then</span> 
+<span class="token keyword">return</span> redis<span class="token punctuation">.</span><span class="token function">call</span><span class="token punctuation">(</span><span class="token string">"del"</span><span class="token punctuation">,</span>KEYS<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span> 
+<span class="token keyword">else</span> 
+<span class="token keyword">return</span> <span class="token number">0</span> 
+<span class="token keyword">end</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
 </ul>
 <h3 id="如果业务没跑完锁过期了怎么办？"><a href="#如果业务没跑完锁过期了怎么办？" class="headerlink" title="如果业务没跑完锁过期了怎么办？"></a>如果业务没跑完锁过期了怎么办？</h3><ul>
 <li>Redisson的Watch Dog（看门狗）</li>

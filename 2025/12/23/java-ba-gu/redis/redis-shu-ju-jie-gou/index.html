@@ -468,6 +468,10 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
+        <script src="/libs/prism/prism.js"></script>
+        
 
         
 
@@ -538,21 +542,20 @@
 <h2 id="跳表是怎么实现的？"><a href="#跳表是怎么实现的？" class="headerlink" title="跳表是怎么实现的？"></a>跳表是怎么实现的？</h2><ul>
 <li>链表在查找元素的时候，因为需要逐一查找，所以查询效率非常低，时间复杂度是$O(N)$，于是就出现了跳表。跳表是在链表基础上改进过来的，实现了一种【多层】的有序链表，这样的好处是能<strong>快速定位数据</strong>。<br><img src="%E8%B7%B3%E8%A1%A8%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84.png" alt="跳表数据结构"></li>
 </ul>
-<pre><code class="c++">typedef struct zskiplistNode &#123;
-    //Zset 对象的元素值
+<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">typedef struct zskiplistNode &#123;
+    &#x2F;&#x2F;Zset 对象的元素值
     sds ele;
-    //元素权重值
+    &#x2F;&#x2F;元素权重值
     double score;
-    //后向指针
+    &#x2F;&#x2F;后向指针
     struct zskiplistNode *backward;
   
-    //节点的level数组，保存每层上的前向指针和跨度
+    &#x2F;&#x2F;节点的level数组，保存每层上的前向指针和跨度
     struct zskiplistLevel &#123;
         struct zskiplistNode *forward;
         unsigned long span;
     &#125; level[];
-&#125; zskiplistNode;
-</code></pre>
+&#125; zskiplistNode;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <ul>
 <li>Zset 对象要同时保存【<strong>元素</strong>】和【<strong>元素的权重</strong>】，对应到跳表节点结构里就是SDS类型的ele变量和double类型的score变量。每个跳表节点都有一个后向指针（<code>struct zskiplistNode *backward</code>），指向前一个节点，目的是为了<font color="#ff0000">方便从跳表的尾节点开始访问节点</font>，这样倒序查找时很方便。</li>
 <li>跳表是一个带有层级关系的链表，而且每一层级可以包含多个节点，每一个节点通过指针连接起来，实现这一特性就是靠跳表节点结构体中的<code>zskiplistLevel</code>结构体类型的level数组。</li>

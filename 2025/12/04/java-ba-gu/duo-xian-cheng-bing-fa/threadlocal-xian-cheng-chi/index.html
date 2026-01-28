@@ -468,40 +468,43 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
+        <script src="/libs/prism/prism.js"></script>
+        
 
         
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="ThreadLocal原理了解吗？"><a href="#ThreadLocal原理了解吗？" class="headerlink" title="ThreadLocal原理了解吗？"></a>ThreadLocal原理了解吗？</h2><pre><code class="java">public class Thread implements Runnable &#123;
-    //......
-    //与此线程有关的ThreadLocal值。由ThreadLocal类维护
-    ThreadLocal.ThreadLocalMap threadLocals = null;
+                <h2 id="ThreadLocal原理了解吗？"><a href="#ThreadLocal原理了解吗？" class="headerlink" title="ThreadLocal原理了解吗？"></a>ThreadLocal原理了解吗？</h2><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Thread</span> <span class="token keyword">implements</span> <span class="token class-name">Runnable</span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">//......</span>
+    <span class="token comment">//与此线程有关的ThreadLocal值。由ThreadLocal类维护</span>
+    <span class="token class-name">ThreadLocal<span class="token punctuation">.</span>ThreadLocalMap</span> threadLocals <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
 
-    //与此线程有关的InheritableThreadLocal值。由InheritableThreadLocal类维护
-    ThreadLocal.ThreadLocalMap inheritableThreadLocals = null;
-    //......
-&#125;
+    <span class="token comment">//与此线程有关的InheritableThreadLocal值。由InheritableThreadLocal类维护</span>
+    <span class="token class-name">ThreadLocal<span class="token punctuation">.</span>ThreadLocalMap</span> inheritableThreadLocals <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+    <span class="token comment">//......</span>
+<span class="token punctuation">&#125;</span>
 
-public class ThreadLocal &#123;
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ThreadLocal</span> <span class="token punctuation">&#123;</span>
 
-    public void set(T value) &#123;
-        //获取当前请求的线程
-        Thread t = Thread.currentThread();
-        //取出 Thread 类内部的 threadLocals 变量(哈希表结构)
-        ThreadLocalMap map = getMap(t);
-        if (map != null)
-            // 将需要存储的值放入到这个哈希表中
-            map.set(this, value);
-        else
-            createMap(t, value);
-    &#125;
-    
-    ThreadLocalMap getMap(Thread t) &#123;
-        return t.threadLocals;
-    &#125;
-&#125;
-</code></pre>
+	<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">set</span><span class="token punctuation">(</span><span class="token class-name">T</span> value<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+	    <span class="token comment">//获取当前请求的线程</span>
+	    <span class="token class-name">Thread</span> t <span class="token operator">=</span> <span class="token class-name">Thread</span><span class="token punctuation">.</span><span class="token function">currentThread</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	    <span class="token comment">//取出 Thread 类内部的 threadLocals 变量(哈希表结构)</span>
+	    <span class="token class-name">ThreadLocalMap</span> map <span class="token operator">=</span> <span class="token function">getMap</span><span class="token punctuation">(</span>t<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	    <span class="token keyword">if</span> <span class="token punctuation">(</span>map <span class="token operator">!=</span> <span class="token keyword">null</span><span class="token punctuation">)</span>
+	        <span class="token comment">// 将需要存储的值放入到这个哈希表中</span>
+	        map<span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">,</span> value<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	    <span class="token keyword">else</span>
+	        <span class="token function">createMap</span><span class="token punctuation">(</span>t<span class="token punctuation">,</span> value<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">&#125;</span>
+	
+	<span class="token class-name">ThreadLocalMap</span> <span class="token function">getMap</span><span class="token punctuation">(</span><span class="token class-name">Thread</span> t<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+	    <span class="token keyword">return</span> t<span class="token punctuation">.</span>threadLocals<span class="token punctuation">;</span>
+	<span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <ul>
 <li>每个Thread对象内部有一个私有成员变量<code>threadlocals</code>，是一个<code>ThreadLocalMap</code>（是ThreadLocal的静态内部类）对象。默认情况下这个变量为null，当调用<code>set()</code>方法时才会创建。</li>
 <li>当调用<code>threadlocal.set(value)</code>时，ThreadLocal会<font color="#ff0000">先获取当前线程</font>，然后从该线程中<font color="#ff0000">获取它的ThreadLocalMap</font>。接着<font color="#ff0000">ThreadLocal以它自己为key</font>，<font color="#ff0000">将value存入当前线程的ThreadLocalMap中</font>。调用<code>threadlocal.get()</code>时，会获取当前线程的ThreadLocalMap，然后以ThreadLocal为key，查找对应的value并返回。<br><img src="ThreadLocal%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84.png" alt="ThreadLocal数据结构"></li>

@@ -468,6 +468,10 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
+        <script src="/libs/prism/prism.js"></script>
+        
 
         
 
@@ -711,25 +715,23 @@
 </ul>
 <h2 id="指令重排序（单例模式举例）"><a href="#指令重排序（单例模式举例）" class="headerlink" title="指令重排序（单例模式举例）"></a>指令重排序（单例模式举例）</h2><ul>
 <li><p>在JMM的规范下，编译器和cpu为了性能，会进行<font color="#ff0000">指令重排序</font>。重排序在单线程下有<code>as-if-serial</code>语义保证结果正确，但在多线程下，就可能破坏代码的逻辑。比如经典的<strong>双重检查锁定（DCL）下单例模式失效</strong>，就是重排序导致的。</p>
-<pre><code class="java">public class Singleton &#123; 
-  private volatile static Singleton uniqueInstance; 
-  private Singleton() &#123; 
-  &#125; 
-  public static Singleton getUniqueInstance() &#123; 
-      //第一次检查，只有为空的时候才加锁 
-      if (uniqueInstance == null) &#123; 
-          //类对象加锁 
-          synchronized (Singleton.class) &#123; 
-          // 第二次检查，为了线程安全
-          if (uniqueInstance == null) &#123; 
-              uniqueInstance = new Singleton(); 
-              &#125; 
-          &#125; 
-      &#125; return uniqueInstance; 
-  &#125; 
-&#125;
-</code></pre>
-</li>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Singleton</span> <span class="token punctuation">&#123;</span> 
+	<span class="token keyword">private</span> <span class="token keyword">volatile</span> <span class="token keyword">static</span> <span class="token class-name">Singleton</span> uniqueInstance<span class="token punctuation">;</span> 
+	<span class="token keyword">private</span> <span class="token class-name">Singleton</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> 
+	<span class="token punctuation">&#125;</span> 
+	<span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token class-name">Singleton</span> <span class="token function">getUniqueInstance</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> 
+		<span class="token comment">//第一次检查，只有为空的时候才加锁 </span>
+		<span class="token keyword">if</span> <span class="token punctuation">(</span>uniqueInstance <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> 
+			<span class="token comment">//类对象加锁 </span>
+			<span class="token keyword">synchronized</span> <span class="token punctuation">(</span><span class="token class-name">Singleton</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> 
+			<span class="token comment">// 第二次检查，为了线程安全</span>
+			<span class="token keyword">if</span> <span class="token punctuation">(</span>uniqueInstance <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> 
+				uniqueInstance <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Singleton</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+				<span class="token punctuation">&#125;</span> 
+			<span class="token punctuation">&#125;</span> 
+		<span class="token punctuation">&#125;</span> <span class="token keyword">return</span> uniqueInstance<span class="token punctuation">;</span> 
+	<span class="token punctuation">&#125;</span> 
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
 <li><p>uniqueInstance = new Singleton();这段代码其实是分为三步执行：</p>
 <ol>
 <li>为<code>uniqueInstance</code>分配内存空间；</li>
