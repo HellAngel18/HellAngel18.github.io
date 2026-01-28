@@ -473,7 +473,35 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="ThreadLocal原理了解吗？"><a href="#ThreadLocal原理了解吗？" class="headerlink" title="ThreadLocal原理了解吗？"></a>ThreadLocal原理了解吗？</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Thread</span> <span class="keyword">implements</span> <span class="title class_">Runnable</span> &#123;</span><br><span class="line">    <span class="comment">//......</span></span><br><span class="line">    <span class="comment">//与此线程有关的ThreadLocal值。由ThreadLocal类维护</span></span><br><span class="line">    ThreadLocal.<span class="type">ThreadLocalMap</span> <span class="variable">threadLocals</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//与此线程有关的InheritableThreadLocal值。由InheritableThreadLocal类维护</span></span><br><span class="line">    ThreadLocal.<span class="type">ThreadLocalMap</span> <span class="variable">inheritableThreadLocals</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">    <span class="comment">//......</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ThreadLocal</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">set</span><span class="params">(T value)</span> &#123;</span><br><span class="line">	    <span class="comment">//获取当前请求的线程</span></span><br><span class="line">	    <span class="type">Thread</span> <span class="variable">t</span> <span class="operator">=</span> Thread.currentThread();</span><br><span class="line">	    <span class="comment">//取出 Thread 类内部的 threadLocals 变量(哈希表结构)</span></span><br><span class="line">	    <span class="type">ThreadLocalMap</span> <span class="variable">map</span> <span class="operator">=</span> getMap(t);</span><br><span class="line">	    <span class="keyword">if</span> (map != <span class="literal">null</span>)</span><br><span class="line">	        <span class="comment">// 将需要存储的值放入到这个哈希表中</span></span><br><span class="line">	        map.set(<span class="built_in">this</span>, value);</span><br><span class="line">	    <span class="keyword">else</span></span><br><span class="line">	        createMap(t, value);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	ThreadLocalMap <span class="title function_">getMap</span><span class="params">(Thread t)</span> &#123;</span><br><span class="line">	    <span class="keyword">return</span> t.threadLocals;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+                <h2 id="ThreadLocal原理了解吗？"><a href="#ThreadLocal原理了解吗？" class="headerlink" title="ThreadLocal原理了解吗？"></a>ThreadLocal原理了解吗？</h2><pre><code class="java">public class Thread implements Runnable &#123;
+    //......
+    //与此线程有关的ThreadLocal值。由ThreadLocal类维护
+    ThreadLocal.ThreadLocalMap threadLocals = null;
+
+    //与此线程有关的InheritableThreadLocal值。由InheritableThreadLocal类维护
+    ThreadLocal.ThreadLocalMap inheritableThreadLocals = null;
+    //......
+&#125;
+
+public class ThreadLocal &#123;
+
+    public void set(T value) &#123;
+        //获取当前请求的线程
+        Thread t = Thread.currentThread();
+        //取出 Thread 类内部的 threadLocals 变量(哈希表结构)
+        ThreadLocalMap map = getMap(t);
+        if (map != null)
+            // 将需要存储的值放入到这个哈希表中
+            map.set(this, value);
+        else
+            createMap(t, value);
+    &#125;
+    
+    ThreadLocalMap getMap(Thread t) &#123;
+        return t.threadLocals;
+    &#125;
+&#125;
+</code></pre>
 <ul>
 <li>每个Thread对象内部有一个私有成员变量<code>threadlocals</code>，是一个<code>ThreadLocalMap</code>（是ThreadLocal的静态内部类）对象。默认情况下这个变量为null，当调用<code>set()</code>方法时才会创建。</li>
 <li>当调用<code>threadlocal.set(value)</code>时，ThreadLocal会<font color="#ff0000">先获取当前线程</font>，然后从该线程中<font color="#ff0000">获取它的ThreadLocalMap</font>。接着<font color="#ff0000">ThreadLocal以它自己为key</font>，<font color="#ff0000">将value存入当前线程的ThreadLocalMap中</font>。调用<code>threadlocal.get()</code>时，会获取当前线程的ThreadLocalMap，然后以ThreadLocal为key，查找对应的value并返回。<br><img src="ThreadLocal%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84.png" alt="ThreadLocal数据结构"></li>

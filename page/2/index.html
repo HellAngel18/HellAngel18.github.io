@@ -595,7 +595,8 @@ MyISAM：MyISAM是MySQL的另一种常见的存储引擎，具有较低的存储
                                 JVM参数设置设置堆内存大小（-Xms和-Xmx）
 推荐显式设置这两个参数，并且通常建议将他们设置为相同的值，以避免堆内存的动态调整带来的性能开销。
 
-12-Xms&lt;heap size&gt;[unit] #设置JVM初始堆大小 -X
+-Xms&lt;heap size&gt;[unit] #设置JVM初始堆大小 
+-Xm
                             
                         </div>
                         <div class="publish-info">
@@ -749,7 +750,10 @@ JDK1.8
                     <div class="card-content article-content">
                         <div class="summary block-with-text">
                             
-                                ThreadLocal原理了解吗？12345678910111213141516171819202122232425262728public class Thread implements Runnable &#123;    //....
+                                ThreadLocal原理了解吗？public class Thread implements Runnable &#123;
+    //......
+    //与此线程有关的ThreadLocal值。由ThreadLocal类维护
+ 
                             
                         </div>
                         <div class="publish-info">
