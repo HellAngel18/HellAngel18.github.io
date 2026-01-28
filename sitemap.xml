@@ -92,87 +92,6 @@
   </url>
   
   <url>
-    <loc>http://lixrangel.com/2025/12/18/java-ba-gu/mysql/mysql-ri-zhi/</loc>
-    
-    <lastmod>2026-01-19</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://lixrangel.com/2025/12/20/java-ba-gu/mysql/mysql-jia-gou/</loc>
-    
-    <lastmod>2026-01-19</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://lixrangel.com/2025/12/19/java-ba-gu/mysql/mysql-xing-neng-diao-you/</loc>
-    
-    <lastmod>2026-01-19</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://lixrangel.com/2025/12/17/java-ba-gu/mysql/mysql-shi-wu/</loc>
-    
-    <lastmod>2026-01-19</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://lixrangel.com/2025/12/16/java-ba-gu/mysql/mysql-cun-chu-yin-qing/</loc>
-    
-    <lastmod>2026-01-19</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://lixrangel.com/2025/12/15/java-ba-gu/mysql/mysql-suo-yin/</loc>
-    
-    <lastmod>2026-01-19</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://lixrangel.com/2025/12/08/java-ba-gu/jvm/jvm-la-ji-hui-shou/</loc>
-    
-    <lastmod>2026-01-18</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://lixrangel.com/2025/12/09/java-ba-gu/jvm/jvm-diao-you/</loc>
-    
-    <lastmod>2026-01-18</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://lixrangel.com/2025/12/07/java-ba-gu/jvm/java-nei-cun-qu-yu-lei-jia-zai/</loc>
-    
-    <lastmod>2026-01-18</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>http://lixrangel.com/2025/08/20/elasticsearch/elasticsearch-8.10-an-zhuang-jiao-cheng-macos-ban/</loc>
     
     <lastmod>2026-01-14</lastmod>
@@ -322,6 +241,13 @@
   </url>
   
   <url>
+    <loc>http://lixrangel.com/tags/%E6%9D%82%E8%AE%B0/</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>http://lixrangel.com/tags/%E7%AE%97%E6%B3%95/</loc>
     <lastmod>2026-01-28</lastmod>
     <changefreq>weekly</changefreq>
@@ -330,13 +256,6 @@
   
   <url>
     <loc>http://lixrangel.com/tags/%E5%88%B7%E9%A2%98/</loc>
-    <lastmod>2026-01-28</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>http://lixrangel.com/tags/%E6%9D%82%E8%AE%B0/</loc>
     <lastmod>2026-01-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -357,14 +276,7 @@
   </url>
   
   <url>
-    <loc>http://lixrangel.com/tags/JVM/</loc>
-    <lastmod>2026-01-28</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>http://lixrangel.com/tags/Redis/</loc>
+    <loc>http://lixrangel.com/tags/%E9%9B%86%E5%90%88/</loc>
     <lastmod>2026-01-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -378,14 +290,7 @@
   </url>
   
   <url>
-    <loc>http://lixrangel.com/tags/%E9%9B%86%E5%90%88/</loc>
-    <lastmod>2026-01-28</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>http://lixrangel.com/tags/MySQL/</loc>
+    <loc>http://lixrangel.com/tags/Redis/</loc>
     <lastmod>2026-01-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
