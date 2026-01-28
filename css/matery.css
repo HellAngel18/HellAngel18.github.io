@@ -124,8 +124,8 @@ code {
 .code_copy {
     position: absolute;
     top: 0.7rem;
-    right: 60px; /* 调整位置，避免与代码折叠键重叠 */
-    z-index: 1;
+    right: 50px; /* 调整位置，避免与代码折叠键重叠 */
+    z-index: 1000; /* 提高层级，确保在折叠按钮之上 */
     filter: invert(50%);
     cursor: pointer;
 }
