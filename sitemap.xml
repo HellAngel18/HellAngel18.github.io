@@ -349,13 +349,6 @@
   </url>
   
   <url>
-    <loc>http://lixrangel.com/tags/%E6%9D%82%E8%AE%B0/</loc>
-    <lastmod>2026-01-28</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>http://lixrangel.com/tags/%E7%AE%97%E6%B3%95/</loc>
     <lastmod>2026-01-28</lastmod>
     <changefreq>weekly</changefreq>
@@ -377,6 +370,13 @@
   </url>
   
   <url>
+    <loc>http://lixrangel.com/tags/%E6%9D%82%E8%AE%B0/</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>http://lixrangel.com/tags/%E5%85%AB%E8%82%A1/</loc>
     <lastmod>2026-01-28</lastmod>
     <changefreq>weekly</changefreq>
@@ -384,7 +384,7 @@
   </url>
   
   <url>
-    <loc>http://lixrangel.com/tags/JVM/</loc>
+    <loc>http://lixrangel.com/tags/MySQL/</loc>
     <lastmod>2026-01-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -398,21 +398,21 @@
   </url>
   
   <url>
+    <loc>http://lixrangel.com/tags/JVM/</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://lixrangel.com/tags/Java%E6%BA%90%E7%A0%81/</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>http://lixrangel.com/tags/%E9%9B%86%E5%90%88/</loc>
-    <lastmod>2026-01-28</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>http://lixrangel.com/tags/Java%E6%BA%90%E7%A0%81%EF%BC%8C%E9%9B%86%E5%90%88/</loc>
-    <lastmod>2026-01-28</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>http://lixrangel.com/tags/MySQL/</loc>
     <lastmod>2026-01-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
