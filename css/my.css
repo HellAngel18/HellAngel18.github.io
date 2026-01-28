@@ -2,5 +2,16 @@
 
 /* 隐藏代码块左上角的三个圆点 */
 .code-area::after {
+    content: none !important;
     display: none !important;
+    visibility: hidden !important;
+}
+
+/* 修复右上角语言标签和复制按钮重叠问题 */
+.code_lang {
+    right: 50px !important; /* 语言标签在左边，给复制按钮留出空间 */
+}
+
+.code_copy {
+    right: 15px !important; /* 复制按钮在右边 */
 }
